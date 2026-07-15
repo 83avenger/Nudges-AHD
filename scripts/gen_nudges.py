@@ -300,3 +300,10 @@ with open("nudges.csv", "w", newline="", encoding="utf-8") as f:
     for i, text in enumerate(nudges, 1):
         w.writerow([i, text, "Pending", "", ""])
 print("Wrote nudges.csv with", len(nudges), "rows")
+
+# JSON for reliable import via Power Automate "Parse JSON" (avoids CSV comma issues)
+import json
+data = [{"NudgeID": i, "NudgeText": text} for i, text in enumerate(nudges, 1)]
+with open("nudges.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+print("Wrote nudges.json with", len(data), "rows")

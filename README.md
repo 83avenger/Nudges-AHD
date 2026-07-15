@@ -9,8 +9,10 @@ existing M365 licences** (standard connectors only, no premium Power Automate).
 | File | What it is |
 |------|-----------|
 | `flow-build-guide.md` | Step-by-step Power Automate cloud flow build (hardened). |
+| `import-flow-guide.md` | Run-once flow that bulk-loads the 250 nudges into the list. |
 | `sharepoint-list-schema.md` | The `Nudges` SharePoint List that stores state. |
 | `nudges.csv` | All 250 wellbeing nudges, seeded to `Pending`. |
+| `nudges.json` | Same 250 nudges as JSON, for the import flow. |
 | `adaptive-card.json` | The Teams notification card. |
 | `IT-handover.md` | Overview, cost, and maintenance for IT. |
 | `scripts/gen_nudges.py` | Regenerates `nudges.csv`. |
@@ -25,11 +27,12 @@ existing M365 licences** (standard connectors only, no premium Power Automate).
 
 ## Quick start
 
-1. Create the `Nudges` SharePoint List and load `nudges.csv`
-   (`sharepoint-list-schema.md`).
-2. Confirm your 50-user M365 Group.
-3. Build the flow (`flow-build-guide.md`).
-4. Pilot, then go live.
+1. Create the `Nudges` SharePoint List (`sharepoint-list-schema.md`).
+2. Bulk-load the 250 nudges with the run-once import flow
+   (`import-flow-guide.md`, uses `nudges.json`).
+3. Confirm your 50-user M365 Group.
+4. Build the scheduled flow (`flow-build-guide.md`).
+5. Pilot, then go live.
 
 ## Alternatives considered
 
