@@ -1,45 +1,36 @@
-# One-Off Import Flow — Load 250 Nudges into the SharePoint List
+# One-Off Import Flow — Load the 21 Challenges into SharePoint
 
-A small, **run-once** Power Automate cloud flow that reads `nudges.json` and
-creates all 250 items in the `Nudges` SharePoint List — so nobody pastes rows by
-hand. Standard connectors only, **$0**, no PC.
+A **run-once** cloud flow that reads `data/month-of-connection.json` and creates
+the 21 challenge items in the `MonthOfConnection` SharePoint List — so nobody
+retypes bilingual rows by hand. Standard connectors only, **$0**, no PC.
 
-> **Why JSON, not CSV?** Power Automate has no reliable native CSV parser, and a
-> few nudges contain commas (e.g. *"Breathe in calm, breathe out tension."*).
-> The built-in **Parse JSON** action handles the text safely. Use `nudges.json`
-> from this repo.
+> **Why JSON?** Power Automate has no reliable native CSV parser, and the rows
+> contain commas, Arabic text, and emoji. **Parse JSON** handles all of it
+> safely. Use `data/month-of-connection.json`.
 
 ## Prerequisites
 
-- The `Nudges` SharePoint List already exists with columns from
-  `sharepoint-list-schema.md` (`NudgeID` number, `NudgeText` text,
-  `Status` choice defaulting to `Pending`).
-- `nudges.json` uploaded somewhere the flow can read it. Easiest: upload it to a
-  **document library** on the same SharePoint site (e.g. `Shared Documents`).
+- The `MonthOfConnection` list exists with the columns in
+  `sharepoint-list-schema.md` (note `RevealDate` is a **Date only** column,
+  `Status` a Choice defaulting to `Scheduled`).
+- `month-of-connection.json` available to the flow. Easiest: upload it to a
+  document library on the site (e.g. `Shared Documents`), **or** paste its
+  contents into a Compose action (Step 2 option B).
 
 ## Build the flow
 
 ### Step 1 — Trigger
+- **Instant cloud flow** → **Manually trigger a flow**.
 
-- Create an **Instant cloud flow** → **Manually trigger a flow**. (Run-once, so a
-  manual trigger is ideal.)
-
-### Step 2 — Get the JSON file content
-
-Pick **one** source:
-
-- **From SharePoint (recommended):** action **Get file content** (SharePoint) →
-  Site + File = `/Shared Documents/nudges.json`.
-- **Or skip the file entirely:** add a **Compose** action and paste the contents
-  of `nudges.json` directly as its input. Then use `outputs('Compose')` wherever
-  the guide says the file content. This avoids uploading anything.
+### Step 2 — Get the JSON
+- **Option A (file):** **Get file content** (SharePoint) → `month-of-connection.json`.
+- **Option B (no upload):** add a **Compose**, paste the file contents, and use
+  `outputs('Compose')` below.
 
 ### Step 3 — Parse JSON
-
 - Action: **Parse JSON**.
-- **Content:** the file content from Step 2
-  (`body('Get_file_content')`) — or `outputs('Compose')` if you pasted it.
-- **Schema:** paste this (it matches `nudges.json`):
+- **Content:** the file content (`body('Get_file_content')`) or `outputs('Compose')`.
+- **Schema:**
 
 ```json
 {
@@ -47,43 +38,59 @@ Pick **one** source:
   "items": {
     "type": "object",
     "properties": {
-      "NudgeID": { "type": "integer" },
-      "NudgeText": { "type": "string" }
+      "Day": { "type": "integer" },
+      "RevealDate": { "type": "string" },
+      "DateLabel": { "type": "string" },
+      "Weekday": { "type": "string" },
+      "WeekArc": { "type": "string" },
+      "ChallengeEN": { "type": "string" },
+      "ChallengeAR": { "type": "string" },
+      "WhyItMatters": { "type": "string" },
+      "TomorrowTeaser": { "type": "string" },
+      "SocialCaption": { "type": "string" },
+      "SourceRef": { "type": "string" },
+      "Status": { "type": "string" },
+      "SentDateTime": { "type": "string" },
+      "RunID": { "type": "string" }
     },
-    "required": [ "NudgeID", "NudgeText" ]
+    "required": [ "Day", "RevealDate", "ChallengeEN", "ChallengeAR" ]
   }
 }
 ```
 
-### Step 4 — Create the 250 items
-
-- Action: **Apply to each** over the **Body** output of Parse JSON.
-  - **Concurrency Control = On, Degree = 8** (fast but stays under SharePoint
-    throttling limits for a one-off run of 250).
-- Inside, action: **Create item** (SharePoint) into the `Nudges` list:
-  - `Title` = `item()?['NudgeID']` (or leave default if you use the built-in ID)
-  - `NudgeID` = `item()?['NudgeID']`
-  - `NudgeText` = `item()?['NudgeText']`
-  - `Status` = `Pending`
+### Step 4 — Create the 21 items
+- **Apply to each** over the **Body** of Parse JSON (Concurrency **On, Degree 8**).
+- Inside: **Create item** (SharePoint) into `MonthOfConnection`:
+  - `Title` = `item()?['Day']`
+  - `Day` = `item()?['Day']`
+  - `RevealDate` = `item()?['RevealDate']`  *(the `yyyy-MM-dd` string maps to the Date column)*
+  - `DateLabel` = `item()?['DateLabel']`
+  - `Weekday` = `item()?['Weekday']`
+  - `WeekArc` = `item()?['WeekArc']`
+  - `ChallengeEN` = `item()?['ChallengeEN']`
+  - `ChallengeAR` = `item()?['ChallengeAR']`
+  - `WhyItMatters` = `item()?['WhyItMatters']`
+  - `TomorrowTeaser` = `item()?['TomorrowTeaser']`
+  - `SocialCaption` = `item()?['SocialCaption']`
+  - `SourceRef` = `item()?['SourceRef']`
+  - `Status` = `Scheduled`
   - Leave `SentDateTime` and `RunID` empty.
 
-### Step 5 — Run once
+### Step 5 — Run once & verify
+1. **Save → Test → Manually → Run flow.**
+2. Open the list: confirm **21 items**, `RevealDate` 2026-08-03 → 2026-08-31,
+   all `Scheduled`, and the **Arabic text renders correctly** (RTL).
 
-1. **Save**, then **Test → Manually → Run flow**.
-2. Wait for it to finish (250 create actions — usually well under a minute).
-3. Open the `Nudges` list and confirm **250 items**, all `Pending`,
-   `NudgeID` 1–250.
-
-### Step 6 — Retire the import flow
-
-- Once loaded, **turn the import flow Off** (or delete it). It's only needed
-  again if you rebuild the list from scratch.
+### Step 6 — Retire
+- Turn the import flow **Off** (or delete). Only needed again if you rebuild the
+  list.
 
 ## Safety notes
 
-- **Run it exactly once.** Running twice creates duplicates. If that happens,
-  delete all items (list → select all → delete) and re-run once.
-- To reload after content changes: clear the list, regenerate `nudges.json`
-  (`python3 scripts/gen_nudges.py`), re-upload, and run the import once more.
-- This flow only **seeds** data. Day-to-day sending is handled by the separate
-  scheduled flow in `flow-build-guide.md`.
+- **Run exactly once** — a second run creates duplicates. If it happens, delete
+  all items and re-run once.
+- To reload after content edits: clear the list, regenerate the data
+  (`python3 scripts/extract_pilot.py source/AHD_...August2026.xlsx`), re-upload,
+  run once.
+- This flow only **seeds** data. Daily sending is the separate reveal flow in
+  `flow-build-guide.md`.

@@ -1,153 +1,165 @@
-# Power Automate Cloud Flow — Build Guide (Free / No PC)
+# Power Automate Cloud Flow — Daily Reveal (Bilingual, Free / No PC)
 
-This builds the Wellbeing Nudges automation using **only standard connectors**
-that are **included in Microsoft 365** — no premium licence, no Azure, and
-**no computer needs to be left on**. Cloud flows run on Microsoft's servers.
+Sends the **Month of Connection** daily challenge — **English + Arabic on one
+card** — to the pilot group each working morning. Standard connectors only,
+**included in Microsoft 365** (no premium licence, no Azure, **no PC left on** —
+cloud flows run on Microsoft's servers).
 
-> You can build this either from **Power Automate** (`make.powerautomate.com`)
-> or from **Teams → Workflows** — they are the same engine. Steps below use
-> Power Automate.
+> Build it from **Power Automate** (`make.powerautomate.com`) or from
+> **Teams → Workflows** — same engine. Steps below use Power Automate.
 
-## Architecture at a glance
+## What it does each morning
 
 ```
-Recurrence (4x/day, UAE time)
-  → Get items where Status = Pending, ordered by NudgeID, top 1
-  → If none: Terminate (all 250 sent)
-  → Get M365 group members (the 50 users)
-  → For each member (concurrency 15): Post Adaptive Card as Flow bot in 1:1 chat
-  → On success: Update the SharePoint item → Status=Sent, SentDateTime, RunID
-  → On failure: Update item → Status=Error and notify IT
+Recurrence: working days at 08:00 UAE  (matches the card's "REVEAL 8:00 AM")
+  → Compute today's date in UAE
+  → Get the MonthOfConnection item WHERE RevealDate = today AND Status = Scheduled
+  → If none (weekend / holiday / pilot over): Terminate
+  → Get the pilot group's members
+  → For each member (concurrency 15): Post bilingual Adaptive Card as Flow bot
+  → On success: item → Status=Sent, SentDateTime (UAE), RunID
+  → On failure: item → Status=Error + notify IT
 ```
 
-**One nudge per run → 4 nudges/day → 250 nudges ≈ 63 working days.**
+**One challenge per working day → 21 days → Mon 3 Aug to Mon 31 Aug 2026.**
+
+Matching on `RevealDate` (not a "next pending" queue) means each challenge fires
+on its own calendar day. A missed or re-run day never shifts the rest.
 
 ---
 
 ## Prerequisites
 
-- SharePoint List `Nudges` created and loaded with 250 rows (see
-  `sharepoint-list-schema.md`).
-- An M365 Group containing the 50 recipients (e.g. `AH-Nudges`).
+- SharePoint List `MonthOfConnection` created and loaded with the 21 rows
+  (see `sharepoint-list-schema.md` + `import-flow-guide.md`).
+- An M365 Group / Teams team containing the pilot recipients.
 - Permission to post Adaptive Cards via the Flow bot (default in most tenants).
 
 ---
 
-## Step 1 — Trigger: Recurrence
+## Step 1 — Trigger: Recurrence on working days
 
 - Add trigger **Recurrence**.
-- Frequency: **Day**, Interval **1**.
+- Frequency: **Week**, Interval **1**.
+- **On these days:** Monday, Tuesday, Wednesday, Thursday, Friday.
+- **At these hours:** `8`  · **At these minutes:** `0`.
 - **Time zone:** `(UTC+04:00) Abu Dhabi, Muscat`.
-- **At these hours/minutes** — set four schedules. The cleanest way is one
-  Recurrence with these start times, or split into explicit trigger times:
-  - 07:00, 09:15, 11:30, 13:45.
-  - If your Recurrence UI only allows whole hours + minutes lists, create the
-    flow with 4 separate Recurrence triggers is **not** possible in one flow;
-    instead either (a) use 4 copies of the flow, or (b) run every 15 min and
-    gate with a condition, or **(recommended)** use the schedule below.
 
-> **Recommended schedule setup:** Frequency = Day, and add the specific times
-> under advanced options if available. If not, the simplest robust pattern is:
-> Recurrence **every 15 minutes** + a **Condition** that only proceeds when the
-> current UAE time is exactly one of the four slots. See Step 2.
+This fires at 08:00 UAE Mon–Fri. Weekends never run. (Public holidays that fall
+on a weekday are handled automatically in Step 3 — there's simply no row whose
+`RevealDate` equals that day, so the flow terminates.)
 
-## Step 2 — (If gating) Time check
+## Step 2 — Compute today's UAE date
 
-Only needed if you used the "every 15 min" pattern. Otherwise the redundant
-07:00–16:00 window check from the original doc can be **removed** — the fixed
-schedule already guarantees the window.
-
-- Add **Compose** `nowUAE`:
+- Add **Compose** `TodayUAE`:
   ```
-  convertTimeZone(utcNow(), 'UTC', 'Arabian Standard Time', 'HH:mm')
+  convertTimeZone(utcNow(), 'UTC', 'Arabian Standard Time', 'yyyy-MM-dd')
   ```
-- Add **Condition**: `nowUAE` is one of `07:00, 09:15, 11:30, 13:45`
-  (use an `or` of four equals, or a `contains` against an array).
-- If not a slot → **Terminate** (Succeeded).
 
-## Step 3 — Get the next pending nudge (deterministic order)
+## Step 3 — Get today's challenge
 
-- Action: **Get items** (SharePoint).
-- Site + List = `Nudges`.
-- **Filter Query:** `Status eq 'Pending'`
-- **Order By:** `NudgeID asc`
-- **Top Count:** `1`
+- Action: **Get items** (SharePoint) on `MonthOfConnection`.
+- **Filter Query:**
+  ```
+  RevealDate eq '@{outputs('TodayUAE')}' and Status eq 'Scheduled'
+  ```
+  (SharePoint date columns compare on the `yyyy-MM-dd` value. If your tenant is
+  fussy about date filtering, filter only on `Status eq 'Scheduled'`, order by
+  `RevealDate asc`, `Top 1`, then verify the returned `RevealDate` equals
+  `TodayUAE` in the next condition.)
+- **Top Count:** `1`.
 
-This replaces the fragile `first()` on an unordered Excel result. Ordering by
-`NudgeID asc` guarantees you always send the lowest-numbered pending nudge.
+## Step 4 — Stop if nothing scheduled for today
 
-## Step 4 — If none left, stop
-
-- Add **Condition:** `length(body('Get_items')?['value'])` is equal to `0`.
-  - **If yes** → **Terminate** (Succeeded) — all nudges sent.
+- **Condition:** `length(body('Get_items')?['value'])` is equal to `0`.
+  - **If yes** → **Terminate** (Succeeded). Weekend, holiday, or pilot finished.
   - **If no** → continue.
-- Add **Compose** `Nudge` = `first(body('Get_items')?['value'])`.
-  - `NudgeText` = `outputs('Nudge')?['NudgeText']`
-  - `NudgeID`   = `outputs('Nudge')?['NudgeID']`
-  - `ItemId`    = `outputs('Nudge')?['ID']`
+- **Compose** `Challenge` = `first(body('Get_items')?['value'])`. Reference
+  fields as `outputs('Challenge')?['ChallengeEN']`,
+  `outputs('Challenge')?['ChallengeAR']`, etc., and the item id as
+  `outputs('Challenge')?['ID']`.
 
-## Step 5 — Get the 50 recipients
+## Step 5 — Get the pilot recipients
 
 - Action: **List group members** (Office 365 Groups) — standard connector.
-- Group Id = your `AH-Nudges` group.
-- (Optional) Filter out disabled/guest accounts in the next step.
+- Group Id = your pilot group (e.g. `AH-Nudges` / the Month of Connection team).
+- Optionally filter out disabled/guest accounts next.
 
-## Step 6 — Send the Adaptive Card to each user
+## Step 6 — Send the bilingual card to each member
 
-- Action: **Apply to each** over `value` from List group members.
-  - Set **Concurrency Control = On, Degree = 15** (avoids Teams throttling; not
-    unbounded).
-- Inside, action: **Post card in a chat or channel** (Microsoft Teams).
+- **Apply to each** over `value` from List group members.
+  - **Concurrency Control = On, Degree = 15** (avoids Teams throttling).
+- Inside: **Post card in a chat or channel** (Microsoft Teams).
   - **Post as:** `Flow bot`
-  - **Post in:** `Chat with Flow bot` → **Recipient:** `items('Apply_to_each')?['mail']`
-  - **Adaptive Card:** paste `adaptive-card.json`, but replace the two tokens
-    with dynamic values:
-    - `${NudgeText}` → `outputs('Nudge')?['NudgeText']`
-    - `${NudgeID}`   → `outputs('Nudge')?['NudgeID']`
-- **Error handling:** wrap this send in a **Scope** named `SendScope`.
+  - **Post in:** `Chat with Flow bot` → **Recipient:**
+    `items('Apply_to_each')?['mail']`
+  - **Adaptive Card:** paste `adaptive-card-bilingual.json`, then bind the
+    tokens to the challenge fields:
+    | Card token | Bind to |
+    |------------|---------|
+    | `${Day}` | `outputs('Challenge')?['Day']` |
+    | `${WeekArc}` | `outputs('Challenge')?['WeekArc']` |
+    | `${ChallengeEN}` | `outputs('Challenge')?['ChallengeEN']` |
+    | `${ChallengeAR}` | `outputs('Challenge')?['ChallengeAR']` |
+    | `${WhyItMatters}` | `outputs('Challenge')?['WhyItMatters']` |
+    | `${TomorrowTeaser}` | `outputs('Challenge')?['TomorrowTeaser']` |
+  - Wrap this send in a **Scope** named `SendScope` for error handling.
 
-> Note on "popup": this produces a Teams chat message + activity-feed
-> notification badge. Teams does not support a forced modal popup from a bot —
-> this is the expected, supported behaviour.
+> The card shows **English and Arabic together** — English block, then a
+> right-to-left Arabic block, then the huddle line and tomorrow's teaser. Arabic
+> renders RTL automatically via the card's `rtl` container.
+>
+> **"Popup" note:** this is a Teams chat message + activity-feed notification,
+> not a forced modal — the expected, supported behaviour for a bot.
 
-## Step 7 — Mark the nudge Sent (only on success)
+## Step 7 — Mark Sent (only on success)
 
-- After `Apply to each`, add action **Update item** (SharePoint), configured to
-  run only if the loop scope **succeeded** (`Configure run after`).
+- After the loop, **Update item** (SharePoint), set to run only if `SendScope`
+  **succeeded** (`Configure run after`):
   - `Status` = `Sent`
   - `SentDateTime` = `convertTimeZone(utcNow(),'UTC','Arabian Standard Time','yyyy-MM-dd HH:mm')`
   - `RunID` = `workflow()?['run']?['name']`
 
-## Step 8 — Handle failures (don't silently lose a nudge)
+## Step 8 — Handle failures
 
-- Add a parallel **Update item** configured (via `Configure run after`) to run
-  when the send scope **has failed / timed out**:
-  - `Status` = `Error`
-  - `RunID`  = `workflow()?['run']?['name']`
-- Add an optional **Post message in a chat** to your IT support user/channel
-  with the failed `NudgeID` and run name.
-
-This means a partly-failed run is visible and re-sendable, rather than being
-marked `Sent` when 20 of 50 users missed it.
+- A parallel **Update item** set (via `Configure run after`) to run when
+  `SendScope` **failed / timed out**:
+  - `Status` = `Error`, `RunID` = `workflow()?['run']?['name']`.
+- Optional **Post message** to IT/Champions with the failed `Day` + run name so
+  the day can be re-sent.
 
 ## Step 9 — Save, test, deploy
 
-1. **Test → Manually** once. Confirm one card arrives and the item flips to
+1. **Test → Manually** once (temporarily relax the Step 3 filter to any
+   `Scheduled` row). Confirm the bilingual card arrives and the item flips to
    `Sent` with a UAE timestamp + RunID.
-2. Pilot with a small group first (point the flow at a 2–3 person test group).
-3. Switch to the real 50-user group and turn the flow **On**.
+2. Pilot with 2–3 test users first.
+3. Point at the real pilot group and turn the flow **On** before Mon 3 Aug.
+
+---
+
+## Optional companion flows (nice-to-have, all free)
+
+- **Thursday "Guess tomorrow's challenge" poll** — a second Recurrence flow
+  (Thursdays) posting a Teams Adaptive Card / Forms poll (from the metrics tab).
+- **Sunday Champion preview** — a flow that emails Champions the upcoming week's
+  rows under embargo.
+- **Weekly pulse** — a Friday flow posting the one-question pulse to the channel.
+
+These aren't required for the core reveal; add them if you want the full
+anticipation + measurement loop from the workbook's *Pilot Design & Metrics*.
 
 ---
 
 ## Cost & licensing summary
 
-| Component            | Licence                         | Extra cost |
-|----------------------|---------------------------------|-----------|
+| Component | Licence | Extra cost |
+|-----------|---------|-----------|
 | Power Automate cloud flow (standard connectors) | Included in M365 | **$0** |
-| SharePoint List      | Included in M365                | **$0** |
-| Teams Flow-bot cards | Included in M365                | **$0** |
-| Office 365 Groups    | Included in M365                | **$0** |
-| Compute / server / PC| None — runs in Microsoft cloud  | **$0** |
+| SharePoint List | Included in M365 | **$0** |
+| Teams Flow-bot cards | Included in M365 | **$0** |
+| Office 365 Groups | Included in M365 | **$0** |
+| Compute / server / PC | None — Microsoft cloud | **$0** |
 
-No premium Power Automate licence is required because every connector used is
+No premium Power Automate licence is required — every connector used is
 **standard**.

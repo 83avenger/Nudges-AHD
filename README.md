@@ -1,44 +1,71 @@
-# Wellbeing Nudges Automation
+# AHD Wellbeing365 — Month of Connection (August 2026 Pilot)
 
-Send 250 wellbeing nudges to 50 users via Microsoft Teams, 4×/day (07:00, 09:15,
-11:30, 13:45 UAE). **Runs in the Microsoft 365 cloud — no PC left on, $0 beyond
-existing M365 licences** (standard connectors only, no premium Power Automate).
+Automates the **daily reveal** of the *Month of Connection* pilot: **one
+bilingual (English + Arabic) connection challenge per working day**, delivered
+each morning in Microsoft Teams to the pilot group, across **21 working days
+(Mon 3 Aug → Mon 31 Aug 2026)**.
+
+**Runs entirely in the Microsoft 365 cloud — no PC left on, $0 beyond existing
+M365 licences** (standard connectors only, no premium Power Automate).
+
+Daily ritual: **Reveal → Huddle → Act → Share → Recognize → Tease Tomorrow.**
+This package automates the **Reveal**; the huddle, action and sharing are led by
+Wellbeing Champions.
 
 ## Contents
 
-| File | What it is |
+| Path | What it is |
 |------|-----------|
-| `flow-build-guide.md` | Step-by-step Power Automate cloud flow build (hardened). |
-| `import-flow-guide.md` | Run-once flow that bulk-loads the 250 nudges into the list. |
-| `sharepoint-list-schema.md` | The `Nudges` SharePoint List that stores state. |
-| `nudges.csv` | All 250 wellbeing nudges, seeded to `Pending`. |
-| `nudges.json` | Same 250 nudges as JSON, for the import flow. |
-| `adaptive-card.json` | The Teams notification card. |
-| `IT-handover.md` | Overview, cost, and maintenance for IT. |
-| `scripts/gen_nudges.py` | Regenerates `nudges.csv`. |
+| `data/month-of-connection.json` / `.csv` | The 21 bilingual challenges (EN + AR + huddle line + teaser + caption + source ref), seeded to `Scheduled`. |
+| `adaptive-card-bilingual.json` | The Teams notification card — English + right-to-left Arabic on one card. |
+| `sharepoint-list-schema.md` | The `MonthOfConnection` SharePoint List (state store). |
+| `import-flow-guide.md` | Run-once flow that bulk-loads the 21 challenges. |
+| `flow-build-guide.md` | The daily reveal flow (date-matched, working-day, bilingual, hardened). |
+| `IT-handover.md` | Overview, cost, roles, privacy, metrics, maintenance. |
+| `scripts/extract_pilot.py` | Regenerates the data from the source workbook. |
+| `source/…August2026.xlsx` | The original AHD workbook (authoritative source). |
+| `archive/generic-250/` | Superseded English-only 250-nudge draft (reference only). |
 
 ## Why this design
 
-- **No computer needs to stay on** — cloud flows run on Microsoft's servers.
-- **Free** — every connector is standard (SharePoint, Teams, Office 365 Groups).
-- **Reliable** — SharePoint List (not Excel) for state, deterministic nudge
-  ordering, per-run error handling. See `IT-handover.md` for the full list of
-  fixes over the original spec.
+- **Bilingual by default** — every card shows English and Arabic together; Arabic
+  renders RTL.
+- **No computer stays on** — cloud flows run on Microsoft's servers.
+- **Free** — SharePoint, Teams, Office 365 Groups, Recurrence are all standard.
+- **Calendar-accurate** — challenges are matched to their `RevealDate`, so a
+  missed or re-run day never shifts the rest; weekends/holidays simply don't fire.
+- **Traceable** — each challenge keeps its `SourceRef` back to Dr. Dania's Social
+  Wellbeing library.
 
-## Quick start
+## Quick start (before Mon 3 Aug 2026)
 
-1. Create the `Nudges` SharePoint List (`sharepoint-list-schema.md`).
-2. Bulk-load the 250 nudges with the run-once import flow
-   (`import-flow-guide.md`, uses `nudges.json`).
-3. Confirm your 50-user M365 Group.
-4. Build the scheduled flow (`flow-build-guide.md`).
-5. Pilot, then go live.
+1. Create the `MonthOfConnection` SharePoint List (`sharepoint-list-schema.md`).
+2. Bulk-load the 21 challenges (`import-flow-guide.md`, uses the JSON).
+3. Confirm the pilot M365 Group / Teams team.
+4. Build the daily reveal flow (`flow-build-guide.md`).
+5. Pilot with 2–3 test users, then go live.
 
-## Alternatives considered
+## Regenerating the data
+
+```bash
+python3 scripts/extract_pilot.py source/AHD_Wellbing365_Month_of_Connection_August2026.xlsx
+```
+
+## Alternatives considered (all cloud, no PC)
 
 | Option | PC needed? | Cost | Verdict |
 |--------|-----------|------|---------|
-| **Power Automate cloud flow** | No | $0 (in M365) | ✅ Chosen — low-code, free |
+| **Power Automate cloud flow** | No | $0 (in M365) | ✅ Chosen — low-code, free, Champion-friendly |
 | Teams Workflows | No | $0 | Same engine, fine too |
 | Azure Functions + Graph | No | ~free | More setup; only if IT wants code |
 | Power Automate Desktop / Task Scheduler | **Yes** | — | ❌ Rejected — needs a machine on |
+
+## Scaling to the 12-month journey
+
+The workbook defines a 12-month *Wellbeing365* journey (Connection → Trust →
+Calm → Movement → …). The same automation is reused each month: load next
+month's rows into the list (or a per-month list) and the reveal flow runs
+unchanged. Dr. Dania's email also envisages **four nudges/day across the four
+pillars** (Social, Physical, Financial, Mental) for the wider rollout — that's a
+variant of this flow with four sends per day; the pilot deliberately runs **one
+hero challenge/day** for a clean, measurable start.
