@@ -98,5 +98,16 @@ wellbeing team.)*
 
 ### Next step
 Confirm **Decision A** (four cards vs one card) and **Decision B** (August 1/day
-vs 4/day). On confirmation, the data files, Adaptive Card(s) and flow guide are
-updated to match — the current one-per-day pilot package remains valid for B1.
+vs 4/day). The current one-per-day pilot package remains valid for B1.
+
+### Status update — 4×/day variant now built
+The full **four-pillars, 4×/day** variant has been produced (Option A / four
+separate cards), so both models are ready and the team can pick after clarifying:
+- Data: `data/four-pillars/by-nudge.json` (84 sends) + `by-day.json` (combined-card view).
+- Card: `adaptive-card-pillar.json`. Flow: `four-pillars-flow-guide.md`.
+- Schema: `four-pillars-sharepoint-schema.md`. Generator: `scripts/gen_four_pillars.py`.
+
+Social pillar = the 21 approved connection challenges; Physical/Financial/Mental
+are bilingual **drafts** (`SourceRef = draft`) for the wellbeing team to approve
+and map to Dr. Dania's library. The combined-single-card format (Decision A ·
+Option B) can be generated from `by-day.json` on request.

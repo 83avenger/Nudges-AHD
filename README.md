@@ -60,12 +60,28 @@ python3 scripts/extract_pilot.py source/AHD_Wellbing365_Month_of_Connection_Augu
 | Azure Functions + Graph | No | ~free | More setup; only if IT wants code |
 | Power Automate Desktop / Task Scheduler | **Yes** | — | ❌ Rejected — needs a machine on |
 
+## Two delivery models in this repo
+
+Management confirmed the operating logic is **4 nudges/day** (one per pillar,
+under one daily theme). Both models are built and documented — see
+`nudge-logic-design.md` for the decision context:
+
+| Model | Files | When to use |
+|-------|-------|-------------|
+| **1 hero challenge/day** (Connection pilot) | `data/month-of-connection.*`, `adaptive-card-bilingual.json`, `flow-build-guide.md`, `sharepoint-list-schema.md` | The tested August pilot; cleanest single measure at the Sep gate. |
+| **4 pillars, 4×/day** (Social→Physical→Financial→Mental) | `data/four-pillars/*`, `adaptive-card-pillar.json`, `four-pillars-flow-guide.md`, `four-pillars-sharepoint-schema.md` | The confirmed operating model for full rollout. |
+
+### Four-pillars variant at a glance
+- **84 sends** = 21 working days × 4 pillars, all **bilingual (EN + AR)**.
+- Times: **07:00 Social · 09:15 Physical · 11:30 Financial · 13:45 Mental** (UAE).
+- **Social** = the 21 approved connection challenges (traceable). **Physical /
+  Financial / Mental** are drafted in EN + AR (`SourceRef = draft`) pending
+  wellbeing-team approval.
+- Same free/no-PC footprint; build via four small per-slot flows (or one gated
+  flow). A **single-combined-card** option is included too (`by-day.json`).
+
 ## Scaling to the 12-month journey
 
 The workbook defines a 12-month *Wellbeing365* journey (Connection → Trust →
-Calm → Movement → …). The same automation is reused each month: load next
-month's rows into the list (or a per-month list) and the reveal flow runs
-unchanged. Dr. Dania's email also envisages **four nudges/day across the four
-pillars** (Social, Physical, Financial, Mental) for the wider rollout — that's a
-variant of this flow with four sends per day; the pilot deliberately runs **one
-hero challenge/day** for a clean, measurable start.
+Calm → Movement → …). The same automation is reused each month: load the next
+month's rows and the flow runs unchanged.
