@@ -11,20 +11,23 @@ cloud flows run on Microsoft's servers).
 ## What it does each morning
 
 ```
-Recurrence: working days at 08:00 UAE  (matches the card's "REVEAL 8:00 AM")
-  → Compute today's date in UAE
-  → Get the MonthOfConnection item WHERE RevealDate = today AND Status = Scheduled
-  → If none (weekend / holiday / pilot over): Terminate
+Recurrence: AHD working days (Sun–Thu) at 08:00 UAE  ("REVEAL 8:00 AM")
+  → Get the next MonthOfConnection item WHERE Status = Scheduled, ordered by Day (top 1)
+  → If none (pilot finished): Terminate
   → Get the pilot group's members
   → For each member (concurrency 15): Post bilingual Adaptive Card as Flow bot
   → On success: item → Status=Sent, SentDateTime (UAE), RunID
   → On failure: item → Status=Error + notify IT
 ```
 
-**One challenge per working day → 21 days → Mon 3 Aug to Mon 31 Aug 2026.**
+**One challenge per working day → 21 challenges → ~4 AHD working weeks.**
 
-Matching on `RevealDate` (not a "next pending" queue) means each challenge fires
-on its own calendar day. A missed or re-run day never shifts the rest.
+> **AHD works Sunday–Thursday** (weekend Fri–Sat). The flow fires only on those
+> days and sends the **next unsent challenge in `Day` order**, so it never
+> depends on the specific calendar dates in the workbook (which were laid out on
+> a Mon–Fri calendar). **Nothing in the list needs to change** — the `RevealDate`
+> column simply becomes informational. If a day is skipped (holiday, pause), the
+> next working day just picks up the next challenge — the sequence self-heals.
 
 ---
 
@@ -37,55 +40,47 @@ on its own calendar day. A missed or re-run day never shifts the rest.
 
 ---
 
-## Step 1 — Trigger: Recurrence on working days
+## Step 1 — Trigger: Recurrence on AHD working days (Sun–Thu)
 
 - Add trigger **Recurrence**.
 - Frequency: **Week**, Interval **1**.
-- **On these days:** Monday, Tuesday, Wednesday, Thursday, Friday.
+- **On these days:** **Sunday, Monday, Tuesday, Wednesday, Thursday**
+  (AHD weekend is Fri–Sat — leave those unchecked).
 - **At these hours:** `8`  · **At these minutes:** `0`.
 - **Time zone:** `(UTC+04:00) Abu Dhabi, Muscat`.
 
-This fires at 08:00 UAE Mon–Fri. Weekends never run. (Public holidays that fall
-on a weekday are handled automatically in Step 3 — there's simply no row whose
-`RevealDate` equals that day, so the flow terminates.)
+This fires at 08:00 UAE Sun–Thu. The Fri–Sat weekend never runs. On a public
+holiday you can either pause the flow that day or add an optional holiday check
+(see note at the end).
 
-## Step 2 — Compute today's UAE date
-
-- Add **Compose** `TodayUAE`:
-  ```
-  convertTimeZone(utcNow(), 'UTC', 'Arabian Standard Time', 'yyyy-MM-dd')
-  ```
-
-## Step 3 — Get today's challenge
+## Step 2 — Get the next challenge (by Day order)
 
 - Action: **Get items** (SharePoint) on `MonthOfConnection`.
-- **Filter Query:**
-  ```
-  RevealDate eq '@{outputs('TodayUAE')}' and Status eq 'Scheduled'
-  ```
-  (SharePoint date columns compare on the `yyyy-MM-dd` value. If your tenant is
-  fussy about date filtering, filter only on `Status eq 'Scheduled'`, order by
-  `RevealDate asc`, `Top 1`, then verify the returned `RevealDate` equals
-  `TodayUAE` in the next condition.)
+- **Filter Query:** `Status eq 'Scheduled'`
+- **Order By:** `Day asc`
 - **Top Count:** `1`.
 
-## Step 4 — Stop if nothing scheduled for today
+This always returns the lowest-numbered unsent challenge, so the sequence
+advances one per working day regardless of the calendar. No date matching, so the
+workbook's Mon–Fri `RevealDate` values don't matter.
+
+## Step 3 — Stop if nothing left
 
 - **Condition:** `length(body('Get_items')?['value'])` is equal to `0`.
-  - **If yes** → **Terminate** (Succeeded). Weekend, holiday, or pilot finished.
+  - **If yes** → **Terminate** (Succeeded). All 21 challenges sent.
   - **If no** → continue.
 - **Compose** `Challenge` = `first(body('Get_items')?['value'])`. Reference
   fields as `outputs('Challenge')?['ChallengeEN']`,
   `outputs('Challenge')?['ChallengeAR']`, etc., and the item id as
   `outputs('Challenge')?['ID']`.
 
-## Step 5 — Get the pilot recipients
+## Step 4 — Get the pilot recipients
 
 - Action: **List group members** (Office 365 Groups) — standard connector.
 - Group Id = your pilot group (e.g. `AH-Nudges` / the Month of Connection team).
 - Optionally filter out disabled/guest accounts next.
 
-## Step 6 — Send the bilingual card to each member
+## Step 5 — Send the bilingual card to each member
 
 - **Apply to each** over `value` from List group members.
   - **Concurrency Control = On, Degree = 15** (avoids Teams throttling).
@@ -112,7 +107,7 @@ on a weekday are handled automatically in Step 3 — there's simply no row whose
 > **"Popup" note:** this is a Teams chat message + activity-feed notification,
 > not a forced modal — the expected, supported behaviour for a bot.
 
-## Step 7 — Mark Sent (only on success)
+## Step 6 — Mark Sent (only on success)
 
 - After the loop, **Update item** (SharePoint), set to run only if `SendScope`
   **succeeded** (`Configure run after`):
@@ -120,7 +115,7 @@ on a weekday are handled automatically in Step 3 — there's simply no row whose
   - `SentDateTime` = `convertTimeZone(utcNow(),'UTC','Arabian Standard Time','yyyy-MM-dd HH:mm')`
   - `RunID` = `workflow()?['run']?['name']`
 
-## Step 8 — Handle failures
+## Step 7 — Handle failures
 
 - A parallel **Update item** set (via `Configure run after`) to run when
   `SendScope` **failed / timed out**:
@@ -128,26 +123,37 @@ on a weekday are handled automatically in Step 3 — there's simply no row whose
 - Optional **Post message** to IT/Champions with the failed `Day` + run name so
   the day can be re-sent.
 
-## Step 9 — Save, test, deploy
+## Step 8 — Save, test, deploy
 
-1. **Test → Manually** once (temporarily relax the Step 3 filter to any
-   `Scheduled` row). Confirm the bilingual card arrives and the item flips to
-   `Sent` with a UAE timestamp + RunID.
-2. Pilot with 2–3 test users first.
-3. Point at the real pilot group and turn the flow **On** before Mon 3 Aug.
+1. **Test → Manually** once. Confirm the bilingual card arrives and the item
+   flips to `Sent` with a UAE timestamp + RunID (it will send Day 1 first).
+2. Pilot with 2–3 test users first. (Reset the sent row's `Status` to
+   `Scheduled` afterwards so the real run starts from Day 1.)
+3. Point at the real pilot group and turn the flow **On** on the intended start
+   day (a Sunday works well as the week opener).
 
 ---
 
 ## Optional companion flows (nice-to-have, all free)
 
-- **Thursday "Guess tomorrow's challenge" poll** — a second Recurrence flow
-  (Thursdays) posting a Teams Adaptive Card / Forms poll (from the metrics tab).
-- **Sunday Champion preview** — a flow that emails Champions the upcoming week's
-  rows under embargo.
-- **Weekly pulse** — a Friday flow posting the one-question pulse to the channel.
+- **Mid-week "Guess tomorrow's challenge" poll** — a second Recurrence flow
+  (e.g. Wednesday) posting a Teams Adaptive Card / Forms poll (from the metrics tab).
+- **Champion preview** — a flow that emails Champions the upcoming week's rows
+  under embargo the day before the week opens (e.g. Saturday, ahead of Sunday).
+- **Weekly pulse** — a flow on the **last working day (Thursday)** posting the
+  one-question pulse to the channel.
 
 These aren't required for the core reveal; add them if you want the full
 anticipation + measurement loop from the workbook's *Pilot Design & Metrics*.
+Adjust the days to your team's rhythm (AHD week = Sun–Thu).
+
+## Optional: skip public holidays
+
+The sequential model simply advances on the next working day, so a one-off
+holiday is handled by **pausing the flow that day** (turn Off, turn back On). If
+you'd rather automate it, add a small **Condition** after the trigger that checks
+`convertTimeZone(utcNow(),'UTC','Arabian Standard Time','yyyy-MM-dd')` against a
+short list of holiday dates and Terminates on a match.
 
 ---
 

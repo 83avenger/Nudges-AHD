@@ -129,17 +129,17 @@ follow the matching guide click-for-click:
 - **Model B:** `four-pillars-flow-guide.md`
 
 All steps there are GUI actions. In short:
-1. **Recurrence** trigger — Time zone **(UTC+04:00) Abu Dhabi, Muscat**, working
-   days, at the reveal time(s).
-2. **Compose** today's UAE date.
-3. **Get items** (SharePoint) filtered to today's `RevealDate` (+ `Pillar` for
-   Model B) and `Status = Scheduled`, Top 1.
-4. **Condition** — if none, **Terminate**.
-5. **List group members** (Office 365 Groups) → your pilot group.
-6. **Apply to each** (concurrency 15) → **Post card in a chat or channel** as
+1. **Recurrence** trigger — Time zone **(UTC+04:00) Abu Dhabi, Muscat**, **AHD
+   working days Sun–Thu** (Fri–Sat unchecked), at the reveal time(s).
+2. **Get items** (SharePoint) where `Status = Scheduled` (+ `Pillar` for Model
+   B), **Order By `Day asc`, Top 1** — the next challenge in sequence (no date
+   matching, so the calendar dates in the list don't matter).
+3. **Condition** — if none, **Terminate**.
+4. **List group members** (Office 365 Groups) → your pilot group.
+5. **Apply to each** (concurrency 15) → **Post card in a chat or channel** as
    **Flow bot** → recipient = member `mail`. Paste the matching **Adaptive Card
    JSON** and map the `${...}` tokens (tables in each guide).
-7. **Update item** → `Status=Sent`, UAE `SentDateTime`, `RunID` (on success);
+6. **Update item** → `Status=Sent`, UAE `SentDateTime`, `RunID` (on success);
    `Status=Error` on failure.
 
 **Checkpoint:** the flow saves with no validation errors.
@@ -149,11 +149,10 @@ All steps there are GUI actions. In short:
 ## Step 5 · Test with 2–3 users (10 min)
 
 1. Make sure the flow points at your **test group**.
-2. Set one row's `RevealDate` to **today** (or relax the date filter), then
-   **Test → Manually → Run**.
+2. **Test → Manually → Run** (it sends Day 1, the next `Scheduled` row).
 3. Confirm the **bilingual card** arrives in Teams and the row flips to **Sent**
    with a UAE timestamp + RunID.
-4. Reset that row's `Status` to `Scheduled` and restore the real filter.
+4. Reset that row's `Status` to `Scheduled` so the real run starts from Day 1.
 
 ---
 

@@ -17,13 +17,13 @@ Data source: `data/four-pillars/by-nudge.json` / `.csv`.
 |-----------------|-------------------------------|-------|
 | `Title`         | Single line of text           | Default. Store `${Day}-${Pillar}` (e.g. `1-Social`). |
 | `Day`           | Number                        | 1–21. |
-| `RevealDate`    | **Date only**                 | Working day (e.g. `2026-08-03`). Matching key #1. |
+| `RevealDate`    | **Date only**                 | Informational planned date (e.g. `2026-08-03`). Flow sends by `Day` order, not by date. |
 | `DateLabel`     | Single line of text           | `3 Aug`. |
 | `Weekday`       | Single line of text           | `Mon`…`Fri`. |
 | `WeekArc`       | Single line of text           | e.g. `W1 · I See You`. |
 | `DailyThemeEN`  | Single line of text           | The one theme for the day (English). |
 | `DailyThemeAR`  | Single line of text           | Daily theme (Arabic). |
-| `Pillar`        | Choice                        | `Social`, `Physical`, `Financial`, `Mental`. Matching key #2. |
+| `Pillar`        | Choice                        | `Social`, `Physical`, `Financial`, `Mental`. Each slot flow filters on this. |
 | `PillarEN`      | Single line of text           | e.g. `Physical Wellbeing`. |
 | `PillarAR`      | Single line of text           | e.g. `الرفاه البدني`. |
 | `PillarEmoji`   | Single line of text           | 🤝 / 🏃 / 💡 / 🧠. |
@@ -47,7 +47,9 @@ Four sends per working day, in Dr. Dania's pillar sequence:
 | 3 | 11:30 | Financial 💡 |
 | 4 | 13:45 | Mental 🧠 |
 
-Each send is picked by **`RevealDate = today` AND `Pillar = <slot's pillar>`**.
+Each slot flow picks the **next `Scheduled` row for its pillar in `Day` order**
+(`Pillar = <slot's pillar>`, ordered by `Day asc`, top 1), on AHD working days
+(Sun–Thu). No calendar-date matching, so the list needs no date edits.
 
 ## Loading
 

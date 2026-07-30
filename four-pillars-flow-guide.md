@@ -29,30 +29,32 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 
 ### Steps (parameterised by SLOT = `HH:MM` and PILLAR = Social/Physical/Financial/Mental)
 
-**Step 1 — Trigger: Recurrence**
-- Frequency **Week**, Interval **1**; **On these days:** Mon–Fri.
+**Step 1 — Trigger: Recurrence (AHD working days, Sun–Thu)**
+- Frequency **Week**, Interval **1**; **On these days:** **Sunday, Monday,
+  Tuesday, Wednesday, Thursday** (AHD weekend Fri–Sat unchecked).
 - **At these hours/minutes:** the SLOT time (e.g. `9` / `15` for Physical).
 - **Time zone:** `(UTC+04:00) Abu Dhabi, Muscat`.
 
-**Step 2 — Today's UAE date**
-- **Compose** `TodayUAE` = `convertTimeZone(utcNow(),'UTC','Arabian Standard Time','yyyy-MM-dd')`.
-
-**Step 3 — Get this slot's nudge**
+**Step 2 — Get this slot's next nudge (by Day order)**
 - **Get items** on `FourPillarNudges`, **Filter Query:**
   ```
-  RevealDate eq '@{outputs('TodayUAE')}' and Pillar eq 'PILLAR' and Status eq 'Scheduled'
+  Pillar eq 'PILLAR' and Status eq 'Scheduled'
   ```
-  **Top Count:** `1`.
+  **Order By:** `Day asc` · **Top Count:** `1`.
+- This sends the next unsent nudge for that pillar, so the four pillar tracks
+  each advance one per working day — independent of the calendar dates in the
+  list. No date matching, so the workbook's Mon–Fri dates don't matter and **the
+  list needs no changes**.
 
-**Step 4 — Stop if nothing scheduled**
+**Step 3 — Stop if nothing left**
 - **Condition** `length(body('Get_items')?['value'])` equal to `0`
-  → **If yes:** Terminate (weekend / holiday / pilot over).
+  → **If yes:** Terminate (this pillar's 21 nudges are all sent).
   → **If no:** **Compose** `Nudge` = `first(body('Get_items')?['value'])`.
 
-**Step 5 — Recipients**
+**Step 4 — Recipients**
 - **List group members** (Office 365 Groups) for the pilot group.
 
-**Step 6 — Send the pillar card**
+**Step 5 — Send the pillar card**
 - **Apply to each** member (Concurrency **On, Degree 15**):
   - **Post card in a chat or channel** → **Post as Flow bot** →
     **Recipient:** `items('Apply_to_each')?['mail']`.
@@ -69,22 +71,22 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
     | `${NudgeAR}` | `outputs('Nudge')?['NudgeAR']` |
   - Wrap in a Scope `SendScope`.
 
-**Step 7 — Mark Sent (on success)** — `Configure run after` = succeeded:
+**Step 6 — Mark Sent (on success)** — `Configure run after` = succeeded:
 - **Update item**: `Status`=`Sent`,
   `SentDateTime`=`convertTimeZone(utcNow(),'UTC','Arabian Standard Time','yyyy-MM-dd HH:mm')`,
   `RunID`=`workflow()?['run']?['name']`.
 
-**Step 8 — On failure** — `Configure run after` = failed/timed out:
+**Step 7 — On failure** — `Configure run after` = failed/timed out:
 - **Update item**: `Status`=`Error`, `RunID`=run name; optional IT alert with
   `Day` + `Pillar`.
 
-**Step 9 — Clone for the other three slots**
+**Step 8 — Clone for the other three slots**
 - **Save As** → rename (e.g. *Thrive365 – Physical 09:15*) → change the trigger
   time and the `Pillar eq '...'` filter. Repeat for Financial and Mental.
 
 ## Alternative: one flow, 15-minute gate
 
-If you prefer a single flow: Recurrence **every 15 min** (Mon–Fri 07:00–14:00) +
+If you prefer a single flow: Recurrence **every 15 min** (Sun–Thu 07:00–14:00) +
 a **Switch** on `convertTimeZone(utcNow(),'UTC','Arabian Standard Time','HH:mm')`
 mapping `07:00→Social, 09:15→Physical, 11:30→Financial, 13:45→Mental`; default →
 Terminate. More logic in one place, but only one flow to maintain.

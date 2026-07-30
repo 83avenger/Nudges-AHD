@@ -2,8 +2,8 @@
 
 Automates the **daily reveal** of the *Month of Connection* pilot: **one
 bilingual (English + Arabic) connection challenge per working day**, delivered
-each morning in Microsoft Teams to the pilot group, across **21 working days
-(Mon 3 Aug → Mon 31 Aug 2026)**.
+each morning in Microsoft Teams to the pilot group, across **21 AHD working days**
+(AHD week = **Sunday–Thursday**, weekend Fri–Sat).
 
 **Runs entirely in the Microsoft 365 cloud — no PC left on, $0 beyond existing
 M365 licences** (standard connectors only, no premium Power Automate).
@@ -41,12 +41,14 @@ the references they point to.
   renders RTL.
 - **No computer stays on** — cloud flows run on Microsoft's servers.
 - **Free** — SharePoint, Teams, Office 365 Groups, Recurrence are all standard.
-- **Calendar-accurate** — challenges are matched to their `RevealDate`, so a
-  missed or re-run day never shifts the rest; weekends/holidays simply don't fire.
+- **Week-agnostic scheduling** — the flow fires on **AHD working days (Sun–Thu)**
+  and sends the next challenge in `Day` order, so it doesn't depend on calendar
+  dates. A skipped day just resumes next working day (self-healing). The list
+  needs no date edits.
 - **Traceable** — each challenge keeps its `SourceRef` back to Dr. Dania's Social
   Wellbeing library.
 
-## Quick start (before Mon 3 Aug 2026)
+## Quick start
 
 1. Auto-create the `MonthOfConnection` SharePoint List (`provisioning/README.md`
    — From-Excel, PnP script, or site script; no manual columns).
@@ -83,7 +85,7 @@ under one daily theme). Both models are built and documented — see
 | **4 pillars, 4×/day** (Social→Physical→Financial→Mental) | `data/four-pillars/*`, `adaptive-card-pillar.json`, `four-pillars-flow-guide.md`, `four-pillars-sharepoint-schema.md` | The confirmed operating model for full rollout. |
 
 ### Four-pillars variant at a glance
-- **84 sends** = 21 working days × 4 pillars, all **bilingual (EN + AR)**.
+- **84 sends** = 21 AHD working days × 4 pillars, all **bilingual (EN + AR)**.
 - Times: **07:00 Social · 09:15 Physical · 11:30 Financial · 13:45 Mental** (UAE).
 - **Social** = the 21 approved connection challenges (traceable). **Physical /
   Financial / Mental** are drafted in EN + AR (`SourceRef = draft`) pending

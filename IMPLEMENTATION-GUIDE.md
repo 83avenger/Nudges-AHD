@@ -108,16 +108,18 @@ shows **84** items. `Status` = `Scheduled` on all. Arabic renders RTL.
 Open `make.powerautomate.com` (or Teams → Workflows) and follow the matching
 guide step by step:
 
-- **Model A:** `flow-build-guide.md` — daily reveal, matches today's `RevealDate`,
-  08:00 UAE, working days.
+- **Model A:** `flow-build-guide.md` — daily reveal, next challenge by `Day`
+  order, 08:00 UAE, AHD working days (Sun–Thu).
 - **Model B:** `four-pillars-flow-guide.md` — four per-slot flows (07:00 Social,
-  09:15 Physical, 11:30 Financial, 13:45 Mental), each matched by `RevealDate` +
-  `Pillar`.
+  09:15 Physical, 11:30 Financial, 13:45 Mental), each sending its pillar's next
+  challenge by `Day` order, Sun–Thu.
 
 Key points the guides cover:
-- Recurrence trigger, **time zone = (UTC+04:00) Abu Dhabi, Muscat**, working days.
-- **Get items** filtered to today's date (+ pillar for Model B) and
-  `Status eq 'Scheduled'`, top 1.
+- Recurrence trigger, **time zone = (UTC+04:00) Abu Dhabi, Muscat**, **AHD
+  working days Sun–Thu** (Fri–Sat weekend unchecked).
+- **Get items** where `Status eq 'Scheduled'` (+ `Pillar` for Model B),
+  **ordered by `Day asc`, top 1** — sends the next challenge in sequence, so it
+  doesn't depend on the calendar dates.
 - **List group members** → **Apply to each** (concurrency 15) →
   **Post card in a chat or channel** as **Flow bot** to `member mail`.
 - Paste the matching **Adaptive Card JSON** and bind the `${...}` tokens to the
@@ -132,12 +134,11 @@ Key points the guides cover:
 ## Step 6 · Test (10 min)
 
 1. Temporarily point the flow at your **2–3 person test group**.
-2. To test off-schedule, relax the Step-3 filter to any `Scheduled` row (or set
-   one row's `RevealDate` to today), then **Test → Manually → Run**.
+2. **Test → Manually → Run** (it will send Day 1, the next `Scheduled` row).
 3. Confirm:
    - The **bilingual card** arrives in Teams (English + Arabic, RTL, day counter).
    - The list item flips to **`Sent`** with a **UAE timestamp** and a **`RunID`**.
-4. Restore the real filter and reset that test row's `Status` to `Scheduled`.
+4. Reset that row's `Status` to `Scheduled` so the real run starts from Day 1.
 
 **Checkpoint:** a real card was received and the row updated correctly.
 
@@ -150,8 +151,9 @@ Key points the guides cover:
 3. Turn the flow **On**.
 4. For Model B, enable **all four** slot flows.
 
-**Checkpoint:** flow(s) On, first reveal will fire on the next scheduled slot
-(Model A: 08:00 UAE next working day; the pilot starts Mon 3 Aug 2026).
+**Checkpoint:** flow(s) On, first reveal (Day 1) fires on the next AHD working
+day (Sun–Thu) at 08:00 UAE. Turn it On on your intended start day — a Sunday
+works well as the week opener.
 
 ---
 
@@ -181,7 +183,7 @@ Key points the guides cover:
 | Dropdown has no Date/Number | Wizard read column as text | Fix type in List settings after import, or use Track A. |
 | "long text" missing | It's named **Multiple lines of text** | Choose that option. |
 | Card arrives but Arabic left-aligned | RTL container | Use the provided card JSON unchanged; it sets `rtl`. |
-| Flow sends on a weekend | Trigger days | Set Recurrence to Mon–Fri; holidays skip via no matching row. |
+| Flow sends on the weekend | Trigger days | Set Recurrence to **Sun–Thu** (AHD week); pause the flow on public holidays. |
 | Row marked Sent but some users missed it | Loop error not caught | Ensure Step 7/8 success/failure branches from the flow guide. |
 | Premium licence prompt | A premium connector slipped in | Use only SharePoint/Teams/Office 365 Groups (standard). |
 

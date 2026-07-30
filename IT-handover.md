@@ -4,7 +4,8 @@
 
 Deliver the **Month of Connection** pilot: **one bilingual (English + Arabic)
 connection challenge per working day**, revealed each morning in Microsoft Teams
-to the pilot group, across **21 working days (Mon 3 Aug → Mon 31 Aug 2026)**.
+to the pilot group, across **21 AHD working days**. AHD's working week is
+**Sunday–Thursday** (weekend Fri–Sat), and the flow is scheduled accordingly.
 
 Daily ritual: **Reveal → Huddle → Act → Share → Recognize → Tease Tomorrow.**
 The automation covers the **Reveal** (and optionally the poll/preview/pulse); the
@@ -32,9 +33,9 @@ All 21 days already have approved Arabic wording (from the workbook).
 |-----------|---------|
 | SharePoint List `MonthOfConnection` | The 21 bilingual challenges + reveal dates + Status/SentDateTime/RunID. |
 | Microsoft 365 Group / Teams team | The pilot recipients. |
-| Power Automate cloud flow (daily reveal) | Fires 08:00 UAE on working days, matches today's challenge by date, sends the card, updates status. |
+| Power Automate cloud flow (daily reveal) | Fires 08:00 UAE on AHD working days (Sun–Thu), sends the next challenge in Day order, updates status. |
 | Bilingual Adaptive Card (Teams Flow bot) | EN + AR notification each morning. |
-| (Optional) poll / preview / pulse flows | Thursday guess-poll, Sunday Champion preview, Friday pulse — the anticipation + measurement loop. |
+| (Optional) poll / preview / pulse flows | Mid-week guess-poll, pre-week Champion preview, end-of-week (Thu) pulse — the anticipation + measurement loop. |
 
 ## Files in this package
 
@@ -48,7 +49,7 @@ All 21 days already have approved Arabic wording (from the workbook).
 - `adaptive-card-bilingual.json` — the EN + AR card.
 - `scripts/extract_pilot.py` — regenerates the data from the workbook.
 
-## Setup (one time, before Mon 3 Aug)
+## Setup (one time)
 
 1. Create the `MonthOfConnection` list (`sharepoint-list-schema.md`).
 2. Bulk-load the 21 rows (`import-flow-guide.md`, uses the JSON).
@@ -99,8 +100,8 @@ All 21 days already have approved Arabic wording (from the workbook).
 | Risk | Fix |
 |------|-----|
 | Excel as datastore (file locks/throttling) | SharePoint List. |
-| "Next pending" queue drifting if a day is missed | Match by `RevealDate` — each challenge fires on its own day or not at all. |
-| Weekends/holidays sending | Working-day trigger + no row for that date → clean terminate. |
+| Wrong working week | Trigger set to **AHD Sun–Thu**; challenges sent in `Day` order, independent of calendar dates — no list edits when the week differs. |
+| Weekend sending | Recurrence limited to Sun–Thu; holidays handled by pausing the flow that day. |
 | Status updated regardless of send result | Success/failure branches; `Error` status + IT alert. |
 | UTC timestamps | UAE-time `SentDateTime`. |
 | Teams API throttling | `Apply to each` concurrency = 15. |
