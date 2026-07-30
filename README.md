@@ -22,6 +22,7 @@ Wellbeing Champions.
 | `import-flow-guide.md` | Run-once flow that bulk-loads the 21 challenges. |
 | `flow-build-guide.md` | The daily reveal flow (date-matched, working-day, bilingual, hardened). |
 | `IT-handover.md` | Overview, cost, roles, privacy, metrics, maintenance. |
+| `provisioning/` | Auto-create the SharePoint Lists from the schema (From-Excel, PnP PowerShell, or site script) — no manual columns. |
 | `scripts/extract_pilot.py` | Regenerates the data from the source workbook. |
 | `source/…August2026.xlsx` | The original AHD workbook (authoritative source). |
 | `archive/generic-250/` | Superseded English-only 250-nudge draft (reference only). |
@@ -39,8 +40,10 @@ Wellbeing Champions.
 
 ## Quick start (before Mon 3 Aug 2026)
 
-1. Create the `MonthOfConnection` SharePoint List (`sharepoint-list-schema.md`).
-2. Bulk-load the 21 challenges (`import-flow-guide.md`, uses the JSON).
+1. Auto-create the `MonthOfConnection` SharePoint List (`provisioning/README.md`
+   — From-Excel, PnP script, or site script; no manual columns).
+2. Bulk-load the 21 challenges (`import-flow-guide.md`, uses the JSON) — or skip
+   this if you used the *From Excel* route, which loads rows too.
 3. Confirm the pilot M365 Group / Teams team.
 4. Build the daily reveal flow (`flow-build-guide.md`).
 5. Pilot with 2–3 test users, then go live.

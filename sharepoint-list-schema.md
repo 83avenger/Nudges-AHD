@@ -4,6 +4,10 @@ Create a SharePoint List named **`MonthOfConnection`** to hold the 21 bilingual
 daily challenges. It is the state store for the reveal flow — concurrency-safe,
 no file locks, and free with your existing Microsoft 365 licence.
 
+> **Don't build the columns by hand** — auto-create the list from this schema via
+> `provisioning/` (Create list *From Excel*, a PnP PowerShell script, or a site
+> script). See `provisioning/README.md`.
+
 Data source: `data/month-of-connection.json` / `.csv`, extracted directly from
 the workbook (`August Connection – 21 Days`) so every row stays traceable to
 Dr. Dania's Social Wellbeing library via `SourceRef`.

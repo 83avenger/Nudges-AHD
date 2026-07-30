@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+  "actions": [
+    {
+      "verb": "createSPList",
+      "listName": "MonthOfConnection",
+      "templateType": 100,
+      "subactions": [
+        { "verb": "setDescription", "description": "Month of Connection - one bilingual challenge per working day." },
+        { "verb": "addSPField", "fieldType": "Number", "displayName": "Day", "internalName": "Day", "addToDefaultView": true },
+        { "verb": "addSPFieldAsXml", "schemaXml": "<Field Type='DateTime' DisplayName='RevealDate' Name='RevealDate' Format='DateOnly'></Field>", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "DateLabel", "internalName": "DateLabel", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "Weekday", "internalName": "Weekday", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "WeekArc", "internalName": "WeekArc", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Note", "displayName": "ChallengeEN", "internalName": "ChallengeEN" },
+        { "verb": "addSPField", "fieldType": "Note", "displayName": "ChallengeAR", "internalName": "ChallengeAR" },
+        { "verb": "addSPField", "fieldType": "Note", "displayName": "WhyItMatters", "internalName": "WhyItMatters" },
+        { "verb": "addSPField", "fieldType": "Note", "displayName": "TomorrowTeaser", "internalName": "TomorrowTeaser" },
+        { "verb": "addSPField", "fieldType": "Note", "displayName": "SocialCaption", "internalName": "SocialCaption" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "SourceRef", "internalName": "SourceRef" },
+        { "verb": "addSPFieldAsXml", "schemaXml": "<Field Type='Choice' DisplayName='Status' Name='Status' Format='Dropdown'><Default>Scheduled</Default><CHOICES><CHOICE>Scheduled</CHOICE><CHOICE>Sent</CHOICE><CHOICE>Error</CHOICE></CHOICES></Field>", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "SentDateTime", "internalName": "SentDateTime" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "RunID", "internalName": "RunID" }
+      ]
+    }
+  ],
+  "bindata": {},
+  "version": 1
+}

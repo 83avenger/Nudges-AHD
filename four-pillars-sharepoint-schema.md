@@ -7,6 +7,10 @@ re-sent without touching the others.
 
 Data source: `data/four-pillars/by-nudge.json` / `.csv`.
 
+> **Auto-create it** instead of building columns by hand:
+> `provisioning/Create-Lists.ps1 -Only FourPillarNudges`, or *Create list → From
+> CSV* with `by-nudge.csv`. See `provisioning/README.md`.
+
 ## Columns
 
 | Display name    | Internal type                 | Notes |
