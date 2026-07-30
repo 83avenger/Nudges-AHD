@@ -15,14 +15,29 @@ Pick by how much access you have. All create the same columns described in
 
 ---
 
-## Route A — Create list "From Excel" (no code, easiest)
+## ⚠️ If "From Excel/CSV" fails with *"Could not obtain a WAC access token"*
+
+That error is a **SharePoint/Office-Online problem, not your data**. The
+From-Excel/CSV wizard hands the file to Office Online (WAC) to parse it, and that
+step fails intermittently — **especially with raw `.csv`**. Fixes, best first:
+
+1. **Use PnP to load the data directly → Route B below + `Import-Data.ps1`.**
+   This bypasses WAC and Power Automate entirely. Most reliable.
+2. **Retry From-Excel with a real `.xlsx` Table** (not CSV): upload
+   `../data/month-of-connection.xlsx` or `../data/four-pillars/by-nudge.xlsx`
+   (each has a formatted Table). Excel Tables succeed where CSV's WAC step fails.
+3. **Create the empty list first** (Route B `Create-Lists.ps1`), then **Edit in
+   grid view** and paste the rows from the `.xlsx`/`.csv`. No WAC involved.
+4. Retry later / different browser — WAC token errors are sometimes transient.
+
+## Route A — Create list "From Excel" (no code, easiest *when WAC works*)
 
 SharePoint can build a list and its columns automatically from a table.
 
-1. In your SharePoint site: **+ New → List → From Excel** (or **From CSV**).
-2. Upload:
-   - `../data/month-of-connection.csv` for the pilot list, **or**
-   - `../data/four-pillars/by-nudge.csv` for the 4×/day list.
+1. In your SharePoint site: **+ New → List → From Excel**.
+2. Upload the **.xlsx** (more reliable than CSV):
+   - `../data/month-of-connection.xlsx` for the pilot list, **or**
+   - `../data/four-pillars/by-nudge.xlsx` for the 4×/day list.
 3. On the preview screen, **set the column types** SharePoint can't infer:
    - `RevealDate` → **Date and time** (Date only).
    - `Status` (and `Pillar` for the 4-pillar list) → **Choice**.
@@ -32,8 +47,7 @@ SharePoint can build a list and its columns automatically from a table.
 4. Finish. **This also loads the rows**, so you can skip the separate import
    flow. Verify the Arabic renders right-to-left.
 
-Trade-off: types are inferred from the data, so you adjust a few. Fastest path
-if you just want it done.
+If this route errors, see the WAC note above and use Route B.
 
 ---
 
@@ -55,8 +69,22 @@ Install-Module PnP.PowerShell -Scope CurrentUser
 ```
 
 It signs in interactively (`-Interactive`) and needs only permission to create a
-list on that site — **no tenant-admin rights**. After it finishes, load rows via
-the import flow (`../import-flow-guide.md`) or Route A step 4.
+list on that site — **no tenant-admin rights**.
+
+### Load the rows the same way (no WAC, no Power Automate)
+After the list exists, `Import-Data.ps1` writes every row straight into it via
+PnP — the reliable answer to the WAC error:
+
+```powershell
+./Import-Data.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>" -List MonthOfConnection
+./Import-Data.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>" -List FourPillarNudges
+# reload cleanly (delete existing items first):
+./Import-Data.ps1 -SiteUrl "..." -List MonthOfConnection -Fresh
+```
+
+It reads the JSON in `../data`, so Arabic, emoji and commas are preserved, and it
+skips empty date/text fields correctly. Re-running appends unless you pass
+`-Fresh`. This is the end-to-end path that avoids the From-Excel wizard entirely.
 
 > If your org blocks the default PnP app registration, an admin may need to
 > consent once (or supply a `-ClientId`). See the PnP.PowerShell docs.
@@ -90,6 +118,9 @@ both).
 
 ## Which should I use?
 
-- Just want it working now, one site → **Route A** (and it loads the data too).
+- **Hit the WAC token error?** → **Route B** (`Create-Lists.ps1` +
+  `Import-Data.ps1`) — creates the list *and* loads the rows, no WAC.
+- Just want it working now via the UI, WAC works → **Route A** with the **.xlsx**
+  (loads the data too).
 - Want exact types with one command, you own the site → **Route B**.
 - Central IT wants a repeatable template → **Route C**.
