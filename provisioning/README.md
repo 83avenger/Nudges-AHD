@@ -38,16 +38,26 @@ SharePoint can build a list and its columns automatically from a table.
 2. Upload the **.xlsx** (more reliable than CSV):
    - `../data/month-of-connection.xlsx` for the pilot list, **or**
    - `../data/four-pillars/by-nudge.xlsx` for the 4×/day list.
-3. On the preview screen, **set the column types** SharePoint can't infer:
-   - `RevealDate` → **Date and time** (Date only).
+3. On the preview screen, **set the column types**:
+   - `ChallengeEN/AR`, `NudgeEN/AR`, `WhyItMatters`, `TomorrowTeaser`,
+     `SocialCaption` → **Multiple lines of text**. *(This is the "long text"
+     option — the wizard calls it "Multiple lines of text", there is no separate
+     "long text" entry.)*
    - `Status` (and `Pillar` for the 4-pillar list) → **Choice**.
-   - Long text (`ChallengeEN/AR`, `NudgeEN/AR`, `WhyItMatters`, …) → **Multiple
-     lines of text**.
-   - `Day`, `PillarOrder` → **Number**.
+   - `RevealDate` → **Date and time**, `Day`/`PillarOrder` → **Number** — **but
+     only if the dropdown offers them.** The wizard shows Date/Number *only* for
+     columns it detected as dates/numbers (more likely with the `.xlsx` than the
+     `.csv`). If a column's dropdown only lists text/Choice/Title, you cannot set
+     Date/Number here — see the note below.
 4. Finish. **This also loads the rows**, so you can skip the separate import
    flow. Verify the Arabic renders right-to-left.
 
-If this route errors, see the WAC note above and use Route B.
+> **If Date/Number aren't offered:** either (a) after finishing, go to
+> **List settings → the column → change type** to Date-only / Number — the reveal
+> flow needs `RevealDate` to be a real **Date** column — or (b) use **Route B**,
+> which sets every type correctly up front and avoids this entirely.
+
+If this route errors or the types can't be set, use Route B.
 
 ---
 
