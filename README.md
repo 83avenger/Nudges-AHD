@@ -14,9 +14,11 @@ Wellbeing Champions.
 
 ## Start here
 
-**→ `IMPLEMENTATION-GUIDE.md`** is the end-to-end, step-by-step running order
-(create list → load data → build flow → test → go live → maintain). The files
-below are the references it points to.
+**→ `IMPLEMENTATION-GUIDE.md`** is the end-to-end running order (create list →
+load data → build flow → test → go live → maintain). Prefer clicking to
+scripting? **→ `IMPLEMENTATION-GUIDE-GUI.md`** does the whole thing in the
+browser (no PowerShell, avoids the "From Excel" WAC error). The files below are
+the references they point to.
 
 ## Contents
 
