@@ -12,6 +12,12 @@ Daily ritual: **Reveal → Huddle → Act → Share → Recognize → Tease Tomo
 This package automates the **Reveal**; the huddle, action and sharing are led by
 Wellbeing Champions.
 
+## Start here
+
+**→ `IMPLEMENTATION-GUIDE.md`** is the end-to-end, step-by-step running order
+(create list → load data → build flow → test → go live → maintain). The files
+below are the references it points to.
+
 ## Contents
 
 | Path | What it is |
