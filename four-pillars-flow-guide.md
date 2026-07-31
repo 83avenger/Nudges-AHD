@@ -71,7 +71,13 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 **Step 3 — Stop if nothing left**
 - **Condition** `length(body('Get_items')?['value'])` equal to `0`
   → **If yes:** Terminate (this pillar's 21 nudges are all sent).
-  → **If no:** **Compose** `Nudge` = `first(body('Get_items')?['value'])`.
+  → **If no:** add a **Compose** action, rename it exactly **`Nudge`**, and set its
+    input via the **Expression (fx)** tab to `first(body('Get_items')?['value'])`.
+    - It **must** be entered as an fx expression (a token chip), **not typed as
+      text**. If typed as text, `outputs('Nudge')` becomes a String and the card
+      fails with *"Property selection is not supported on values of type 'String'"*.
+    - Verify: run once, open the Compose — Outputs should be a **JSON object**
+      (`{ "Day": 1, "Pillar": "Social", … }`), not a line of text.
 
 **Step 4 — Recipients**
 - **List group members** (Office 365 Groups) for the pilot group.
