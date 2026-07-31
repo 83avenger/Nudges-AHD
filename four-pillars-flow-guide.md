@@ -71,13 +71,10 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 **Step 3 — Stop if nothing left**
 - **Condition** `length(body('Get_items')?['value'])` equal to `0`
   → **If yes:** Terminate (this pillar's 21 nudges are all sent).
-  → **If no:** add a **Compose** action, rename it exactly **`Nudge`**, and set its
-    input via the **Expression (fx)** tab to `first(body('Get_items')?['value'])`.
-    - It **must** be entered as an fx expression (a token chip), **not typed as
-      text**. If typed as text, `outputs('Nudge')` becomes a String and the card
-      fails with *"Property selection is not supported on values of type 'String'"*.
-    - Verify: run once, open the Compose — Outputs should be a **JSON object**
-      (`{ "Day": 1, "Pillar": "Social", … }`), not a line of text.
+  → **If no:** continue. **No Compose needed** — the card reads the item directly
+    with `first(body('Get_items')?['value'])?['<field>']`, so there's nothing to
+    mis-configure. (This assumes your Get items action is named `Get_items`; if it
+    is `Get_items_2`, adjust that name in the card JSON.)
 
 **Step 4 — Recipients**
 - **List group members** (Office 365 Groups) for the pilot group.
@@ -96,10 +93,10 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
     identity (`c-sshoaib@…` vs UPN `sshoaib@…`). Recipients must be Teams-enabled;
     unlicensed accounts can't receive Flow-bot chats.
   - **Adaptive Card:** paste **`adaptive-card-pillar.powerautomate.json`** — it
-    already has the Power Automate expressions inline (`@{outputs('Nudge')?['…']}`),
-    so nothing to hand-bind. It assumes a **Compose** action named exactly
-    **`Nudge`** = `first(body('Get_items')?['value'])` (Step 3). If your Compose
-    has a different name, find/replace `Nudge` in the JSON.
+    has the Power Automate expressions inline
+    (`@{first(body('Get_items')?['value'])?['…']}`), reading the item straight from
+    Get items. Nothing to hand-bind, no Compose. If your Get items action isn't
+    named `Get_items`, find/replace that name in the JSON.
   - Wrap in a Scope `SendScope`.
 
   > ⚠️ **Do NOT paste `adaptive-card-pillar.json` (the `${...}` version) into
