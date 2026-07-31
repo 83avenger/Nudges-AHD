@@ -63,13 +63,20 @@ $PSVersionTable.PSVersion    # PnP.PowerShell needs PowerShell 7
   (`winget install --id Microsoft.PowerShell --source winget`, then reopen the
   *PowerShell 7* / `pwsh` app) and run the module install + scripts there. If you
   can't install PS7, use the **no-install GUI route** below instead.
-- If the first interactive login says the app isn't registered, run once (or ask
-  an admin): `Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP-Nudges" -Tenant <tenant>.onmicrosoft.com -Interactive`.
+- **PnP.PowerShell 2.x needs your own Entra ID app** (Microsoft retired the
+  built-in one). If login warns *"Please specify a valid client id"* /
+  *"Specified method is not supported"*, register an app once:
+  ```powershell
+  Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP-Nudges" -Tenant <tenant>.onmicrosoft.com -Interactive
+  ```
+  Copy the **Client Id** it prints, then pass it to the scripts via `-ClientId`.
+  (Registering needs rights to create an app registration; if that's blocked, use
+  the GUI route below.)
 
-**Run:**
+**Run** (add `-ClientId <id>` if you registered an app above):
 ```powershell
-./Create-List.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>"
-./Import-Data.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>"
+./Create-List.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>" -ClientId <app-id>
+./Import-Data.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>" -ClientId <app-id>
 # reload cleanly: add -Fresh to Import-Data
 ```
 

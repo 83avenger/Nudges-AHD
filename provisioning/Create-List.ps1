@@ -18,11 +18,16 @@
 #>
 
 param(
-  [Parameter(Mandatory = $true)][string]$SiteUrl
+  [Parameter(Mandatory = $true)][string]$SiteUrl,
+  # PnP.PowerShell 2.x needs your own Entra ID app. Register once with
+  # Register-PnPEntraIDAppForInteractiveLogin (see provisioning/README.md),
+  # then pass the returned Client Id here.
+  [string]$ClientId
 )
 
 $ErrorActionPreference = 'Stop'
-Connect-PnPOnline -Url $SiteUrl -Interactive
+if ($ClientId) { Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId }
+else { Connect-PnPOnline -Url $SiteUrl -Interactive }
 
 $Title = 'FourPillarNudges'
 $list = Get-PnPList -Identity $Title -ErrorAction SilentlyContinue

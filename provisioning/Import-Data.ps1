@@ -18,6 +18,7 @@
 
 param(
   [Parameter(Mandatory = $true)][string]$SiteUrl,
+  [string]$ClientId,   # see Create-List.ps1 / provisioning/README.md
   [switch]$Fresh
 )
 
@@ -33,7 +34,8 @@ $fields = @('Day', 'RevealDate', 'DateLabel', 'Weekday', 'WeekArc', 'DailyThemeE
 $rows = Get-Content -Raw -Encoding UTF8 $jsonPath | ConvertFrom-Json
 Write-Host "Loaded $($rows.Count) rows from by-nudge.json" -ForegroundColor Cyan
 
-Connect-PnPOnline -Url $SiteUrl -Interactive
+if ($ClientId) { Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId }
+else { Connect-PnPOnline -Url $SiteUrl -Interactive }
 
 if ($Fresh) {
   Write-Host "Deleting existing items in '$List'..." -ForegroundColor Yellow
