@@ -94,9 +94,35 @@ Terminate. More logic in one place, but only one flow to maintain.
 ## Alternative: one combined card per day (Option B)
 
 If the team prefers **all four pillars on one card** (one send/morning) instead
-of four sends: use `data/four-pillars/by-day.json` (21 rows, each with all four
-pillars), one Recurrence at 08:00, and a card with four labelled bilingual
-sections. Say the word and this card + guide can be added.
+of four sends, everything you need is included:
+
+- **Card:** `adaptive-card-four-pillars-combined.json` — one bilingual card with
+  four labelled sections (🤝 Social, 🏃 Physical, 💡 Financial, 🧠 Mental), each
+  EN + Arabic.
+- **Data:** `data/four-pillars/by-day-flat.json` / `.csv` — **21 rows** (one per
+  day) with all four pillars as flat columns (`SocialEN/AR`, `PhysicalEN/AR`,
+  `FinancialEN/AR`, `MentalEN/AR`). Load this into a **one-row-per-day** list
+  (e.g. `FourPillarsDaily`) instead of the 84-row `FourPillarNudges`.
+
+**Flow (single, simpler than four):**
+1. **Recurrence** — Sun–Thu, **08:00 UAE** (one send/day).
+2. **Get items** where `Status eq 'Scheduled'`, **Order By `Day asc`**, Top 1.
+3. **Condition** — if none, Terminate.
+4. **List group members** → **Apply to each** (concurrency 15) → **Post card as
+   Flow bot**, pasting `adaptive-card-four-pillars-combined.json` with tokens:
+   | Token | Bind to | Token | Bind to |
+   |-------|---------|-------|---------|
+   | `${Day}` | `Day` | `${WeekArc}` | `WeekArc` |
+   | `${DailyThemeEN}` | `DailyThemeEN` | `${DailyThemeAR}` | `DailyThemeAR` |
+   | `${SocialEN}` | `SocialEN` | `${SocialAR}` | `SocialAR` |
+   | `${PhysicalEN}` | `PhysicalEN` | `${PhysicalAR}` | `PhysicalAR` |
+   | `${FinancialEN}` | `FinancialEN` | `${FinancialAR}` | `FinancialAR` |
+   | `${MentalEN}` | `MentalEN` | `${MentalAR}` | `MentalAR` |
+   (all from `outputs('Compose_Challenge')?['<field>']`).
+5. **Update item** → `Status=Sent`, UAE `SentDateTime`, `RunID`.
+
+This is a single flow with a single daily send — lighter to run and maintain than
+the four per-slot flows, at the cost of pacing (all four arrive together).
 
 ## Cost & licensing
 

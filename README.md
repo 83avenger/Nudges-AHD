@@ -82,7 +82,14 @@ under one daily theme). Both models are built and documented — see
 | Model | Files | When to use |
 |-------|-------|-------------|
 | **1 hero challenge/day** (Connection pilot) | `data/month-of-connection.*`, `adaptive-card-bilingual.json`, `flow-build-guide.md`, `sharepoint-list-schema.md` | The tested August pilot; cleanest single measure at the Sep gate. |
-| **4 pillars, 4×/day** (Social→Physical→Financial→Mental) | `data/four-pillars/*`, `adaptive-card-pillar.json`, `four-pillars-flow-guide.md`, `four-pillars-sharepoint-schema.md` | The confirmed operating model for full rollout. |
+| **4 pillars, 4×/day** (Social→Physical→Financial→Mental) | `data/four-pillars/*`, `four-pillars-flow-guide.md`, `four-pillars-sharepoint-schema.md` | The confirmed operating model for full rollout. |
+
+**Model B has two card formats** (pick one):
+- **Option A · four separate cards** (one per pillar, at four times) →
+  `adaptive-card-pillar.json` + `data/four-pillars/by-nudge.*` (84 rows).
+- **Option B · one combined card/day** (all four pillars in one) →
+  `adaptive-card-four-pillars-combined.json` + `data/four-pillars/by-day-flat.*`
+  (21 rows).
 
 ### Four-pillars variant at a glance
 - **84 sends** = 21 AHD working days × 4 pillars, all **bilingual (EN + AR)**.
