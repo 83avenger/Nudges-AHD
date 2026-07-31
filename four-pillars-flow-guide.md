@@ -99,6 +99,14 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
     named `Get_items`, find/replace that name in the JSON.
   - Wrap in a Scope `SendScope`.
 
+  > **Card delivers but all fields are blank** (`Day /21`, empty body)? The
+  > `@{…}` expressions reference `Get_items` but your action's real internal name
+  > differs (e.g. `Get_items_1` after rebuilding), so `body('Get_items')` is null
+  > and every field resolves to empty — silently, no error. Fix: click the Get
+  > items action to read its name (spaces → underscores), then find/replace
+  > `Get_items` in the card JSON to match. Verify the name via the fx editor:
+  > type `body('` and read the suggestion.
+
   > ⚠️ **Do NOT paste `adaptive-card-pillar.json` (the `${...}` version) into
   > Power Automate.** Power Automate does **not** process Adaptive Card `${token}`
   > templating — those render literally (`${NudgeEN}`). The `.powerautomate.json`
