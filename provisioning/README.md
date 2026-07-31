@@ -51,11 +51,22 @@ the file to Office Online to parse it and that step fails intermittently
 
 ## Route B — PnP PowerShell (recommended: exact types + loads data)
 
+**Prerequisites (one-time):**
 ```powershell
-# one-time
-Install-Module PnP.PowerShell -Scope CurrentUser
+Install-Module PnP.PowerShell -Scope CurrentUser -Force -AllowClobber
+$PSVersionTable.PSVersion    # PnP.PowerShell needs PowerShell 7
+```
+- If `Connect-PnPOnline is not recognized` → the module isn't installed; run the
+  Install line above.
+- If `$PSVersionTable.PSVersion` **Major is 5** (classic Windows PowerShell) → PnP
+  2.x won't load. Either install PowerShell 7 (`winget install Microsoft.PowerShell`,
+  then reopen as *PowerShell 7*), **or** use the last 5.1-compatible build:
+  `Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Scope CurrentUser -Force`.
+- If the first interactive login says the app isn't registered, run once (or ask
+  an admin): `Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP-Nudges" -Tenant <tenant>.onmicrosoft.com -Interactive`.
 
-# create the list with correct types, then load all 84 rows
+**Run:**
+```powershell
 ./Create-List.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>"
 ./Import-Data.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>"
 # reload cleanly: add -Fresh to Import-Data
@@ -63,6 +74,10 @@ Install-Module PnP.PowerShell -Scope CurrentUser
 
 Signs in interactively; needs only permission to create/add on that site — **no
 tenant-admin rights**. No WAC, no Power Automate. Arabic/emoji/commas preserved.
+
+> Not worth the install? Use the **Blank list + Add column** GUI route
+> (`../IMPLEMENTATION-GUIDE-GUI.md` Steps 2–3) — no PowerShell, and it keeps
+> column internal names correct (unlike *From Excel*).
 
 ---
 
