@@ -160,39 +160,8 @@ def main():
             w.writerow(r)
     with open(os.path.join(OUTDIR, "by-nudge.json"), "w", encoding="utf-8") as f:
         json.dump(by_nudge, f, ensure_ascii=False, indent=2)
-    with open(os.path.join(OUTDIR, "by-day.json"), "w", encoding="utf-8") as f:
-        json.dump(by_day, f, ensure_ascii=False, indent=2)
 
-    # Flat per-day rows for the single COMBINED card (Model B / Option B):
-    # one row per day with all four pillars as columns.
-    flat = []
-    for d in by_day:
-        row = {
-            "Day": d["Day"], "RevealDate": d["RevealDate"], "DateLabel": d["DateLabel"],
-            "Weekday": d["Weekday"], "WeekArc": d["WeekArc"],
-            "DailyThemeEN": d["DailyThemeEN"], "DailyThemeAR": d["DailyThemeAR"],
-        }
-        for p in PILLARS:
-            pk = p["key"]
-            row[f"{pk}EN"] = d["pillars"][pk]["en"]
-            row[f"{pk}AR"] = d["pillars"][pk]["ar"]
-            row[f"{pk}Source"] = d["pillars"][pk]["source"]
-        row.update({"Status": "Scheduled", "SentDateTime": "", "RunID": ""})
-        flat.append(row)
-    flat_cols = ["Day","RevealDate","DateLabel","Weekday","WeekArc","DailyThemeEN",
-                 "DailyThemeAR","SocialEN","SocialAR","SocialSource","PhysicalEN",
-                 "PhysicalAR","PhysicalSource","FinancialEN","FinancialAR",
-                 "FinancialSource","MentalEN","MentalAR","MentalSource",
-                 "Status","SentDateTime","RunID"]
-    with open(os.path.join(OUTDIR, "by-day-flat.csv"), "w", newline="", encoding="utf-8-sig") as f:
-        w = csv.DictWriter(f, fieldnames=flat_cols)
-        w.writeheader()
-        for r in flat:
-            w.writerow(r)
-    with open(os.path.join(OUTDIR, "by-day-flat.json"), "w", encoding="utf-8") as f:
-        json.dump(flat, f, ensure_ascii=False, indent=2)
-
-    print(f"Wrote {len(by_nudge)} sends (by-nudge), {len(by_day)} days (by-day), {len(flat)} days (by-day-flat).")
+    print(f"Wrote {len(by_nudge)} sends (by-nudge) = {len(by_day)} days x 4 pillars.")
     print("Slots:", ", ".join(f"{p['en']} {p['slot']}" for p in PILLARS))
 
 

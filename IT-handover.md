@@ -1,19 +1,27 @@
-# IT Handover — AHD Wellbeing365 · Month of Connection (August 2026 Pilot)
+# IT Handover — AHD Wellbeing365 Nudges Automation
 
 ## Project overview
 
-Deliver the **Month of Connection** pilot: **one bilingual (English + Arabic)
-connection challenge per working day**, revealed each morning in Microsoft Teams
-to the pilot group, across **21 AHD working days**. AHD's working week is
-**Sunday–Thursday** (weekend Fri–Sat), and the flow is scheduled accordingly.
+Deliver **4 bilingual (English + Arabic) wellbeing nudges per working day**, one
+per pillar, to the pilot group in Microsoft Teams:
+
+| Slot (UAE) | Pillar |
+|-----------|--------|
+| 07:00 | 🤝 Social |
+| 09:15 | 🏃 Physical |
+| 11:30 | 💡 Financial |
+| 13:45 | 🧠 Mental |
+
+AHD's working week is **Sunday–Thursday** (weekend Fri–Sat), and the flows are
+scheduled accordingly. Over ~4 working weeks that's **84 nudges** (21 days × 4).
 
 Daily ritual: **Reveal → Huddle → Act → Share → Recognize → Tease Tomorrow.**
-The automation covers the **Reveal** (and optionally the poll/preview/pulse); the
-huddle and sharing are human activities led by Wellbeing Champions.
+The automation covers the **Reveal** (the 4 nudges); the huddle and sharing are
+human activities led by Wellbeing Champions.
 
-> **No PC or server needs to stay on.** This is a Power Automate **cloud** flow —
-> Microsoft runs it on its own servers on schedule. (The "PC must be on" concern
-> only applies to Power Automate *Desktop* / RPA, which this is not.)
+> **No PC or server needs to stay on.** These are Power Automate **cloud** flows —
+> Microsoft runs them on its own servers on schedule. (The "PC must be on"
+> concern only applies to Power Automate *Desktop* / RPA, which this is not.)
 
 ## Cost
 
@@ -23,39 +31,41 @@ Automate licence** required.
 
 ## Bilingual requirement
 
-English and Arabic are both delivered on **one Adaptive Card**: English block,
-then a right-to-left Arabic block, then the huddle line and tomorrow's teaser.
-All 21 days already have approved Arabic wording (from the workbook).
+Each nudge card shows English and Arabic together (English block, then a
+right-to-left Arabic block, plus the daily theme). All Arabic is populated;
+Social wording is approved (from the workbook), the other three pillars are
+drafts pending wellbeing-team approval.
 
 ## Components
 
 | Component | Purpose |
 |-----------|---------|
-| SharePoint List `MonthOfConnection` | The 21 bilingual challenges + reveal dates + Status/SentDateTime/RunID. |
+| SharePoint List `FourPillarNudges` | The 84 bilingual nudges + pillar/slot + Status/SentDateTime/RunID. |
 | Microsoft 365 Group / Teams team | The pilot recipients. |
-| Power Automate cloud flow (daily reveal) | Fires 08:00 UAE on AHD working days (Sun–Thu), sends the next challenge in Day order, updates status. |
-| Bilingual Adaptive Card (Teams Flow bot) | EN + AR notification each morning. |
+| Four Power Automate cloud flows (one per slot) | Fire 07:00/09:15/11:30/13:45 UAE on Sun–Thu; each sends its pillar's next nudge in Day order and updates status. |
+| Bilingual Adaptive Card (Teams Flow bot) | EN + AR pillar notification. |
 | (Optional) poll / preview / pulse flows | Mid-week guess-poll, pre-week Champion preview, end-of-week (Thu) pulse — the anticipation + measurement loop. |
 
 ## Files in this package
 
-- `data/month-of-connection.json` / `.csv` — the 21 challenges (traceable to the
-  source library via `SourceRef`), seeded to `Scheduled`.
-- `source/AHD_Wellbing365_Month_of_Connection_August2026.xlsx` — the original
-  workbook (authoritative source).
-- `sharepoint-list-schema.md` — list columns and loading.
-- `import-flow-guide.md` — run-once bulk import.
-- `flow-build-guide.md` — the daily reveal flow (hardened, bilingual).
-- `adaptive-card-bilingual.json` — the EN + AR card.
-- `scripts/extract_pilot.py` — regenerates the data from the workbook.
+- `data/four-pillars/by-nudge.json` / `.csv` / `.xlsx` — the 84 nudges, seeded
+  `Scheduled`. Social is traceable via `SourceRef`; other pillars = `draft`.
+- `source/AHD_Wellbing365_Month_of_Connection_August2026.xlsx` — original workbook.
+- `four-pillars-sharepoint-schema.md` — list columns.
+- `provisioning/` — auto-create the list + load rows (PnP / From-Excel / site script).
+- `import-flow-guide.md` — all-GUI run-once loader alternative.
+- `four-pillars-flow-guide.md` — the four reveal flows (hardened, bilingual).
+- `adaptive-card-pillar.json` — the EN + AR pillar card.
+- `scripts/gen_four_pillars.py` — regenerates the data.
 
 ## Setup (one time)
 
-1. Create the `MonthOfConnection` list (`sharepoint-list-schema.md`).
-2. Bulk-load the 21 rows (`import-flow-guide.md`, uses the JSON).
-3. Confirm the pilot M365 Group / Teams team.
-4. Build the daily reveal flow (`flow-build-guide.md`).
-5. Pilot with 2–3 test users, then point at the real group and turn it **On**.
+1. Create the `FourPillarNudges` list + load the 84 rows (`provisioning/README.md`).
+2. Confirm the pilot M365 Group / Teams team.
+3. Build the four per-slot reveal flows (`four-pillars-flow-guide.md`).
+4. Pilot with 2–3 test users, then point at the real group and turn all four **On**.
+
+Full step-by-step: `IMPLEMENTATION-GUIDE.md` (PnP) or `IMPLEMENTATION-GUIDE-GUI.md`.
 
 ## Roles & governance (from the workbook)
 
@@ -87,8 +97,9 @@ All 21 days already have approved Arabic wording (from the workbook).
 
 ## Maintenance
 
-- **Wellbeing team / Fahad** approve and edit challenge wording (in the list or
-  by re-running `extract_pilot.py` against an updated workbook and re-importing).
+- **Wellbeing team / Fahad** approve and edit nudge wording (in the list or by
+  re-running `scripts/gen_four_pillars.py` and re-importing). Priority: approve
+  the Physical/Financial/Mental drafts and a native-Arabic review before go-live.
 - **IT** manages group membership and monitors flow run history (look for items
   marked `Error`).
 - The reveal flow needs **no manual intervention** to send.

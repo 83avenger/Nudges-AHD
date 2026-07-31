@@ -1,77 +1,54 @@
-# Nudge Delivery Logic — Design for Confirmation
+# Nudge Delivery Logic — Decision Record (FINAL)
 
-Status: **for review / confirmation before build.** This captures the logic as
-clarified with management (4 nudges/day across the 4 wellbeing pillars, under one
-daily theme, bilingual). It deliberately does **not** change the automation yet —
-two points below need a team decision first.
+Status: **DECIDED and built.** The automation implements this model. The earlier
+open questions are resolved; kept here as the record.
 
-## 1. Confirmed logic
+## 1. The model
 
 - **4 nudges per working day**, one for each wellbeing pillar, in this sequence:
-  1. **Social** wellbeing
-  2. **Physical** wellbeing
-  3. **Financial** wellbeing
-  4. **Mental** wellbeing
+  1. **Social** wellbeing — 07:00
+  2. **Physical** wellbeing — 09:15
+  3. **Financial** wellbeing — 11:30
+  4. **Mental** wellbeing — 13:45  (UAE)
 - All four sit **under one daily theme**.
-- Every nudge is **bilingual (English + Arabic)**.
-- Source-traceable to Dr. Dania's wellbeing nudge library.
+- **Four separate bilingual cards** (not one combined) — one per pillar at its
+  time slot.
+- Every nudge is **bilingual (English + Arabic)**; Arabic renders RTL.
+- **AHD working week = Sunday–Thursday**; each pillar's flow sends the next unsent
+  nudge in `Day` order, independent of calendar dates.
+- Source-traceable to Dr. Dania's library (`SourceRef`).
 
-## 2. Two decisions needed before build
+## 2. Resolved decisions
 
-### Decision A — Delivery format
-- **Option A · Four separate cards** at four times a day
-  (e.g. 07:00 Social, 09:15 Physical, 11:30 Financial, 13:45 Mental — the
-  original schedule).
-- **Option B · One combined card** per day with four labelled sections
-  (Mohammed's "4 messages under one nudge").
-
-*Recommendation:* start the pilot with **Option A** (paced touchpoints match the
-original design and give cleaner per-pillar engagement metrics); Option B is easy
-to switch to later if four cards feel too frequent.
-
-### Decision B — Scope for August
-The *Month of Connection* workbook is currently **one connection nudge/day** (all
-Social, 21 days). "4 pillars/day" means either:
-- **B1 · August stays 1/day** (pure Connection) and 4/day begins **September**, or
-- **B2 · August is rebuilt as 4/day** — each day keeps a connection theme but adds
-  Physical, Financial and Mental nudges (needs 3 more nudges/day from the library).
-
-*Recommendation:* **B1** — keep the tested August pilot as-is for a clean measure
-at the September decision gate, and launch the full 4-pillar model from September.
-Choose **B2** only if leadership wants all four pillars visible from day one.
+- **Delivery format → four separate cards** (Option A). The combined single-card
+  option is archived (`archive/option-b-combined-card/`).
+- **Scope → the whole program runs 4 pillars/day.** The one-challenge-per-day
+  layout is archived (`archive/model-a-one-per-day/`). The 21 approved connection
+  challenges are reused as the **Social** pillar.
 
 ## 3. Data model (4-nudges/day)
 
-One row per **day**, with four bilingual pillar nudges. (If Option B / one card,
-this is one send; if Option A / four cards, the flow sends each pillar at its
-time slot.)
+**One row per send** (= one pillar on one day): 21 days × 4 pillars = 84 rows.
+Per-row delivery tracking means a single failed slot can be re-sent without
+touching the others. See `four-pillars-sharepoint-schema.md` for the full column
+list. Key fields:
 
 | Field | Notes |
 |-------|-------|
-| `Day`, `RevealDate`, `Weekday` | Calendar key. |
-| `DailyTheme` | The one theme for the day (EN + AR). |
-| `SocialEN` / `SocialAR` | Social pillar nudge. |
-| `PhysicalEN` / `PhysicalAR` | Physical pillar nudge. |
-| `FinancialEN` / `FinancialAR` | Financial pillar nudge. |
-| `MentalEN` / `MentalAR` | Mental pillar nudge. |
-| `WhyItMatters`, `TomorrowTeaser`, `SocialCaption` | Huddle line, teaser, caption. |
-| `Source_Social/Physical/Financial/Mental` | One source ref per pillar. |
-| `Status`, `SentDateTime`, `RunID` | Delivery tracking. |
-
-For **Option A**, delivery tracking is per pillar (e.g. `Status_Social`,
-`Status_Physical`, …) so a single failed slot can be re-sent without resending
-the others.
+| `Day`, `RevealDate`, `Weekday`, `WeekArc` | `Day` is the ordering key; `RevealDate` informational. |
+| `DailyThemeEN` / `DailyThemeAR` | The day's theme. |
+| `Pillar`, `SlotTime` | Social/Physical/Financial/Mental and its time. |
+| `NudgeEN` / `NudgeAR` | The bilingual nudge. |
+| `SourceRef` | Library ref (Social) or `draft`. |
+| `Status`, `SentDateTime`, `RunID` | Per-send delivery tracking. |
 
 ## 4. Schedule
 
-- **Option A:** one flow that runs at each of the four times and sends the
-  matching pillar for today's row — or four small flows, one per time slot.
-  Times per the original design: **07:00 / 09:15 / 11:30 / 13:45 UAE**, working
-  days only.
-- **Option B:** one flow at the morning reveal time (e.g. 08:00 UAE) sending the
-  single combined card.
+Four small flows (one per slot), or one flow with a 15-minute gate. Times:
+**07:00 Social / 09:15 Physical / 11:30 Financial / 13:45 Mental** (UAE), on AHD
+working days **Sun–Thu**. Each pillar advances in `Day` order.
 
-## 5. Worked example (illustrative — one day, Option A)
+## 5. Worked example (one day)
 
 > Theme: **Connection — "See People."**
 
@@ -86,28 +63,24 @@ the others.
 show the shape — real wording comes from Dr. Dania's library, approved by the
 wellbeing team.)*
 
-## 6. What stays the same regardless of the decisions
+## 6. Design principles (unchanged)
 
 - Bilingual EN + AR, Arabic right-to-left on the card.
-- Free / no-PC: Power Automate cloud flow + SharePoint List, standard connectors.
-- SharePoint List as state store; run-once import; per-send error handling;
-  UAE-time stamps; working-day scheduling.
+- Free / no-PC: Power Automate cloud flows + SharePoint List, standard connectors.
+- SharePoint List as state store; per-send error handling; UAE-time stamps;
+  Sun–Thu scheduling; `Day`-order sequencing (no date coupling).
 - Source traceability to Dr. Dania's library.
 
 ---
 
-### Next step
-Confirm **Decision A** (four cards vs one card) and **Decision B** (August 1/day
-vs 4/day). The current one-per-day pilot package remains valid for B1.
+## What's built
 
-### Status update — 4×/day variant now built
-The full **four-pillars, 4×/day** variant has been produced (Option A / four
-separate cards), so both models are ready and the team can pick after clarifying:
-- Data: `data/four-pillars/by-nudge.json` (84 sends) + `by-day.json` (combined-card view).
+- Data: `data/four-pillars/by-nudge.json` / `.csv` / `.xlsx` — **84 sends**.
 - Card: `adaptive-card-pillar.json`. Flow: `four-pillars-flow-guide.md`.
-- Schema: `four-pillars-sharepoint-schema.md`. Generator: `scripts/gen_four_pillars.py`.
+- Schema: `four-pillars-sharepoint-schema.md`. List provisioning: `provisioning/`.
+- Generator: `scripts/gen_four_pillars.py`.
 
-Social pillar = the 21 approved connection challenges; Physical/Financial/Mental
-are bilingual **drafts** (`SourceRef = draft`) for the wellbeing team to approve
-and map to Dr. Dania's library. The combined-single-card format (Decision A ·
-Option B) can be generated from `by-day.json` on request.
+**Open content item (not a logic decision):** Social pillar = the 21 approved
+connection challenges; **Physical / Financial / Mental** are bilingual **drafts**
+(`SourceRef = draft`) for the wellbeing team (Dr. Dania) to approve and map to the
+source library, with a native-Arabic review before go-live.

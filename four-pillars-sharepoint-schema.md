@@ -1,15 +1,15 @@
-# SharePoint List Schema — `FourPillarNudges` (4×/day variant)
+# SharePoint List Schema — `FourPillarNudges`
 
-Holds every **send** for the four-pillars model: **one row per nudge** =
+Holds every **send** for the 4-nudges/day model: **one row per nudge** =
 21 working days × 4 pillars = **84 rows**. One row per send keeps delivery
-tracking and time-slot matching simple, and lets a single failed slot be
-re-sent without touching the others.
+tracking simple and lets a single failed slot be re-sent without touching the
+others.
 
-Data source: `data/four-pillars/by-nudge.json` / `.csv`.
+Data source: `data/four-pillars/by-nudge.json` / `.csv` / `.xlsx`.
 
 > **Auto-create it** instead of building columns by hand:
-> `provisioning/Create-Lists.ps1 -Only FourPillarNudges`, or *Create list → From
-> CSV* with `by-nudge.csv`. See `provisioning/README.md`.
+> `provisioning/Create-List.ps1`, or *Create list → From Excel* with
+> `by-nudge.xlsx`. See `provisioning/README.md`.
 
 ## Columns
 

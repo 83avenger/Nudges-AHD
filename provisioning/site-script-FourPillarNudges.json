@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+  "actions": [
+    {
+      "verb": "createSPList",
+      "listName": "FourPillarNudges",
+      "templateType": 100,
+      "subactions": [
+        { "verb": "setDescription", "description": "Four-pillars 4x/day nudges (Social/Physical/Financial/Mental), bilingual." },
+        { "verb": "addSPField", "fieldType": "Number", "displayName": "Day", "internalName": "Day", "addToDefaultView": true },
+        { "verb": "addSPFieldAsXml", "schemaXml": "<Field Type='DateTime' DisplayName='RevealDate' Name='RevealDate' Format='DateOnly'></Field>", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "DateLabel", "internalName": "DateLabel" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "Weekday", "internalName": "Weekday" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "WeekArc", "internalName": "WeekArc", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "DailyThemeEN", "internalName": "DailyThemeEN", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "DailyThemeAR", "internalName": "DailyThemeAR" },
+        { "verb": "addSPFieldAsXml", "schemaXml": "<Field Type='Choice' DisplayName='Pillar' Name='Pillar' Format='Dropdown'><CHOICES><CHOICE>Social</CHOICE><CHOICE>Physical</CHOICE><CHOICE>Financial</CHOICE><CHOICE>Mental</CHOICE></CHOICES></Field>", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "PillarEN", "internalName": "PillarEN" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "PillarAR", "internalName": "PillarAR" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "PillarEmoji", "internalName": "PillarEmoji" },
+        { "verb": "addSPField", "fieldType": "Number", "displayName": "PillarOrder", "internalName": "PillarOrder" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "SlotTime", "internalName": "SlotTime", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Note", "displayName": "NudgeEN", "internalName": "NudgeEN" },
+        { "verb": "addSPField", "fieldType": "Note", "displayName": "NudgeAR", "internalName": "NudgeAR" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "SourceRef", "internalName": "SourceRef" },
+        { "verb": "addSPFieldAsXml", "schemaXml": "<Field Type='Choice' DisplayName='Status' Name='Status' Format='Dropdown'><Default>Scheduled</Default><CHOICES><CHOICE>Scheduled</CHOICE><CHOICE>Sent</CHOICE><CHOICE>Error</CHOICE></CHOICES></Field>", "addToDefaultView": true },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "SentDateTime", "internalName": "SentDateTime" },
+        { "verb": "addSPField", "fieldType": "Text", "displayName": "RunID", "internalName": "RunID" }
+      ]
+    }
+  ],
+  "bindata": {},
+  "version": 1
+}

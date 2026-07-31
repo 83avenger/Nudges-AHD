@@ -1,196 +1,133 @@
-# Implementation Guide — AHD Wellbeing365 Nudges (End to End)
+# Implementation Guide — End to End
 
-Follow this in order to go from zero to a live, automated, bilingual nudge
-program. It covers **both** delivery models — pick one at Step 0.
+From zero to a live, automated, bilingual **4-nudges-per-day** program.
 
-- **No PC left on** — everything runs in the Microsoft 365 cloud.
-- **$0 beyond existing M365** — standard connectors only.
-- Estimated time: **~60–90 minutes** the first time.
+- **4 nudges/day**, one per pillar: **07:00 Social · 09:15 Physical · 11:30
+  Financial · 13:45 Mental** (UAE), on **AHD working days (Sun–Thu)**.
+- **No PC left on** · **$0 beyond existing M365** · standard connectors only.
+- First-time build: **~75–90 minutes**.
 
-Detailed references are linked at each step; this page is the running order.
-
----
-
-## Step 0 · Decide the delivery model (5 min)
-
-| | **Model A — Month of Connection pilot** | **Model B — Four pillars, 4×/day** |
-|---|---|---|
-| Sends | 1 bilingual challenge/working day | 4 nudges/day (Social→Physical→Financial→Mental) |
-| List | `MonthOfConnection` (21 rows) | `FourPillarNudges` (84 rows) |
-| Card | `adaptive-card-bilingual.json` | `adaptive-card-pillar.json` |
-| Flow guide | `flow-build-guide.md` | `four-pillars-flow-guide.md` |
-| Best for | Clean, measurable pilot for the Sep gate | The confirmed full operating model |
-
-> If unsure, run **Model A** for August (it's the approved, tested pilot) and
-> switch to **Model B** from September. The steps below work for either — just
-> use the list/card/flow from the matching column.
-
-**Checkpoint:** you know which list, card and flow guide you're using.
+Prefer all-clicks (no PowerShell)? See `IMPLEMENTATION-GUIDE-GUI.md`.
 
 ---
 
 ## Step 1 · Prerequisites (10 min)
 
-- [ ] A Microsoft 365 account with **Teams, SharePoint, Power Automate** (standard).
-- [ ] A **SharePoint site** to hold the list (a team site is fine).
-- [ ] Rights to **create a list** on that site (site Member/Owner).
-- [ ] A **Microsoft 365 Group / Teams team** containing the pilot recipients
-      (create one now if needed — e.g. `AH-Nudges`). Note its name/ID.
-- [ ] For the PnP route: **PowerShell** with the PnP module:
-      ```powershell
-      Install-Module PnP.PowerShell -Scope CurrentUser
-      ```
-- [ ] The files from this repo on your machine (clone or download the branch).
+- [ ] Microsoft 365 with **Teams, SharePoint, Power Automate** (standard).
+- [ ] A **SharePoint site** for the list; rights to create a list on it.
+- [ ] A **Microsoft 365 Group / Teams team** of recipients (e.g. `AH-Nudges`) —
+      start with 2–3 test users. Note its name/ID.
+- [ ] PnP module: `Install-Module PnP.PowerShell -Scope CurrentUser`.
+- [ ] This repo cloned/downloaded locally.
 
-**Checkpoint:** you can open PowerShell and your SharePoint site in a browser.
+**Checkpoint:** you can open PowerShell and your SharePoint site.
 
 ---
 
-## Step 2 · Create the SharePoint list (10 min)
+## Step 2 · Create the list + load the 84 rows (10 min)
 
-Pick **one** track. Track A is the most reliable (it avoids the "From Excel"
-wizard's WAC-token error and column-type limits).
-
-### Track A — PnP PowerShell (recommended)
 ```powershell
 cd provisioning
-./Create-Lists.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>"
-# creates BOTH lists with exact types; add -Only MonthOfConnection to do just one
-```
-Sign in when prompted. This builds every column with the correct type
-(Date-only, Number, Choice, Multiple-lines) and sets `Status` default `Scheduled`.
-
-### Track B — UI, "From Excel"
-1. Site → **+ New → List → From Excel**.
-2. Upload the **.xlsx** (not CSV — CSV triggers the WAC error more often):
-   `data/month-of-connection.xlsx` **or** `data/four-pillars/by-nudge.xlsx`.
-3. Set column types: long fields → **Multiple lines of text** (that *is* the
-   "long text" option); `Status`/`Pillar` → **Choice**; `RevealDate` → **Date**,
-   `Day`/`PillarOrder` → **Number** *if offered*.
-4. If Date/Number aren't offered, or you get **"Could not obtain a WAC access
-   token"**, stop and use Track A — it's the intended fix. (See
-   `provisioning/README.md` for all fallbacks.)
-
-**Checkpoint:** the list exists with the right columns. Confirm `RevealDate` is a
-**Date** column and `Status` is a **Choice** — the flow depends on both.
-
----
-
-## Step 3 · Load the challenge rows (10 min)
-
-If you used **Track B / From Excel**, the rows are already loaded — **skip to
-Step 4** (just verify the count and that Arabic shows right-to-left).
-
-If you used **Track A**, load the data via PnP (no WAC, no Power Automate):
-```powershell
-./Import-Data.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>" -List MonthOfConnection
-# Model B: -List FourPillarNudges
-# reload cleanly if needed: add -Fresh
+./Create-List.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>"
+./Import-Data.ps1 -SiteUrl "https://<tenant>.sharepoint.com/sites/<YourSite>"
 ```
 
-**Checkpoint:** Model A shows **21** items (dates 2026-08-03 → 08-31); Model B
-shows **84** items. `Status` = `Scheduled` on all. Arabic renders RTL.
+`Create-List.ps1` builds `FourPillarNudges` with exact column types
+(Date-only, Number, Choice, Multiple-lines, `Status` default `Scheduled`).
+`Import-Data.ps1` loads all 84 rows — no WAC, no Power Automate, Arabic preserved.
+
+*No PowerShell?* Use `provisioning/README.md` Route A (From Excel with
+`data/four-pillars/by-nudge.xlsx`) or the GUI guide.
+
+**Checkpoint:** the list shows **84 items**, all `Status = Scheduled`, four
+`Pillar` values, Arabic right-to-left.
 
 ---
 
-## Step 4 · Confirm the recipient group (5 min)
+## Step 3 · Confirm the recipient group (5 min)
 
-- Open your M365 Group / Teams team and confirm the **pilot members** are in it.
-- Copy the **Group ID** (or name) — the flow needs it.
-- Keep the pilot small for the first live test (2–3 people), then expand.
-
-**Checkpoint:** you have the group and its ID, with test users in it.
+- Confirm the pilot members are in the M365 Group / Teams team; copy its **ID**.
+- Keep it to 2–3 test users for the first live test, then expand.
 
 ---
 
-## Step 5 · Build the Power Automate flow (20–30 min)
+## Step 4 · Build the four reveal flows (30–40 min)
 
-Open `make.powerautomate.com` (or Teams → Workflows) and follow the matching
-guide step by step:
+Open `make.powerautomate.com` (or Teams → Workflows) and follow
+`four-pillars-flow-guide.md`. Build **one** flow, confirm it, then **Save As**
+three times changing only the **time** and the **pillar**:
 
-- **Model A:** `flow-build-guide.md` — daily reveal, next challenge by `Day`
-  order, 08:00 UAE, AHD working days (Sun–Thu).
-- **Model B:** `four-pillars-flow-guide.md` — four per-slot flows (07:00 Social,
-  09:15 Physical, 11:30 Financial, 13:45 Mental), each sending its pillar's next
-  challenge by `Day` order, Sun–Thu.
+| Flow | Time (UAE) | Pillar filter |
+|------|-----------|---------------|
+| Social 07:00 | 07:00 | `Pillar eq 'Social'` |
+| Physical 09:15 | 09:15 | `Pillar eq 'Physical'` |
+| Financial 11:30 | 11:30 | `Pillar eq 'Financial'` |
+| Mental 13:45 | 13:45 | `Pillar eq 'Mental'` |
 
-Key points the guides cover:
-- Recurrence trigger, **time zone = (UTC+04:00) Abu Dhabi, Muscat**, **AHD
-  working days Sun–Thu** (Fri–Sat weekend unchecked).
-- **Get items** where `Status eq 'Scheduled'` (+ `Pillar` for Model B),
-  **ordered by `Day asc`, top 1** — sends the next challenge in sequence, so it
-  doesn't depend on the calendar dates.
-- **List group members** → **Apply to each** (concurrency 15) →
-  **Post card in a chat or channel** as **Flow bot** to `member mail`.
-- Paste the matching **Adaptive Card JSON** and bind the `${...}` tokens to the
-  challenge fields (token→field tables are in each guide).
-- On success → **Update item** `Status=Sent`, UAE `SentDateTime`, `RunID`.
-  On failure → `Status=Error` + optional IT alert.
+Each flow (per the guide):
+1. **Recurrence** — Time zone **(UTC+04:00) Abu Dhabi, Muscat**, **Sun–Thu**, at
+   the slot time.
+2. **Get items** where `Pillar eq '<pillar>' and Status eq 'Scheduled'`, **Order
+   By `Day asc`, Top 1** — the next unsent nudge for that pillar.
+3. **Condition** — if none, **Terminate**.
+4. **List group members** → **Apply to each** (concurrency 15) → **Post card in a
+   chat or channel** as **Flow bot** to `member mail`. Paste
+   `adaptive-card-pillar.json` and map the `${...}` tokens (table in the guide).
+5. On success → **Update item** `Status=Sent`, UAE `SentDateTime`, `RunID`;
+   on failure → `Status=Error` + optional IT alert.
 
-**Checkpoint:** the flow saves without errors.
+> One-flow alternative (15-min gate) is in the guide if you'd rather maintain a
+> single flow.
 
----
-
-## Step 6 · Test (10 min)
-
-1. Temporarily point the flow at your **2–3 person test group**.
-2. **Test → Manually → Run** (it will send Day 1, the next `Scheduled` row).
-3. Confirm:
-   - The **bilingual card** arrives in Teams (English + Arabic, RTL, day counter).
-   - The list item flips to **`Sent`** with a **UAE timestamp** and a **`RunID`**.
-4. Reset that row's `Status` to `Scheduled` so the real run starts from Day 1.
-
-**Checkpoint:** a real card was received and the row updated correctly.
+**Checkpoint:** all four flows save without errors.
 
 ---
 
-## Step 7 · Go live (5 min)
+## Step 5 · Test with 2–3 users (10 min)
 
-1. Point the flow at the **real pilot group**.
-2. Make sure all rows are `Status = Scheduled` and `SentDateTime`/`RunID` empty.
-3. Turn the flow **On**.
-4. For Model B, enable **all four** slot flows.
-
-**Checkpoint:** flow(s) On, first reveal (Day 1) fires on the next AHD working
-day (Sun–Thu) at 08:00 UAE. Turn it On on your intended start day — a Sunday
-works well as the week opener.
+1. Point the flows at your **test group**.
+2. **Test → Manually → Run** one flow — it sends that pillar's Day 1 nudge.
+3. Confirm the **bilingual card** arrives (EN + RTL Arabic, pillar badge, day
+   counter) and the row flips to **Sent** with UAE timestamp + RunID.
+4. Reset that row's `Status` to `Scheduled` so the real run starts at Day 1.
 
 ---
 
-## Step 8 · Monitor & maintain (ongoing)
+## Step 6 · Go live (5 min)
 
-- **Power Automate → the flow → Run history**: watch for failures; any row left
-  `Error` can be reset to `Scheduled` to re-send.
-- **Content edits:** the wellbeing team edits wording directly in the list, or
-  re-run the generators and re-import:
-  ```powershell
-  # from repo root
-  python3 scripts/extract_pilot.py source/AHD_...August2026.xlsx   # Model A data
-  python3 scripts/gen_four_pillars.py                              # Model B data
-  ./provisioning/Import-Data.ps1 -SiteUrl "..." -List <List> -Fresh
-  ```
+1. Point the flows at the **real pilot group**; all rows `Scheduled`.
+2. Turn **all four** flows **On** on your intended start day (a Sunday works well).
+
+---
+
+## Step 7 · Monitor & maintain (ongoing)
+
+- **Power Automate → each flow → Run history**: watch for failures; reset any
+  `Error` row to `Scheduled` to re-send.
+- **Content edits:** the wellbeing team edits wording in the list, or re-run
+  `python3 scripts/gen_four_pillars.py` and reload
+  (`./provisioning/Import-Data.ps1 -SiteUrl "..." -Fresh`).
 - **Group membership:** IT manages who's in the recipient group.
-- **September gate (1–3 Sep):** review the metrics in `IT-handover.md`, then load
+- **September gate (1–3 Sep):** review metrics in `IT-handover.md`, then load
   next month's rows — no flow rebuild needed.
 
 ---
 
-## Troubleshooting quick table
+## Troubleshooting
 
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| "Could not obtain a WAC access token" | From-Excel wizard / Office Online | Use Track A (PnP) — Steps 2–3. |
-| Dropdown has no Date/Number | Wizard read column as text | Fix type in List settings after import, or use Track A. |
-| "long text" missing | It's named **Multiple lines of text** | Choose that option. |
-| Card arrives but Arabic left-aligned | RTL container | Use the provided card JSON unchanged; it sets `rtl`. |
-| Flow sends on the weekend | Trigger days | Set Recurrence to **Sun–Thu** (AHD week); pause the flow on public holidays. |
-| Row marked Sent but some users missed it | Loop error not caught | Ensure Step 7/8 success/failure branches from the flow guide. |
-| Premium licence prompt | A premium connector slipped in | Use only SharePoint/Teams/Office 365 Groups (standard). |
+| Symptom | Fix |
+|---------|-----|
+| "Could not obtain a WAC access token" | From-Excel wizard problem. Use Step 2 (PnP) — it doesn't touch WAC. |
+| No Date/Number option in From-Excel | Set type after import in List settings, or use PnP (exact types up front). |
+| "long text" missing | It's **Multiple lines of text**. |
+| Card arrives but Arabic left-aligned | Use `adaptive-card-pillar.json` unchanged (it sets `rtl`). |
+| Flow sends on the weekend | Set Recurrence to **Sun–Thu**; pause the flow on public holidays. |
+| Row marked Sent but some users missed it | Ensure the success/failure branches from the flow guide. |
+| Premium licence prompt | Use only SharePoint/Teams/Office 365 Groups (standard). |
 
 ---
 
-## The essential order (TL;DR)
-
-1. Pick Model A or B.  2. `Create-Lists.ps1`.  3. `Import-Data.ps1`.
-4. Confirm group.  5. Build flow (matching guide).  6. Test with 2–3 users.
-7. Turn On.  8. Monitor / reload monthly.
+## TL;DR
+1. `Create-List.ps1` + `Import-Data.ps1`.  2. Confirm group.
+3. Build 4 flows (Save-As ×3).  4. Test with 2–3 users.  5. Turn all 4 On.
+6. Monitor / reload monthly.

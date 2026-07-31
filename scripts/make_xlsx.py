@@ -46,14 +46,6 @@ def write_xlsx(records, cols, out_path, table_name, date_cols=()):
 
 
 def main():
-    moc = json.load(open(os.path.join(ROOT, "data", "month-of-connection.json"), encoding="utf-8"))
-    moc_cols = ["Day", "RevealDate", "DateLabel", "Weekday", "WeekArc",
-                "ChallengeEN", "ChallengeAR", "WhyItMatters", "TomorrowTeaser",
-                "SocialCaption", "SourceRef", "Status", "SentDateTime", "RunID"]
-    write_xlsx(moc, moc_cols,
-               os.path.join(ROOT, "data", "month-of-connection.xlsx"),
-               "tblNudges", date_cols=("RevealDate",))
-
     fp = json.load(open(os.path.join(ROOT, "data", "four-pillars", "by-nudge.json"), encoding="utf-8"))
     fp_cols = ["Day", "RevealDate", "DateLabel", "Weekday", "WeekArc",
                "DailyThemeEN", "DailyThemeAR", "Pillar", "PillarEN", "PillarAR",

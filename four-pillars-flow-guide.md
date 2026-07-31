@@ -13,11 +13,10 @@ Dr. Dania's sequence — each on its own Teams card at its time slot:
 Standard connectors only — **included in Microsoft 365**, no premium licence, no
 Azure, **no PC left on** (cloud flows run on Microsoft's servers).
 
-> This is the **4×/day variant**. For the single-hero-challenge pilot see
-> `flow-build-guide.md`. For the combined-single-card option see the note at the
-> end.
+This is **the** delivery model: 4 nudges/day, one per pillar, each as its own
+bilingual card. (AHD working week = **Sunday–Thursday**.)
 
-## Recommended structure: four small flows (one per slot)
+## Structure: four small flows (one per slot)
 
 Because the four times have different minutes (07:00, 09:15, 11:30, 13:45), a
 single Recurrence trigger can't fire all four. The simplest, most reliable
@@ -84,45 +83,14 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 - **Save As** → rename (e.g. *Thrive365 – Physical 09:15*) → change the trigger
   time and the `Pillar eq '...'` filter. Repeat for Financial and Mental.
 
-## Alternative: one flow, 15-minute gate
+## Optional: one flow instead of four (15-minute gate)
 
-If you prefer a single flow: Recurrence **every 15 min** (Sun–Thu 07:00–14:00) +
-a **Switch** on `convertTimeZone(utcNow(),'UTC','Arabian Standard Time','HH:mm')`
-mapping `07:00→Social, 09:15→Physical, 11:30→Financial, 13:45→Mental`; default →
-Terminate. More logic in one place, but only one flow to maintain.
-
-## Alternative: one combined card per day (Option B)
-
-If the team prefers **all four pillars on one card** (one send/morning) instead
-of four sends, everything you need is included:
-
-- **Card:** `adaptive-card-four-pillars-combined.json` — one bilingual card with
-  four labelled sections (🤝 Social, 🏃 Physical, 💡 Financial, 🧠 Mental), each
-  EN + Arabic.
-- **Data:** `data/four-pillars/by-day-flat.json` / `.csv` — **21 rows** (one per
-  day) with all four pillars as flat columns (`SocialEN/AR`, `PhysicalEN/AR`,
-  `FinancialEN/AR`, `MentalEN/AR`). Load this into a **one-row-per-day** list
-  (e.g. `FourPillarsDaily`) instead of the 84-row `FourPillarNudges`.
-
-**Flow (single, simpler than four):**
-1. **Recurrence** — Sun–Thu, **08:00 UAE** (one send/day).
-2. **Get items** where `Status eq 'Scheduled'`, **Order By `Day asc`**, Top 1.
-3. **Condition** — if none, Terminate.
-4. **List group members** → **Apply to each** (concurrency 15) → **Post card as
-   Flow bot**, pasting `adaptive-card-four-pillars-combined.json` with tokens:
-   | Token | Bind to | Token | Bind to |
-   |-------|---------|-------|---------|
-   | `${Day}` | `Day` | `${WeekArc}` | `WeekArc` |
-   | `${DailyThemeEN}` | `DailyThemeEN` | `${DailyThemeAR}` | `DailyThemeAR` |
-   | `${SocialEN}` | `SocialEN` | `${SocialAR}` | `SocialAR` |
-   | `${PhysicalEN}` | `PhysicalEN` | `${PhysicalAR}` | `PhysicalAR` |
-   | `${FinancialEN}` | `FinancialEN` | `${FinancialAR}` | `FinancialAR` |
-   | `${MentalEN}` | `MentalEN` | `${MentalAR}` | `MentalAR` |
-   (all from `outputs('Compose_Challenge')?['<field>']`).
-5. **Update item** → `Status=Sent`, UAE `SentDateTime`, `RunID`.
-
-This is a single flow with a single daily send — lighter to run and maintain than
-the four per-slot flows, at the cost of pacing (all four arrive together).
+If you'd rather maintain a single flow: Recurrence **every 15 min**
+(Sun–Thu 07:00–14:00) + a **Switch** on
+`convertTimeZone(utcNow(),'UTC','Arabian Standard Time','HH:mm')` mapping
+`07:00→Social, 09:15→Physical, 11:30→Financial, 13:45→Mental`; default →
+Terminate; then the same Get-items / send / update steps. Same behaviour as the
+four flows, consolidated. Choose whichever your team prefers to maintain.
 
 ## Cost & licensing
 
