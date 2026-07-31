@@ -25,6 +25,14 @@ the file to Office Online to parse it and that step fails intermittently
 
 ---
 
+> **⚠️ From-Excel renames your columns internally.** Importing from a spreadsheet
+> keeps your headers as *display* names but sets the permanent **internal** names
+> to `field_1`, `field_2`, … . Power Automate filters use **internal** names, so
+> you'll hit *"Column 'Pillar' does not exist"* even though the list shows
+> `Pillar`. **Route B (PnP) or a Blank list + Add column keep internal names = the
+> real names** (`Pillar`, `Day`, `Status`). Prefer those if you'll query the list
+> from a flow — which this project does.
+
 ## Route A — From Excel (no code, easiest when WAC works)
 
 1. Site → **+ New → List → From Excel**.
