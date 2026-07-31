@@ -117,6 +117,7 @@ Each flow (per the guide):
 
 | Symptom | Fix |
 |---------|-----|
+| "Column 'Pillar' does not exist" in Get items | Filter/Order By use **internal** names. Replace the `PILLAR` placeholder with the real value (`'Social'` …); if it persists, the column's internal name differs (From-Excel can make `Pillar0`) — check List settings → column → URL `Field=`, re-select the list to refresh schema, or recreate with `Create-List.ps1`. Same for `Day`. |
 | "Could not obtain a WAC access token" | From-Excel wizard problem. Use Step 2 (PnP) — it doesn't touch WAC. |
 | No Date/Number option in From-Excel | Set type after import in List settings, or use PnP (exact types up front). |
 | "long text" missing | It's **Multiple lines of text**. |

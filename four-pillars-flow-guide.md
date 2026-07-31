@@ -35,15 +35,27 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 - **Time zone:** `(UTC+04:00) Abu Dhabi, Muscat`.
 
 **Step 2 — Get this slot's next nudge (by Day order)**
-- **Get items** on `FourPillarNudges`, **Filter Query:**
+- **Get items** on `FourPillarNudges`, **Filter Query** — **replace `PILLAR`
+  with the real pillar name** for this flow (`Social` / `Physical` / `Financial`
+  / `Mental`), e.g. for the Social flow:
   ```
-  Pillar eq 'PILLAR' and Status eq 'Scheduled'
+  Pillar eq 'Social' and Status eq 'Scheduled'
   ```
   **Order By:** `Day asc` · **Top Count:** `1`.
 - This sends the next unsent nudge for that pillar, so the four pillar tracks
   each advance one per working day — independent of the calendar dates in the
-  list. No date matching, so the workbook's Mon–Fri dates don't matter and **the
-  list needs no changes**.
+  list.
+
+> **Filter/Order By use column INTERNAL names, not display names.** If you get
+> *"Column 'Pillar' does not exist"*, the column's internal name differs (common
+> when the list was made via *From Excel/CSV*, which can name it `Pillar0` /
+> `field_7`). Fixes: (1) **List settings → click the column →** the `Field=` value
+> in the URL is the internal name to use; (2) run **Get items with no
+> filter/order-by once** and read the exact field names from the output; (3)
+> re-select the Site + List in the action to refresh its cached schema; or (4)
+> recreate the list with `provisioning/Create-List.ps1`, which sets internal
+> names to exactly `Pillar`, `Day`, `Status`. The same applies to `Day` in
+> Order By.
 
 **Step 3 — Stop if nothing left**
 - **Condition** `length(body('Get_items')?['value'])` equal to `0`

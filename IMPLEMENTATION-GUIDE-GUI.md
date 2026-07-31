@@ -134,6 +134,7 @@ flows **On** (a Sunday is a good start day).
 
 | Symptom | Fix |
 |---------|-----|
+| "Column 'Pillar' does not exist" in Get items | Replace the `PILLAR` placeholder with `'Social'` etc.; if it persists, the column's internal name differs — check List settings → column → URL `Field=`, re-select the list to refresh the action's schema, or recreate with PnP `Create-List.ps1`. Same for `Day`. Building from **Blank list** (Step 2) keeps internal names clean. |
 | "Could not obtain a WAC access token" | You're using *From Excel* — don't. Use Step 2 (Blank list) + Step 3 grid paste / import flow. |
 | No Date/Number in *From Excel* | Not needed — you set types on the Blank list yourself. |
 | "long text" missing | It's **Multiple lines of text**. |
