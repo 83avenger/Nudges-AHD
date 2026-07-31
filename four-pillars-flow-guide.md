@@ -79,11 +79,16 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 **Step 5 — Send the pillar card**
 - **Apply to each** member (Concurrency **On, Degree 15**):
   - **Post card in a chat or channel** → **Post as Flow bot** →
-    **Recipient:** `items('Apply_to_each')?['userPrincipalName']` (preferred) or
-    `items('Apply_to_each')?['id']`. **Avoid `mail`** — for guest/contractor
-    accounts the mail can differ from the Teams identity (e.g. `c-sshoaib@…` vs
-    UPN `sshoaib@…`) and the post fails. The recipient must be a Teams-enabled
-    user; unlicensed accounts can't receive Flow-bot chats.
+    **Recipient:** insert this as **Dynamic content** — pick **User Principal
+    Name** of the current group member (NOT typed as text). If you use the
+    Expression (fx) tab instead, enter
+    `items('Apply_to_each')?['userPrincipalName']` and confirm it becomes a
+    **token chip**, not black literal text — otherwise it's sent verbatim and
+    fails with *"No user details … 'items('Apply_to_each')?['mail']' were found in
+    Graph."* Match the loop's real name (e.g. `Apply_to_each_2`).
+    **Avoid `mail`** — for guest/contractor accounts it can differ from the Teams
+    identity (`c-sshoaib@…` vs UPN `sshoaib@…`). Recipients must be Teams-enabled;
+    unlicensed accounts can't receive Flow-bot chats.
   - **Adaptive Card:** `adaptive-card-pillar.json`, tokens bound to `Nudge`:
     | Token | Bind to |
     |-------|---------|
