@@ -42,6 +42,12 @@ cd provisioning
 **Checkpoint:** the list shows **84 items**, all `Status = Scheduled`, four
 `Pillar` values, Arabic right-to-left.
 
+> **Verify column internal names before building flows.** In Power Automate, add
+> a temporary **Get items** with **Filter/Order By/Top all empty** and run it. The
+> output keys must read `Day`, `Pillar`, `Status`, `NudgeEN` … If you see
+> `field_1`/`field_7`, the list was made via *From Excel* — recreate it with
+> `Create-List.ps1` (this two-command route already gives correct names).
+
 ---
 
 ## Step 3 · Confirm the recipient group (5 min)

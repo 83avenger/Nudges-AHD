@@ -28,6 +28,17 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 
 ### Steps (parameterised by SLOT = `HH:MM` and PILLAR = Social/Physical/Financial/Mental)
 
+**Step 0 — Verify the column internal names (10-second check, do this first)**
+- Add a temporary **Get items** on `FourPillarNudges` with **Filter Query,
+  Order By and Top Count ALL empty**, and run the flow once.
+- In the run output, look at the field names (keys) of a returned item.
+  - ✅ If you see `Day`, `Pillar`, `Status`, `NudgeEN` … → good, continue.
+  - ❌ If you see `field_1`, `field_2`, `field_7` … → the list was made via
+    *From Excel/CSV*, which locks internal names to `field_N`. **Recreate the
+    list** with `provisioning/Create-List.ps1` (or Blank list + Add column) so the
+    filters below work by name, then re-run this check. Do not proceed until the
+    keys are real names.
+
 **Step 1 — Trigger: Recurrence (AHD working days, Sun–Thu)**
 - Frequency **Week**, Interval **1**; **On these days:** **Sunday, Monday,
   Tuesday, Wednesday, Thursday** (AHD weekend Fri–Sat unchecked).

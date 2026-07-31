@@ -74,6 +74,12 @@ item), point it at `data/four-pillars/by-nudge.json`, run once. No WAC, no PnP.
 
 **Checkpoint:** **84 items**, all `Scheduled`, four `Pillar` values, Arabic RTL.
 
+> **Verify column internal names before building flows.** Add a temporary **Get
+> items** with **Filter/Order By/Top all empty** and run it. Output keys must be
+> `Day`, `Pillar`, `Status`, `NudgeEN` … If they're `field_1`/`field_7`, the list
+> came from *From Excel* — rebuild it as a **Blank list + Add column** (Step 2),
+> which keeps internal names correct.
+
 ---
 
 ## Step 4 · Build the four reveal flows (35–45 min)
