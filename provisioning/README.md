@@ -58,10 +58,11 @@ $PSVersionTable.PSVersion    # PnP.PowerShell needs PowerShell 7
 ```
 - If `Connect-PnPOnline is not recognized` → the module isn't installed; run the
   Install line above.
-- If `$PSVersionTable.PSVersion` **Major is 5** (classic Windows PowerShell) → PnP
-  2.x won't load. Either install PowerShell 7 (`winget install Microsoft.PowerShell`,
-  then reopen as *PowerShell 7*), **or** use the last 5.1-compatible build:
-  `Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Scope CurrentUser -Force`.
+- If `$PSVersionTable.PSVersion` **Major is 5** (classic Windows PowerShell) →
+  **PnP.PowerShell does not run on 5.1 at any version.** Install **PowerShell 7**
+  (`winget install --id Microsoft.PowerShell --source winget`, then reopen the
+  *PowerShell 7* / `pwsh` app) and run the module install + scripts there. If you
+  can't install PS7, use the **no-install GUI route** below instead.
 - If the first interactive login says the app isn't registered, run once (or ask
   an admin): `Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP-Nudges" -Tenant <tenant>.onmicrosoft.com -Interactive`.
 
