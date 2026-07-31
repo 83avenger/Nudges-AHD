@@ -67,8 +67,10 @@ $PSVersionTable.PSVersion    # PnP.PowerShell needs PowerShell 7
   built-in one). If login warns *"Please specify a valid client id"* /
   *"Specified method is not supported"*, register an app once:
   ```powershell
-  Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP-Nudges" -Tenant <tenant>.onmicrosoft.com -Interactive
+  Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP-Nudges" -Tenant <tenant>.onmicrosoft.com
   ```
+  (No `-Interactive` switch — it opens a browser by default. Requires rights to
+  register an app **and** admin consent to the requested permissions.)
   Copy the **Client Id** it prints, then pass it to the scripts via `-ClientId`.
   (Registering needs rights to create an app registration; if that's blocked, use
   the GUI route below.)
