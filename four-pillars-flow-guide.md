@@ -89,18 +89,22 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
     **Avoid `mail`** — for guest/contractor accounts it can differ from the Teams
     identity (`c-sshoaib@…` vs UPN `sshoaib@…`). Recipients must be Teams-enabled;
     unlicensed accounts can't receive Flow-bot chats.
-  - **Adaptive Card:** `adaptive-card-pillar.json`, tokens bound to `Nudge`:
-    | Token | Bind to |
-    |-------|---------|
-    | `${PillarEmoji}` | `outputs('Nudge')?['PillarEmoji']` |
-    | `${PillarEN}` | `outputs('Nudge')?['PillarEN']` |
-    | `${PillarAR}` | `outputs('Nudge')?['PillarAR']` |
-    | `${DailyThemeEN}` | `outputs('Nudge')?['DailyThemeEN']` |
-    | `${WeekArc}` | `outputs('Nudge')?['WeekArc']` |
-    | `${Day}` | `outputs('Nudge')?['Day']` |
-    | `${NudgeEN}` | `outputs('Nudge')?['NudgeEN']` |
-    | `${NudgeAR}` | `outputs('Nudge')?['NudgeAR']` |
+  - **Adaptive Card:** paste **`adaptive-card-pillar.powerautomate.json`** — it
+    already has the Power Automate expressions inline (`@{outputs('Nudge')?['…']}`),
+    so nothing to hand-bind. It assumes a **Compose** action named exactly
+    **`Nudge`** = `first(body('Get_items')?['value'])` (Step 3). If your Compose
+    has a different name, find/replace `Nudge` in the JSON.
   - Wrap in a Scope `SendScope`.
+
+  > ⚠️ **Do NOT paste `adaptive-card-pillar.json` (the `${...}` version) into
+  > Power Automate.** Power Automate does **not** process Adaptive Card `${token}`
+  > templating — those render literally (`${NudgeEN}`). The `.powerautomate.json`
+  > file uses `@{…}` Flow expressions, which the flow evaluates before sending.
+  > (The `${...}` file is the clean template for reference / other renderers.)
+  >
+  > Manual alternative: paste `adaptive-card-pillar.json`, then replace each
+  > `${Field}` by inserting the matching value as **Dynamic content / fx** so it
+  > becomes an evaluated `@{…}` token, not literal text.
 
 **Step 6 — Mark Sent (on success)** — `Configure run after` = succeeded:
 - **Update item**: `Status`=`Sent`,

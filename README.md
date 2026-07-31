@@ -32,7 +32,8 @@ sharing are led by Wellbeing Champions.
 | Path | What it is |
 |------|-----------|
 | `data/four-pillars/by-nudge.json` / `.csv` / `.xlsx` | **84 nudges** = 21 working days × 4 pillars (EN + AR + theme + slot + source ref), seeded `Scheduled`. |
-| `adaptive-card-pillar.json` | The Teams card — one pillar nudge, English + right-to-left Arabic. |
+| `adaptive-card-pillar.powerautomate.json` | **Paste this into Power Automate** — pillar card with inline `@{…}` expressions (assumes a Compose named `Nudge`). |
+| `adaptive-card-pillar.json` | The clean `${…}` template (reference / other renderers). Power Automate does NOT process `${}` — use the `.powerautomate.json` version there. |
 | `four-pillars-sharepoint-schema.md` | The `FourPillarNudges` SharePoint List (state store). |
 | `provisioning/` | Auto-create the list from the schema (From-Excel, PnP, or site script) + load the rows — no manual columns. |
 | `import-flow-guide.md` | All-GUI alternative loader (Power Automate, no PnP). |
