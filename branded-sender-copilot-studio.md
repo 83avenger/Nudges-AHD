@@ -23,38 +23,64 @@ and usually overkill.)
 
 ## Steps
 
-### 1. Create the agent
-1. Go to **copilotstudio.microsoft.com** → sign in.
-2. **+ Create → New agent** (you can skip the AI description prompts).
-3. **Name:** `AHD Thrive365`. Add a short description and the **icon**.
-4. Save. You don't need any topics/knowledge — this agent only acts as the
-   branded sender for cards posted from the flow.
+### 1. Open Copilot Studio in the RIGHT environment
+1. Go to **https://copilotstudio.microsoft.com** and sign in.
+2. **Top‑right → environment picker** → pick a **Ready** environment — ideally the
+   **same one your nudges flow lives in** (check Power Automate's environment
+   picker). Prefer the **Default** environment (Dataverse = Yes). Avoid Disabled
+   and "Microsoft Teams"‑type environments.
 
-### 2. Turn off unnecessary AI features (optional, keeps it simple)
-- In **Settings → Generative AI**, you can leave defaults; the agent won't be
-  used conversationally, just as the posting identity.
+### 2. Create the agent
+1. Left nav → **Create** (or **Agents → + New agent**).
+2. If it opens the "Describe your agent" chat, click **Skip to configure**
+   (or **Skip**) to go straight to the setup form.
+3. Fill in:
+   - **Name:** `AHD Thrive365`
+   - **Description:** `Posts the AHD Wellbeing365 daily wellbeing nudges.`
+   - **Instructions:** leave blank / minimal — this agent is only a posting
+     identity, it won't hold conversations.
+4. Click **Create**. Wait for the agent to open.
 
-### 3. Add the Teams channel
-1. In the agent → **Channels** (or **Settings → Channels**) → **Microsoft Teams**.
-2. **Turn on Teams** / **Add channel**.
-3. **Publish** the agent (top-right **Publish**).
+### 3. Set the display name and icon
+1. In the agent → **Settings → Details** (or the **⚙ / Overview** page).
+2. Confirm **Name = AHD Thrive365**.
+3. Upload the **AHD Thrive365 icon** (PNG). This becomes the sender avatar in Teams.
+4. Save.
 
-### 4. Get it approved for Teams
-- Publishing a Copilot Studio agent to Teams typically submits it to the
-  **Teams admin center → Manage apps** for approval.
-- Ask your **Teams admin** to **approve/allow** the "AHD Thrive365" app so it can
-  message users in the tenant.
-- (Depending on tenant policy, the admin may also need to add it to an app
-  setup/permission policy.)
+### 4. (Optional) keep it non‑conversational
+- You do **not** need topics, knowledge sources, or generative answers. It's fine
+  to leave defaults; the agent is used only as the "Post as" identity.
 
-### 5. Point the flow's card at the branded bot
+### 5. Connect the Teams channel
+1. In the agent → **Channels** (top menu) → **Microsoft Teams**.
+2. Click **Turn on Teams** / **Add channel** → confirm.
+3. Choose availability: make it available to your org (an option like
+   **"Make agent available to everyone in my org"** or **"Show to everyone once
+   admin approves"**).
+
+### 6. Publish
+1. Top‑right → **Publish** → **Publish** again to confirm.
+2. Wait for the "Published" confirmation.
+
+### 7. Get it approved for Teams (admin)
+- Publishing to Teams submits the app to **Teams admin center → Teams apps →
+  Manage apps** for approval.
+- Ask your **Teams admin** to find **"AHD Thrive365"** and **Allow/Approve** it
+  (and, if needed, add it to an **app setup / permission policy** so it can
+  message users 1:1).
+- Until approved, the "Post as" bot may not deliver to users.
+
+### 8. Point each flow's card at the branded bot
 1. Open each of the four pillar flows → the **Post card in a chat or channel**
    action.
-2. Change **Post as** from **Flow bot** to your **Power Virtual Agents / Copilot
-   Studio bot** and select **AHD Thrive365**.
+2. Change **Post as** from **Flow bot** to **Power Virtual Agents** (or **Copilot
+   Studio**) and select **AHD Thrive365**.
 3. Keep **Post in = Chat with bot**, recipient = the member's
    `userPrincipalName`, and the same Adaptive Card.
-4. Save and test — the sender now shows **AHD Thrive365** with your icon.
+4. **Save → Test** — the sender now shows **AHD Thrive365** with your icon.
+   - If the bot isn't listed in "Post as", it isn't published/approved yet, or the
+     flow is in a **different environment** than the agent — rebuild the agent in
+     the flow's environment (Step 1).
 
 ## Caveats
 
