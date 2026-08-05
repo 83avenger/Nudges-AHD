@@ -108,6 +108,22 @@ licence** you don't have, that's the admin/licence gate — ask a Power Platform
 admin, or fall back to **Option C** (keep "Workflows"; the card is already
 branded). This is a cosmetic follow‑up, not a launch blocker.
 
+## "There is a billing issue" on Publish (confirmed gate in this tenant)
+
+Publish is blocked with *"There is a billing issue. Please contact your admin to
+confirm the billing capability for this environment and agent."* This means
+**Copilot Studio billing is not set up**. To publish, an **admin** must enable one
+of (each has a **real cost**):
+- a **Copilot Studio licence** assigned to the maker, **or**
+- **pay‑as‑you‑go** billing (an Azure subscription linked to the environment), **or**
+- a **Copilot Studio message‑capacity pack** for the tenant.
+
+**Decision:** since this incurs cost purely for a **display name** (the card is
+already branded AHD Thrive365), launch the pilot on **"Workflows"** (Option C) and
+raise Copilot Studio licensing with IT only if leadership wants the branded sender
+after the September gate. An unpublished agent costs nothing; you can leave or
+delete it.
+
 ## Alternative (heaviest) — custom Azure Bot + Teams app
 
 Register an Azure Bot named "AHD Thrive365", build a Teams app manifest, and have
