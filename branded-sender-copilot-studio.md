@@ -124,6 +124,38 @@ raise Copilot Studio licensing with IT only if leadership wants the branded send
 after the September gate. An unpublished agent costs nothing; you can leave or
 delete it.
 
+## Cost under pay-as-you-go (if you choose to publish)
+
+Copilot Studio is billed in **Copilot Credits** (formerly "messages"):
+- **Pay-as-you-go:** ~**$0.01 per credit** via Azure, no commitment.
+- **Capacity pack:** **$200/month for 25,000 credits** (annual, ~$0.008/credit).
+- Consumption per feature: classic answer ~1, generative answer ~2, grounding ~10,
+  autonomous action ~25+. This agent does no AI, so a posted card is ~a basic
+  interaction (**treat as ~1 credit** until measured).
+- **Exemption:** users with **M365 Copilot** licences don't consume credits for
+  internal agent interactions.
+
+Estimated volume = 4 nudges/day × ~21 working days:
+
+| Scope | Cards/month | Est. PAYG @ ~$0.01 |
+|-------|-------------|--------------------|
+| Pilot – 50 users | ~4,200 | **~$40–45/mo** |
+| 1,000 users | ~84,000 | ~$840/mo |
+| 4,000 users | ~336,000 | ~$3,360/mo |
+
+**Cost scales linearly with users** — cheap for the pilot, but potentially
+thousands/month at full-org scale, purely for the sender name (the Flow bot is
+$0 at any scale).
+
+**Verify before scaling:** it's not clearly documented how many credits a
+proactive card posted via Power Automate "Post as" the agent actually consumes.
+Publish, send a few test cards, then read the **Azure Cost Management / Copilot
+Studio meter** to get the real per-card credit rate before rolling out widely.
+
+Pricing references (verify current figures):
+- CloudZero — Copilot Studio pricing: https://www.cloudzero.com/blog/copilot-studio-pricing/
+- A Guide to Cloud — Copilot Studio PAYG: https://www.aguidetocloud.com/blog/copilot-studio-pricing/
+
 ## Alternative (heaviest) — custom Azure Bot + Teams app
 
 Register an Azure Bot named "AHD Thrive365", build a Teams app manifest, and have
