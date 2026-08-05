@@ -70,11 +70,17 @@ and usually overkill.)
 
 ## "This environment is turned off" when opening Copilot Studio
 
-This means your tenant's **Power Platform environment is disabled** (or you have no
-Copilot Studio licence) — an **admin‑only** gate. You cannot self‑serve past it.
-Ask a **Power Platform admin** to enable/create an environment and assign you a
-**Copilot Studio** licence, or fall back to **Option C** (keep "Workflows"; the
-card is already branded). This is a cosmetic follow‑up, not a launch blocker.
+Usually it means Copilot Studio opened in a **disabled** environment. **Switch
+environments first:** top‑right environment picker → choose a **Ready** one
+(prefer your tenant's **Default** environment with Dataverse = Yes, which is
+typically where the nudges flow also lives; avoid Disabled and "Microsoft Teams"
+‑type environments). Build the agent in the **same environment as the flow** so
+the flow's *Post as* can find the bot.
+
+If **all** environments are off, or publishing prompts for a **Copilot Studio
+licence** you don't have, that's the admin/licence gate — ask a Power Platform
+admin, or fall back to **Option C** (keep "Workflows"; the card is already
+branded). This is a cosmetic follow‑up, not a launch blocker.
 
 ## Alternative (heaviest) — custom Azure Bot + Teams app
 
