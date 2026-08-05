@@ -68,6 +68,14 @@ and usually overkill.)
 - If any of this stalls, fall back to **Option C**: keep "Workflows" as the
   poster; the card header already carries the AHD Thrive365 brand.
 
+## "This environment is turned off" when opening Copilot Studio
+
+This means your tenant's **Power Platform environment is disabled** (or you have no
+Copilot Studio licence) — an **admin‑only** gate. You cannot self‑serve past it.
+Ask a **Power Platform admin** to enable/create an environment and assign you a
+**Copilot Studio** licence, or fall back to **Option C** (keep "Workflows"; the
+card is already branded). This is a cosmetic follow‑up, not a launch blocker.
+
 ## Alternative (heaviest) — custom Azure Bot + Teams app
 
 Register an Azure Bot named "AHD Thrive365", build a Teams app manifest, and have
