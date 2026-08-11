@@ -39,7 +39,8 @@ sharing are led by Wellbeing Champions.
 | `import-flow-guide.md` | All-GUI alternative loader (Power Automate, no PnP). |
 | `four-pillars-flow-guide.md` | The 4×/day reveal flow (Sun–Thu, per-pillar, hardened). |
 | `IT-handover.md` | Overview, cost, roles, privacy, metrics, maintenance. |
-| `branded-sender-copilot-studio.md` | Optional: make the Teams sender show "AHD Thrive365" instead of "Workflows". |
+| `branded-sender-copilot-studio.md` | Optional: make the Teams sender show "AHD Thrive365" instead of "Workflows" (Copilot Studio, paid). |
+| `branded-channel-feed.md` | Optional: add a shared "AHD Thrive365" Teams channel feed alongside the 1:1 nudges (free Flow-bot or premium webhook). |
 | `scripts/gen_four_pillars.py` | Regenerates the dataset. |
 | `data/month-of-connection.json` | Source of the **Social** pillar (the 21 approved connection challenges). |
 | `source/…August2026.xlsx` | The original AHD workbook (authoritative source). |
