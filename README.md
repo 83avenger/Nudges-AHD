@@ -39,6 +39,7 @@ sharing are led by Wellbeing Champions.
 | `import-flow-guide.md` | All-GUI alternative loader (Power Automate, no PnP). |
 | `four-pillars-flow-guide.md` | The 4×/day reveal flow (Sun–Thu, per-pillar, hardened). |
 | `IT-handover.md` | Overview, cost, roles, privacy, metrics, maintenance. |
+| `operations-service-account.md` | **Before go-live:** run the flow connections under a dedicated service account, not a personal one. |
 | `branded-sender-copilot-studio.md` | Optional: make the Teams sender show "AHD Thrive365" instead of "Workflows" (Copilot Studio, paid). |
 | `branded-channel-feed.md` | Optional: add a shared "AHD Thrive365" Teams channel feed alongside the 1:1 nudges (free Flow-bot or premium webhook). |
 | `channel-vs-1to1-comparison.md` | Optional: run a non-invasive parallel channel demo to compare 1:1 vs channel and show channel disadvantages. |

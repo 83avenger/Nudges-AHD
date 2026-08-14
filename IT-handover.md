@@ -77,6 +77,14 @@ Full step-by-step: `IMPLEMENTATION-GUIDE.md` (PnP) or `IMPLEMENTATION-GUIDE-GUI.
 | IT / Microsoft 365 | Teams channel, scheduling by work pattern, polls, reactions, aggregate engagement analytics. |
 | Marketing / Communications | Brand-approved cards, consent & privacy controls, weekly external recap, social governance. |
 
+## Connection ownership (fix before go-live)
+
+The flows authenticate as whoever built them. Running them under a **personal**
+(or Tier‑0 admin) account means they **break when that person leaves** or their
+account/MFA changes. **Before launch**, re‑authorize all connections under a
+**dedicated service account** and add IT as co‑owners — see
+`operations-service-account.md`.
+
 ## Privacy & sharing
 
 - Cards are **public-safe**; captions are pre-approved. No internal screenshots
