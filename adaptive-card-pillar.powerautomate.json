@@ -12,7 +12,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "AHD Thrive365 · @{first(body('Get_items')?['value'])?['PillarEmoji']} @{first(body('Get_items')?['value'])?['PillarEN']}",
+              "text": "AHD Thrive365 · @{first(body('GetItems')?['value'])?['PillarEmoji']} @{first(body('GetItems')?['value'])?['PillarEN']}",
               "weight": "Bolder",
               "size": "Medium",
               "color": "Accent",
@@ -20,7 +20,7 @@
             },
             {
               "type": "TextBlock",
-              "text": "Theme: @{first(body('Get_items')?['value'])?['DailyThemeEN']} · @{first(body('Get_items')?['value'])?['WeekArc']}",
+              "text": "Theme: @{first(body('GetItems')?['value'])?['DailyThemeEN']} · @{first(body('GetItems')?['value'])?['WeekArc']}",
               "isSubtle": true,
               "spacing": "None",
               "wrap": true
@@ -34,7 +34,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "Day @{first(body('Get_items')?['value'])?['Day']}/21",
+              "text": "Day @{first(body('GetItems')?['value'])?['Day']}/21",
               "weight": "Bolder",
               "horizontalAlignment": "Right",
               "wrap": false
@@ -50,7 +50,7 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "@{first(body('Get_items')?['value'])?['NudgeEN']}",
+          "text": "@{first(body('GetItems')?['value'])?['NudgeEN']}",
           "size": "Medium",
           "weight": "Bolder",
           "wrap": true
@@ -64,7 +64,7 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "@{first(body('Get_items')?['value'])?['PillarEmoji']} @{first(body('Get_items')?['value'])?['PillarAR']}",
+          "text": "@{first(body('GetItems')?['value'])?['PillarEmoji']} @{first(body('GetItems')?['value'])?['PillarAR']}",
           "weight": "Bolder",
           "size": "Small",
           "color": "Accent",
@@ -73,7 +73,7 @@
         },
         {
           "type": "TextBlock",
-          "text": "@{first(body('Get_items')?['value'])?['NudgeAR']}",
+          "text": "@{first(body('GetItems')?['value'])?['NudgeAR']}",
           "size": "Medium",
           "weight": "Bolder",
           "horizontalAlignment": "Right",

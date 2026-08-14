@@ -46,7 +46,7 @@ so it posts once, not per member). In each pillar flow, after **Update item**:
 2. **Post as:** `Flow bot` · **Post in:** `Channel`.
 3. Select your **Team** and **Channel** (`AHD Thrive365 · Wellbeing` / `Daily Nudges`).
 4. **Adaptive Card:** paste the same `adaptive-card-pillar.powerautomate.json`
-   (match the `Get_items`/`GetItems` action name to yours).
+   (it references `GetItems` — match to your Get items action name).
 5. Save. Now each pillar's nudge also lands in the shared channel.
 
 Sender shows as "Workflows", but the **channel** is clearly AHD Thrive365 and the
@@ -79,7 +79,7 @@ In each pillar flow, after **Update item**, add:
        { "contentType": "application/vnd.microsoft.card.adaptive",
          "content": { ...pillar card... } } ] }
    ```
-   Match the `Get_items` action name inside it to your flow's Get items action.
+   Match the `GetItems` action name inside it to your flow's Get items action.
 5. Save. The card now posts to the channel from **"AHD Thrive365"** with your icon.
 
 **Caveats:** the HTTP action requires a **premium Power Automate plan**; Office 365

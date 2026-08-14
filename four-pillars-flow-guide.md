@@ -69,12 +69,12 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
 > Order By.
 
 **Step 3 — Stop if nothing left**
-- **Condition** `length(body('Get_items')?['value'])` equal to `0`
+- **Condition** `length(body('GetItems')?['value'])` equal to `0`
   → **If yes:** Terminate (this pillar's 21 nudges are all sent).
   → **If no:** continue. **No Compose needed** — the card reads the item directly
-    with `first(body('Get_items')?['value'])?['<field>']`, so there's nothing to
-    mis-configure. (This assumes your Get items action is named `Get_items`; if it
-    is `Get_items_2`, adjust that name in the card JSON.)
+    with `first(body('GetItems')?['value'])?['<field>']`, so there's nothing to
+    mis-configure. (This assumes your Get items action is named `GetItems`; if it
+    is `GetItems_2`, adjust that name in the card JSON.)
 
 **Step 4 — Recipients**
 - **List group members** (Office 365 Groups) for the pilot group.
@@ -94,17 +94,17 @@ Build **one** flow, confirm it, then **Save As** three copies and change only th
     unlicensed accounts can't receive Flow-bot chats.
   - **Adaptive Card:** paste **`adaptive-card-pillar.powerautomate.json`** — it
     has the Power Automate expressions inline
-    (`@{first(body('Get_items')?['value'])?['…']}`), reading the item straight from
+    (`@{first(body('GetItems')?['value'])?['…']}`), reading the item straight from
     Get items. Nothing to hand-bind, no Compose. If your Get items action isn't
-    named `Get_items`, find/replace that name in the JSON.
+    named `GetItems`, find/replace that name in the JSON.
   - Wrap in a Scope `SendScope`.
 
   > **Card delivers but all fields are blank** (`Day /21`, empty body)? The
-  > `@{…}` expressions reference `Get_items` but your action's real internal name
-  > differs (e.g. `Get_items_1` after rebuilding), so `body('Get_items')` is null
+  > `@{…}` expressions reference `GetItems` but your action's real internal name
+  > differs (e.g. `GetItems_1` after rebuilding), so `body('GetItems')` is null
   > and every field resolves to empty — silently, no error. Fix: click the Get
   > items action to read its name (spaces → underscores), then find/replace
-  > `Get_items` in the card JSON to match. Verify the name via the fx editor:
+  > `GetItems` in the card JSON to match. Verify the name via the fx editor:
   > type `body('` and read the suggestion.
 
   > ⚠️ **Do NOT paste `adaptive-card-pillar.json` (the `${...}` version) into
@@ -136,7 +136,7 @@ If you'd rather maintain a single flow: Recurrence **every 15 min**
 (Sun–Thu 07:00–14:00) + a **Switch** on
 `convertTimeZone(utcNow(),'UTC','Arabian Standard Time','HH:mm')` mapping
 `07:00→Social, 09:15→Physical, 11:30→Financial, 13:45→Mental`; default →
-Terminate; then the same Get-items / send / update steps. Same behaviour as the
+Terminate; then the same GetItems / send / update steps. Same behaviour as the
 four flows, consolidated. Choose whichever your team prefers to maintain.
 
 ## Cost & licensing
