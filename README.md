@@ -26,6 +26,7 @@ sharing are led by Wellbeing Champions.
   fastest).
 - **`IMPLEMENTATION-GUIDE-GUI.md`** — the same, all in the browser (no
   PowerShell; avoids the "From Excel" WAC error).
+- **`GO-LIVE-CHECKLIST.md`** — production‑readiness checklist + licences required.
 
 ## Contents
 
