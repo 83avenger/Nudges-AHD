@@ -41,6 +41,7 @@ sharing are led by Wellbeing Champions.
 | `IT-handover.md` | Overview, cost, roles, privacy, metrics, maintenance. |
 | `branded-sender-copilot-studio.md` | Optional: make the Teams sender show "AHD Thrive365" instead of "Workflows" (Copilot Studio, paid). |
 | `branded-channel-feed.md` | Optional: add a shared "AHD Thrive365" Teams channel feed alongside the 1:1 nudges (free Flow-bot or premium webhook). |
+| `channel-vs-1to1-comparison.md` | Optional: run a non-invasive parallel channel demo to compare 1:1 vs channel and show channel disadvantages. |
 | `scripts/gen_four_pillars.py` | Regenerates the dataset. |
 | `data/month-of-connection.json` | Source of the **Social** pillar (the 21 approved connection challenges). |
 | `source/…August2026.xlsx` | The original AHD workbook (authoritative source). |
