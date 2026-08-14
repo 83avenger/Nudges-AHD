@@ -34,6 +34,11 @@ name** branded:
 
 ## Option 1 · Post to the channel with Flow bot (free)
 
+> **No new SharePoint needed.** You do **not** copy or duplicate the list. The
+> channel post reuses the **same `FourPillarNudges` list** and the **same Get
+> items** already in each flow — both the 1:1 card and the channel card read the
+> same `first(body('GetItems')…)` item. One list, one query, two destinations.
+
 Add **one** channel post per day (once per pillar, **outside** the Apply‑to‑each
 so it posts once, not per member). In each pillar flow, after **Update item**:
 
