@@ -11,6 +11,27 @@ Additionally, if the builder account is a **privileged/Tier‑0 admin** (e.g. a
 `t0-*` account), running a wellbeing automation under it is **over‑privileged**
 and a security concern.
 
+## Symptom seen in this tenant
+
+Flows fail with the connection in **Error**, e.g.:
+
+> `Getitems failed: … sharepointonline is in the block list … Failed to refresh
+> access token … AADSTS135010: UserPrincipal doesn't have the key ID configured …
+> invalid_grant`
+
+**Root cause:** the connection runs as a **Tier‑0 / privileged admin** account
+(`t0-*`). Such accounts carry strict **Conditional Access / token‑protection**
+policies (short sign‑in frequency, device‑bound tokens, passwordless/CBA). A
+Power Automate cloud connection is **unattended** and cannot satisfy those, so the
+stored **refresh token can't be renewed** → the connector is blocked and the flow
+fails. Re‑authenticating fixes it briefly, then the policy invalidates the token
+again. **The identity is the problem, not the flow.**
+
+- **Temporary unblock:** Power Automate → **Connections** → the errored connection
+  → **⋯ → Fix connection** → re‑sign‑in. (Will recur under the admin account.)
+- **Permanent fix:** move to the service account below, excluded from the Tier‑0
+  policies (or under a service‑account‑appropriate policy). Work with IT security.
+
 ## Fix — run everything under a dedicated service account
 
 ### 1. Create a service account
