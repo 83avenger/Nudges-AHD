@@ -147,6 +147,18 @@ Estimated volume = 4 nudges/day × ~21 working days:
 thousands/month at full-org scale, purely for the sender name (the Flow bot is
 $0 at any scale).
 
+### PAYG vs pack, and UAE notes
+- **Both are available** (2026). PAYG needs an **Azure subscription** linked to the
+  environment (admin sets it up); packs are bought via the M365 admin center. No
+  UAE‑specific restriction found — PAYG bills through Azure, which operates in the
+  UAE (UAE North/Central).
+- **Break‑even:** the $200 pack only beats PAYG above **~20,000 credits/month
+  (~238 users)**. Below that, **PAYG is cheaper** — so use **PAYG for the pilot**.
+- **UAE billing:** Azure PAYG is **USD‑metered**; invoiced in **AED** with FX + **5%
+  VAT**. Pilot ≈ **$42 + 5% ≈ ~$44/mo (~AED 162)**.
+- PAYG has **no commitment**, so it doubles as the measurement test — turn it on,
+  send ~20 cards, read the meter for the real per‑card credit rate.
+
 **Verify before scaling:** it's not clearly documented how many credits a
 proactive card posted via Power Automate "Post as" the agent actually consumes.
 Publish, send a few test cards, then read the **Azure Cost Management / Copilot
