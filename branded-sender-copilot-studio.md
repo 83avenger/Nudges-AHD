@@ -135,13 +135,17 @@ Copilot Studio is billed in **Copilot Credits** (formerly "messages"):
 - **Exemption:** users with **M365 Copilot** licences don't consume credits for
   internal agent interactions.
 
-Estimated volume = 4 nudges/day × ~21 working days:
+Estimated volume = 4 nudges/day × ~21 working days (at ~1 credit/card):
 
-| Scope | Cards/month | Est. PAYG @ ~$0.01 |
-|-------|-------------|--------------------|
-| Pilot – 50 users | ~4,200 | **~$40–45/mo** |
-| 1,000 users | ~84,000 | ~$840/mo |
-| 4,000 users | ~336,000 | ~$3,360/mo |
+| Scope | Cards/month | PAYG @ ~$0.01 | Pack alt. ($200/25k) | Cheaper |
+|-------|-------------|---------------|----------------------|---------|
+| Pilot – 50 users | ~4,200 | **~$42/mo** | 1 pack = $200 | **PAYG** |
+| 250 users | ~21,000 | ~$210/mo | 1 pack = $200 | pack (marginal) |
+| 1,000 users | ~84,000 | ~$840/mo | 4 packs = $800 | pack |
+| **4,000 users** | **~336,000** | **~$3,360/mo** | **14 packs = $2,800** | **pack** |
+
+PAYG is cheaper up to ~238 users (~20k credits); above that the $200 pack wins.
+UAE all‑in: add ~5% VAT + AED FX (pilot ≈ ~$44/mo).
 
 **Cost scales linearly with users** — cheap for the pilot, but potentially
 thousands/month at full-org scale, purely for the sender name (the Flow bot is
