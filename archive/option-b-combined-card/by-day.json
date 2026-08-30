@@ -1,0 +1,800 @@
+[
+  {
+    "Day": 1,
+    "RevealDate": "2026-08-03",
+    "DateLabel": "3 Aug",
+    "Weekday": "Mon",
+    "WeekArc": "W1 · I See You",
+    "DailyThemeEN": "Use Their Name",
+    "DailyThemeAR": "استخدم اسمه",
+    "WhyItMatters": "A personal greeting takes only seconds, but it helps a colleague feel noticed and respected.",
+    "TomorrowTeaser": "Tomorrow: go beyond the people you already know.",
+    "SocialCaption": "Day 1/21 👋 Use their name. One small greeting can change the tone of a shift. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Use Their Name - Greet one colleague by name today.",
+        "ar": "استخدم اسمه - حيِّ زميلاً واحداً باسمه اليوم.",
+        "slot": "07:00",
+        "source": "#1"
+      },
+      "Physical": {
+        "en": "Stand and stretch for one minute before your next task.",
+        "ar": "قِف وتمدّد لمدة دقيقة قبل مهمتك التالية.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Note one small expense you can plan for this week.",
+        "ar": "دوّن مصروفاً بسيطاً يمكنك التخطيط له هذا الأسبوع.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Take three slow breaths before you start.",
+        "ar": "خذ ثلاثة أنفاس بطيئة قبل أن تبدأ.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 2,
+    "RevealDate": "2026-08-04",
+    "DateLabel": "4 Aug",
+    "Weekday": "Tue",
+    "WeekArc": "W1 · I See You",
+    "DailyThemeEN": "Cross the Circle",
+    "DailyThemeAR": "وسّع دائرة التواصل",
+    "WhyItMatters": "Connection across departments strengthens collaboration and reminds us that we are One AHD.",
+    "TomorrowTeaser": "Tomorrow: someone you regularly pass may still feel unnoticed.",
+    "SocialCaption": "Day 2/21 🤝 Step outside your usual circle and greet someone new. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Cross the Circle - Greet someone outside your usual team or department.",
+        "ar": "وسّع دائرة التواصل - حيِّ شخصاً من خارج فريقك أو قسمك المعتاد.",
+        "slot": "07:00",
+        "source": "#21"
+      },
+      "Physical": {
+        "en": "Take the stairs or a short walk between tasks.",
+        "ar": "اصعد الدرج أو امشِ قليلاً بين المهام.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Check one subscription you no longer use.",
+        "ar": "راجع اشتراكاً واحداً لم تعد تستخدمه.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Set one clear intention for your day.",
+        "ar": "حدّد نيّة واضحة واحدة ليومك.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 3,
+    "RevealDate": "2026-08-05",
+    "DateLabel": "5 Aug",
+    "Weekday": "Wed",
+    "WeekArc": "W1 · I See You",
+    "DailyThemeEN": "Notice Someone New",
+    "DailyThemeAR": "لاحظ شخصاً جديداً",
+    "WhyItMatters": "A smile, greeting, or respectful gesture can turn an ordinary moment into belonging.",
+    "TomorrowTeaser": "Tomorrow: a new beginning becomes easier when someone opens the door.",
+    "SocialCaption": "Day 3/21 👀 Notice someone new. A greeting is enough to begin. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Notice Someone New - Acknowledge a colleague you do not normally speak with.",
+        "ar": "لاحظ شخصاً جديداً - أظهر التقدير لزميل لا تتحدث معه عادةً.",
+        "slot": "07:00",
+        "source": "#24"
+      },
+      "Physical": {
+        "en": "Roll your shoulders back slowly five times.",
+        "ar": "أدِر كتفيك للخلف ببطء خمس مرات.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Set aside a small amount toward a simple goal.",
+        "ar": "خصّص مبلغاً صغيراً لهدف بسيط.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Pause for thirty seconds between tasks.",
+        "ar": "توقّف ثلاثين ثانية بين المهام.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 4,
+    "RevealDate": "2026-08-06",
+    "DateLabel": "6 Aug",
+    "Weekday": "Thu",
+    "WeekArc": "W1 · I See You",
+    "DailyThemeEN": "Make the Welcome Real",
+    "DailyThemeAR": "اجعل الترحيب حقيقياً",
+    "WhyItMatters": "Welcoming behavior reduces distance and helps people enter the day with confidence.",
+    "TomorrowTeaser": "Tomorrow: how we end an interaction can matter as much as how we begin.",
+    "SocialCaption": "Day 4/21 🌟 Make the welcome real. Help someone start with confidence. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Make the Welcome Real - Welcome someone beginning a shift, joining a meeting, or entering your work area.",
+        "ar": "اجعل الترحيب حقيقياً - رحّب بمن يبدأ مناوبته أو ينضم إلى اجتماع أو يدخل منطقة عملك.",
+        "slot": "07:00",
+        "source": "#41"
+      },
+      "Physical": {
+        "en": "Drink a glass of water now.",
+        "ar": "اشرب كوب ماء الآن.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Compare prices before one purchase today.",
+        "ar": "قارن الأسعار قبل عملية شراء واحدة اليوم.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Name one thing you're grateful for now.",
+        "ar": "اذكر أمراً واحداً تشعر بالامتنان له الآن.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 5,
+    "RevealDate": "2026-08-07",
+    "DateLabel": "7 Aug",
+    "Weekday": "Fri",
+    "WeekArc": "W1 · I See You",
+    "DailyThemeEN": "End with Warmth",
+    "DailyThemeAR": "اختم يومك بودّ",
+    "WhyItMatters": "A thoughtful closing leaves people feeling valued beyond the task itself.",
+    "TomorrowTeaser": "Next week: appreciation becomes specific.",
+    "SocialCaption": "Day 5/21 ☀️ End with warmth. One kind wish before you go. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "End with Warmth - Before your day or shift ends, wish one colleague well.",
+        "ar": "اختم يومك بودّ - قبل نهاية يومك أو مناوبتك، تمنَّ الخير لزميل.",
+        "slot": "07:00",
+        "source": "#20"
+      },
+      "Physical": {
+        "en": "Rest your eyes: look far away for twenty seconds.",
+        "ar": "أرِح عينيك: انظر إلى مكان بعيد لمدة عشرين ثانية.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Write down one financial goal for the month.",
+        "ar": "اكتب هدفاً مالياً واحداً لهذا الشهر.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Give one task your full attention.",
+        "ar": "امنح مهمة واحدة كامل انتباهك.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 6,
+    "RevealDate": "2026-08-10",
+    "DateLabel": "10 Aug",
+    "Weekday": "Mon",
+    "WeekArc": "W2 · I Appreciate You",
+    "DailyThemeEN": "Make It Specific",
+    "DailyThemeAR": "كن محدداً",
+    "WhyItMatters": "Specific appreciation feels genuine and makes positive behavior easier to repeat.",
+    "TomorrowTeaser": "Tomorrow: effort deserves recognition, even before the result.",
+    "SocialCaption": "Day 6/21 🙌 Name the action. Name the impact. Make appreciation specific. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Make It Specific - Thank one colleague for a specific action and explain why it helped.",
+        "ar": "كن محدداً - اشكر زميلاً على عمل محدد واشرح كيف أحدث فرقاً.",
+        "slot": "07:00",
+        "source": "#3"
+      },
+      "Physical": {
+        "en": "Straighten your posture and unclench your jaw.",
+        "ar": "اعتدل في جلستك وأرخِ فكّك.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Try a no-spend moment: pause one small buy.",
+        "ar": "جرّب لحظة بلا إنفاق: أجّل عملية شراء صغيرة.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Notice a tense muscle and let it soften.",
+        "ar": "لاحظ عضلة متوترة ودعها تسترخي.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 7,
+    "RevealDate": "2026-08-11",
+    "DateLabel": "11 Aug",
+    "Weekday": "Tue",
+    "WeekArc": "W2 · I Appreciate You",
+    "DailyThemeEN": "Recognize the Effort",
+    "DailyThemeAR": "قدّر الجهد",
+    "WhyItMatters": "Recognizing effort supports motivation during demanding work, not only after success.",
+    "TomorrowTeaser": "Tomorrow: turn your appreciation into a message.",
+    "SocialCaption": "Day 7/21 💙 Results matter. Effort matters too. Recognize it today. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Recognize the Effort - Appreciate someone’s effort, even if the work is still in progress.",
+        "ar": "قدّر الجهد - عبّر عن تقديرك لجهد شخص حتى لو كان العمل لا يزال مستمراً.",
+        "slot": "07:00",
+        "source": "#83"
+      },
+      "Physical": {
+        "en": "Take a two-minute walk to reset your energy.",
+        "ar": "امشِ دقيقتين لتجديد طاقتك.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Review one bill for anything unexpected.",
+        "ar": "راجع فاتورة واحدة بحثاً عن أي مبلغ غير متوقع.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Take a mindful break away from screens.",
+        "ar": "خذ استراحة واعية بعيداً عن الشاشات.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 8,
+    "RevealDate": "2026-08-12",
+    "DateLabel": "12 Aug",
+    "Weekday": "Wed",
+    "WeekArc": "W2 · I Appreciate You",
+    "DailyThemeEN": "Send It",
+    "DailyThemeAR": "أرسلها",
+    "WhyItMatters": "A short written thank-you can be revisited and remembered long after the moment.",
+    "TomorrowTeaser": "Tomorrow: good feedback should travel.",
+    "SocialCaption": "Day 8/21 💬 Send the message you have been meaning to send. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Send It - Message a colleague who made your work easier this week.",
+        "ar": "أرسلها - ابعث رسالة لزميل جعل عملك أسهل هذا الأسبوع.",
+        "slot": "07:00",
+        "source": "#4"
+      },
+      "Physical": {
+        "en": "Loosen your neck with gentle side-to-side stretches.",
+        "ar": "أرخِ رقبتك بتمدد لطيف يميناً ويساراً.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Plan tomorrow's spending before it happens.",
+        "ar": "خطّط لمصروف الغد قبل حدوثه.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Speak to yourself as kindly as to a friend.",
+        "ar": "تحدّث إلى نفسك بلطف كما تخاطب صديقاً.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 9,
+    "RevealDate": "2026-08-13",
+    "DateLabel": "13 Aug",
+    "Weekday": "Thu",
+    "WeekArc": "W2 · I Appreciate You",
+    "DailyThemeEN": "Pass It On",
+    "DailyThemeAR": "انقلها إليه",
+    "WhyItMatters": "Passing on praise builds trust and prevents meaningful recognition from being lost.",
+    "TomorrowTeaser": "Tomorrow: close the week by telling someone what you value.",
+    "SocialCaption": "Day 9/21 📣 Good feedback should reach the person who earned it. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Pass It On - If you hear positive feedback about a colleague, make sure they receive it.",
+        "ar": "انقلها إليه - إذا سمعت إشادة بزميل، فتأكد من وصولها إليه.",
+        "slot": "07:00",
+        "source": "#64"
+      },
+      "Physical": {
+        "en": "Refill your water bottle and keep it close.",
+        "ar": "أعد ملء زجاجة الماء واجعلها قريبة منك.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Learn one new thing about budgeting today.",
+        "ar": "تعلّم شيئاً جديداً عن إدارة الميزانية اليوم.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Write down what's on your mind to clear it.",
+        "ar": "اكتب ما يشغل بالك لتصفّي ذهنك.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 10,
+    "RevealDate": "2026-08-14",
+    "DateLabel": "14 Aug",
+    "Weekday": "Fri",
+    "WeekArc": "W2 · I Appreciate You",
+    "DailyThemeEN": "Finish with Appreciation",
+    "DailyThemeAR": "اختم بالتقدير",
+    "WhyItMatters": "A sincere weekly reflection strengthens relationships and reinforces teamwork.",
+    "TomorrowTeaser": "Next week: the challenge is not to speak more, but to listen better.",
+    "SocialCaption": "Day 10/21 ❤️ Finish the week with genuine appreciation. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Finish with Appreciation - Tell one colleague what you valued about working with them this week.",
+        "ar": "اختم بالتقدير - أخبر زميلاً بما قدّرته في العمل معه هذا الأسبوع.",
+        "slot": "07:00",
+        "source": "#46"
+      },
+      "Physical": {
+        "en": "Stand up during your next phone call or reading.",
+        "ar": "قِف أثناء مكالمتك أو قراءتك القادمة.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Separate a want from a need before buying.",
+        "ar": "ميّز بين الرغبة والحاجة قبل الشراء.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Let one small task be good enough today.",
+        "ar": "دع مهمة صغيرة تكون جيدة بما يكفي اليوم.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 11,
+    "RevealDate": "2026-08-17",
+    "DateLabel": "17 Aug",
+    "Weekday": "Mon",
+    "WeekArc": "W3 · I Hear You",
+    "DailyThemeEN": "Two Minutes of Attention",
+    "DailyThemeAR": "دقيقتان من الاهتمام",
+    "WhyItMatters": "Undivided attention signals respect and allows important details to surface.",
+    "TomorrowTeaser": "Tomorrow: let the other person reach the end of their thought.",
+    "SocialCaption": "Day 11/21 👂 Two minutes. Full attention. No multitasking. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Two Minutes of Attention - Give one colleague your full attention without checking another screen or task.",
+        "ar": "دقيقتان من الاهتمام - امنح زميلاً كامل انتباهك دون الانشغال بشاشة أو مهمة أخرى.",
+        "slot": "07:00",
+        "source": "#126"
+      },
+      "Physical": {
+        "en": "Take three slow, deep breaths to steady your body.",
+        "ar": "خذ ثلاثة أنفاس عميقة بطيئة لتهدئة جسمك.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Track today's small spends for awareness.",
+        "ar": "تتبّع مصروفاتك الصغيرة اليوم لزيادة الوعي.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Focus on what's within your control right now.",
+        "ar": "ركّز على ما هو ضمن سيطرتك الآن.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 12,
+    "RevealDate": "2026-08-18",
+    "DateLabel": "18 Aug",
+    "Weekday": "Tue",
+    "WeekArc": "W3 · I Hear You",
+    "DailyThemeEN": "Let Them Finish",
+    "DailyThemeAR": "دعه يكمل",
+    "WhyItMatters": "Allowing someone to finish improves understanding and helps people feel heard.",
+    "TomorrowTeaser": "Tomorrow: curiosity goes one question deeper.",
+    "SocialCaption": "Day 12/21 ⏸️ Pause. Listen. Let them finish. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Let Them Finish - In one conversation today, consciously avoid interrupting.",
+        "ar": "دعه يكمل - تجنّب المقاطعة بوعي في محادثة واحدة اليوم.",
+        "slot": "07:00",
+        "source": "#128"
+      },
+      "Physical": {
+        "en": "Stretch your wrists and hands between tasks.",
+        "ar": "مدّد معصميك ويديك بين المهام.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Set a simple reminder for an upcoming payment.",
+        "ar": "اضبط تذكيراً بسيطاً لدفعة قادمة.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Take a breath before replying to that message.",
+        "ar": "خذ نفَساً قبل الرد على تلك الرسالة.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 13,
+    "RevealDate": "2026-08-19",
+    "DateLabel": "19 Aug",
+    "Weekday": "Wed",
+    "WeekArc": "W3 · I Hear You",
+    "DailyThemeEN": "Ask One More Question",
+    "DailyThemeAR": "اسأل سؤالاً إضافياً",
+    "WhyItMatters": "A thoughtful follow-up moves a conversation from hearing words to understanding meaning.",
+    "TomorrowTeaser": "Tomorrow: listen before trying to solve.",
+    "SocialCaption": "Day 13/21 ❓ One more question can reveal a whole new perspective. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Ask One More Question - Ask a genuine follow-up question to understand a colleague’s perspective.",
+        "ar": "اسأل سؤالاً إضافياً - اطرح سؤال متابعة حقيقياً لفهم وجهة نظر زميلك.",
+        "slot": "07:00",
+        "source": "#143"
+      },
+      "Physical": {
+        "en": "Take a short movement break away from your screen.",
+        "ar": "خذ استراحة حركة قصيرة بعيداً عن الشاشة.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Consider a smart swap that saves a little.",
+        "ar": "فكّر في بديل ذكي يوفّر القليل.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Step to a window for a short mental reset.",
+        "ar": "اتّجه إلى نافذة لإعادة ضبط ذهنك قليلاً.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 14,
+    "RevealDate": "2026-08-20",
+    "DateLabel": "20 Aug",
+    "Weekday": "Thu",
+    "WeekArc": "W3 · I Hear You",
+    "DailyThemeEN": "Listen Before Solving",
+    "DailyThemeAR": "استمع قبل أن تقترح حلاً",
+    "WhyItMatters": "Clarifying what someone needs prevents well-intended advice from replacing genuine support.",
+    "TomorrowTeaser": "Tomorrow: check whether you understood correctly.",
+    "SocialCaption": "Day 14/21 🤍 Advice or attention? Ask before you assume. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Listen Before Solving - Ask: “Would you like a suggestion, or would you prefer me to listen?”",
+        "ar": "استمع قبل أن تقترح حلاً - اسأل: «هل تود اقتراحاً أم تفضّل أن أستمع؟»",
+        "slot": "07:00",
+        "source": "#139"
+      },
+      "Physical": {
+        "en": "Choose a healthy snack or fruit today.",
+        "ar": "اختر وجبة خفيفة صحية أو فاكهة اليوم.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Read one saving tip from a trusted source.",
+        "ar": "اقرأ نصيحة واحدة عن الادخار من مصدر موثوق.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Acknowledge one thing you did well today.",
+        "ar": "اعترف بأمر واحد أتقنته اليوم.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 15,
+    "RevealDate": "2026-08-21",
+    "DateLabel": "21 Aug",
+    "Weekday": "Fri",
+    "WeekArc": "W3 · I Hear You",
+    "DailyThemeEN": "Check Your Understanding",
+    "DailyThemeAR": "تحقق من فهمك",
+    "WhyItMatters": "Checking understanding reduces assumptions and strengthens clear communication.",
+    "TomorrowTeaser": "Final week: connection becomes practical support.",
+    "SocialCaption": "Day 15/21 ✅ Do not just listen-check that you understood. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Check Your Understanding - End one important conversation with: “Have I understood you correctly?”",
+        "ar": "تحقق من فهمك - اختم محادثة مهمة بسؤال: «هل فهمتك بشكل صحيح؟»",
+        "slot": "07:00",
+        "source": "#144"
+      },
+      "Physical": {
+        "en": "Walk while you talk when you can.",
+        "ar": "امشِ أثناء حديثك عندما يمكنك ذلك.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Reflect on one money habit that helps you.",
+        "ar": "تأمّل عادة مالية واحدة تفيدك.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Protect a few minutes of quiet focus.",
+        "ar": "احمِ بضع دقائق من التركيز الهادئ.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 16,
+    "RevealDate": "2026-08-24",
+    "DateLabel": "24 Aug",
+    "Weekday": "Mon",
+    "WeekArc": "W4 · I Support You",
+    "DailyThemeEN": "Offer Something Practical",
+    "DailyThemeAR": "قدّم دعماً عملياً",
+    "WhyItMatters": "A specific offer makes support easier to accept and easier to act on.",
+    "TomorrowTeaser": "Tomorrow: support continues after the difficult moment.",
+    "SocialCaption": "Day 16/21 👐 Ask the practical question. Then be ready to help. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Offer Something Practical - Ask one colleague: “Is there anything practical I can do to help today?”",
+        "ar": "قدّم دعماً عملياً - اسأل زميلاً: «هل هناك شيء عملي يمكنني مساعدتك فيه اليوم؟»",
+        "slot": "07:00",
+        "source": "#53"
+      },
+      "Physical": {
+        "en": "Give your eyes a screen break for one minute.",
+        "ar": "امنح عينيك استراحة من الشاشة لمدة دقيقة.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Plan a low-cost way to enjoy your week.",
+        "ar": "خطّط لطريقة ممتعة وقليلة التكلفة لأسبوعك.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Notice your feelings without judging them.",
+        "ar": "لاحظ مشاعرك دون أن تُصدر عليها أحكاماً.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 17,
+    "RevealDate": "2026-08-25",
+    "DateLabel": "25 Aug",
+    "Weekday": "Tue",
+    "WeekArc": "W4 · I Support You",
+    "DailyThemeEN": "Check In Afterwards",
+    "DailyThemeAR": "تابع بعد الموقف",
+    "WhyItMatters": "Following up shows that care continues after the pressure has passed.",
+    "TomorrowTeaser": "Tomorrow: open the circle.",
+    "SocialCaption": "Day 17/21 💬 The difficult moment ended. Your support does not have to. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Check In Afterwards - Check in with someone after a demanding shift, meeting, or interaction.",
+        "ar": "تابع بعد الموقف - اطمئن على شخص بعد مناوبة أو اجتماع أو موقف صعب.",
+        "slot": "07:00",
+        "source": "#212"
+      },
+      "Physical": {
+        "en": "Stretch your back gently by reaching forward.",
+        "ar": "مدّد ظهرك بلطف بالانحناء إلى الأمام.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Check progress toward one savings goal.",
+        "ar": "تحقّق من تقدّمك نحو هدف ادخار واحد.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Let go of one worry you cannot control.",
+        "ar": "تخلَّ عن قلق واحد لا يمكنك التحكم فيه.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 18,
+    "RevealDate": "2026-08-26",
+    "DateLabel": "26 Aug",
+    "Weekday": "Wed",
+    "WeekArc": "W4 · I Support You",
+    "DailyThemeEN": "Open the Circle",
+    "DailyThemeAR": "افتح الدائرة",
+    "WhyItMatters": "Small invitations reduce isolation and create a stronger sense of belonging.",
+    "TomorrowTeaser": "Tomorrow: whose voice is missing?",
+    "SocialCaption": "Day 18/21 🔵 Open the circle. Make room for one more. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Open the Circle - Invite a colleague to join a break, conversation, or team moment when appropriate.",
+        "ar": "افتح الدائرة - ادعُ زميلاً للانضمام إلى استراحة أو محادثة أو لحظة جماعية عندما يكون ذلك مناسباً.",
+        "slot": "07:00",
+        "source": "#55"
+      },
+      "Physical": {
+        "en": "Drink water before you feel thirsty in the heat.",
+        "ar": "اشرب الماء قبل أن تشعر بالعطش في الحر.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Avoid one impulse purchase today.",
+        "ar": "تجنّب عملية شراء اندفاعية واحدة اليوم.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Finish one task fully before starting another.",
+        "ar": "أنهِ مهمة واحدة تماماً قبل بدء أخرى.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 19,
+    "RevealDate": "2026-08-27",
+    "DateLabel": "27 Aug",
+    "Weekday": "Thu",
+    "WeekArc": "W4 · I Support You",
+    "DailyThemeEN": "Make Space for a Voice",
+    "DailyThemeAR": "أفسح المجال لصوت آخر",
+    "WhyItMatters": "Inclusive teams make better decisions when different perspectives can be heard safely.",
+    "TomorrowTeaser": "Tomorrow: one action can make another team’s day easier.",
+    "SocialCaption": "Day 19/21 🎙️ Do not fill every silence. Invite another perspective. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Make Space for a Voice - Notice whose perspective may be missing and invite it respectfully.",
+        "ar": "أفسح المجال لصوت آخر - لاحظ وجهة النظر الغائبة وادعُ صاحبها للمشاركة باحترام.",
+        "slot": "07:00",
+        "source": "#224"
+      },
+      "Physical": {
+        "en": "Take a mindful pause to stand and breathe.",
+        "ar": "خذ وقفة واعية لتقف وتتنفس.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Notice one thing you're glad you didn't overspend on.",
+        "ar": "دوّن أمراً تشعر بالامتنان لأنك لم تُفرط في الإنفاق عليه.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Give yourself permission to pause and rest.",
+        "ar": "اسمح لنفسك بالتوقف والراحة.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 20,
+    "RevealDate": "2026-08-28",
+    "DateLabel": "28 Aug",
+    "Weekday": "Fri",
+    "WeekArc": "W4 · I Support You",
+    "DailyThemeEN": "Make Someone’s Day Easier",
+    "DailyThemeAR": "اجعل يوم شخص أسهل",
+    "WhyItMatters": "Support becomes culture when it crosses team and department boundaries.",
+    "TomorrowTeaser": "Monday is the finale: choose the habit that stays.",
+    "SocialCaption": "Day 20/21 🤝 One practical action. One easier day. Finish strong, AHD. #AHDThrive365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Make Someone’s Day Easier - Take one practical action that reduces an avoidable burden for a colleague or another department.",
+        "ar": "اجعل يوم شخص أسهل - قم بخطوة عملية تقلل عبئاً يمكن تجنبه عن زميل أو قسم آخر.",
+        "slot": "07:00",
+        "source": "#121"
+      },
+      "Physical": {
+        "en": "Add one extra short walk to your day.",
+        "ar": "أضف نزهة قصيرة إضافية إلى يومك.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Review the week's spending calmly, without judgment.",
+        "ar": "راجع مصروفات الأسبوع بهدوء ودون إصدار أحكام.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Reflect on one moment that went well this week.",
+        "ar": "تأمّل لحظة واحدة سارت على ما يُرام هذا الأسبوع.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  },
+  {
+    "Day": 21,
+    "RevealDate": "2026-08-31",
+    "DateLabel": "31 Aug",
+    "Weekday": "Mon",
+    "WeekArc": "FINALE · We Are Connected",
+    "DailyThemeEN": "Make It Last",
+    "DailyThemeAR": "اجعلها عادة مستمرة",
+    "WhyItMatters": "Culture is built not by what we try once, but by what we choose to repeat together.",
+    "TomorrowTeaser": "SEPTEMBER REVEAL → Shaped by your feedback. Watch this space.",
+    "SocialCaption": "Day 21/21 🏁 We connected, listened, appreciated and supported. Which habit will you keep? #AHD_Wellbieng_365 #AHDConnect",
+    "pillars": {
+      "Social": {
+        "en": "Make It Last - Choose one August connection behavior to continue in September. Team photo challenge: show us what “One AHD” means to you.",
+        "ar": "اجعلها عادة مستمرة - اختر سلوكاً واحداً من سلوكيات التواصل في أغسطس لتستمر عليه في سبتمبر. تحدي صورة الفريق: شاركونا معنى «AHD واحد».",
+        "slot": "07:00",
+        "source": "finale"
+      },
+      "Physical": {
+        "en": "Choose one movement habit to keep in September.",
+        "ar": "اختر عادة حركة واحدة لتستمر عليها في سبتمبر.",
+        "slot": "09:15",
+        "source": "draft"
+      },
+      "Financial": {
+        "en": "Choose one money habit to keep in September.",
+        "ar": "اختر عادة مالية واحدة لتستمر عليها في سبتمبر.",
+        "slot": "11:30",
+        "source": "draft"
+      },
+      "Mental": {
+        "en": "Choose one calm habit to keep in September.",
+        "ar": "اختر عادة هدوء واحدة لتستمر عليها في سبتمبر.",
+        "slot": "13:45",
+        "source": "draft"
+      }
+    }
+  }
+]
