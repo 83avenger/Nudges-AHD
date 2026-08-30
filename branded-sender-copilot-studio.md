@@ -172,6 +172,31 @@ Pricing references (verify current figures):
 - CloudZero — Copilot Studio pricing: https://www.cloudzero.com/blog/copilot-studio-pricing/
 - A Guide to Cloud — Copilot Studio PAYG: https://www.aguidetocloud.com/blog/copilot-studio-pricing/
 
+## What the Copilot Studio spend actually unlocks
+
+PAYG credits unlock the **whole Copilot Studio platform** (billed per message/credit
+at runtime), not just the branded bot:
+- **Agent building:** natural‑language authoring, topics + generative orchestration,
+  multi‑agent systems, testing/evaluation, ALM.
+- **Knowledge (RAG):** generative answers grounded on SharePoint, websites, files,
+  Dataverse, Azure AI Search; multilingual (incl. Arabic).
+- **Actions:** Power Automate flows, 1,500+ connectors, REST APIs, connected apps.
+- **Autonomy/advanced:** autonomous/triggered agents, computer‑using agents,
+  real‑time voice, human handoff.
+- **Channels:** Teams, M365 Copilot, web, Slack, SMS, voice, custom apps.
+- **Analytics & governance:** engagement/CSAT/transcripts, DLP, Entra auth, audit.
+
+**But this program uses almost none of it** — only the "Post as this agent"
+identity. So paying purely for the branded sender buys **<5% of the platform**.
+Credit cost scales with feature richness (basic post ~1 credit, generative answer
+~2, grounding ~10, autonomous action ~25+).
+
+**Upside if you want value for the spend:** the same billing could fund a real
+bilingual **"AHD Wellbeing Assistant"** in Teams — grounded on approved SharePoint
+content, answering EAP/benefits/wellbeing questions with analytics — which would
+justify Copilot Studio far more than a display name. (Advanced features'
+availability/pricing vary by tier and some are in preview — verify with Microsoft.)
+
 ## Alternative (heaviest) — custom Azure Bot + Teams app
 
 Register an Azure Bot named "AHD Thrive365", build a Teams app manifest, and have
