@@ -32,6 +32,16 @@ first** (see `azure-cost-management-setup.md`).
 
 ---
 
+> **Before enabling PAYG — check the free pool first.** If the tenant has
+> **Microsoft 365 Copilot / E7** licences, it includes **~25,000 pooled Copilot
+> Credits/month** — enough to cover the pilot (~4,200) at **$0**. In that case,
+> **assign that capacity to the environment and DON'T attach a PAYG policy**, which
+> caps usage at the pool (no overage billing). Only set up PAYG below if there's no
+> included pool, or you deliberately want billed overage. See the "E7 / M365
+> Copilot" section in `../branded-sender-copilot-studio.md`.
+
+---
+
 ## 1. Prerequisites
 - An **Azure subscription** in the tenant (any active one).
 - **Owner/Contributor** on that subscription (to create a resource group + budget).

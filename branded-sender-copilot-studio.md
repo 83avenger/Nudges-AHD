@@ -163,6 +163,36 @@ $0 at any scale).
 - PAYG has **no commitment**, so it doubles as the measurement test — turn it on,
   send ~20 cards, read the meter for the real per‑card credit rate.
 
+### E7 / Microsoft 365 Copilot — included credits (could make the pilot $0)
+
+- **E7** (new July 2026 SKU = **E5 + Microsoft 365 Copilot + Entra Suite + Agent
+  365**) and standalone **Microsoft 365 Copilot** include a **pooled ~25,000
+  Copilot Credits/month** at the **tenant** level (≈ one $200 pack) — a monthly
+  allowance shared across all agents. **Not unlimited; overage is billed.**
+- **Your pilot (~4,200 credits/mo) fits well inside ~25,000** → the branded sender
+  could be **$0** *if* the tenant holds M365 Copilot/E7 **and** the capacity is
+  assigned to the agent's environment. Full‑org scale (~336k/mo) exceeds the pool.
+- ⚠️ **Verify the exact figure/pooling** with your Microsoft partner or the **June
+  2026 Copilot Studio Licensing Guide** — public phrasing is inconsistent.
+
+**Check + assign the pooled capacity (admin):**
+1. Confirm the tenant has **M365 Copilot / E7** licences: M365 admin center →
+   **Billing → Licenses** (look for "Microsoft 365 Copilot" / "E7").
+2. Power Platform admin center → **Resources → Capacity** (Copilot Studio credits)
+   → **assign** the included Copilot Studio capacity to the **environment hosting
+   the AHD Thrive365 agent**. (Included capacity is pooled but must be allocated to
+   the environment to apply.)
+
+**Lock usage to the included pool (no surprise overage):**
+3. **Do NOT attach a pay‑as‑you‑go billing policy** to that environment. With only
+   prepaid/included capacity and **no PAYG meter**, consumption is **capped at the
+   pool** — beyond it, agent messages are throttled/blocked rather than **billed**.
+4. If you *want* overage allowed, attach PAYG **and** set an **Azure budget +
+   alerts** (`runbooks/azure-cost-management-setup.md`) as a backstop — but note
+   budgets **alert**, they don't hard‑stop.
+5. **Monitor:** Power Platform admin center → Copilot Studio **credits/capacity**
+   report; review weekly during the pilot.
+
 **Verify before scaling:** it's not clearly documented how many credits a
 proactive card posted via Power Automate "Post as" the agent actually consumes.
 Publish, send a few test cards, then read the **Azure Cost Management / Copilot
