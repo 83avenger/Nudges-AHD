@@ -1,0 +1,124 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "AHD Thrive365 · Month of Connection",
+              "weight": "Bolder",
+              "size": "Medium",
+              "color": "Accent",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "${WeekArc}",
+              "isSubtle": true,
+              "spacing": "None",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "verticalContentAlignment": "Center",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Day ${Day}/21",
+              "weight": "Bolder",
+              "horizontalAlignment": "Right",
+              "wrap": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "🌟 Today's Connection Challenge",
+          "weight": "Bolder",
+          "size": "Small",
+          "isSubtle": true,
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "${ChallengeEN}",
+          "size": "Medium",
+          "weight": "Bolder",
+          "wrap": true,
+          "spacing": "Small"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "rtl": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "🌟 تحدّي التواصل اليوم",
+          "weight": "Bolder",
+          "size": "Small",
+          "isSubtle": true,
+          "horizontalAlignment": "Right",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "${ChallengeAR}",
+          "size": "Medium",
+          "weight": "Bolder",
+          "horizontalAlignment": "Right",
+          "wrap": true,
+          "spacing": "Small"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "💡 ${WhyItMatters}",
+          "wrap": true,
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "🔜 ${TomorrowTeaser}",
+          "wrap": true,
+          "isSubtle": true,
+          "spacing": "Small"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "One AHD. One daily action. Stronger together. · ‏‏‏AHD واحد. فعل واحد كل يوم. أقوى معاً.",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true,
+      "horizontalAlignment": "Center",
+      "spacing": "Medium"
+    }
+  ]
+}

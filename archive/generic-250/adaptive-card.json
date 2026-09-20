@@ -1,0 +1,36 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🌟 Wellbeing Reminder 🌟",
+      "weight": "Bolder",
+      "size": "Medium",
+      "color": "Accent",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "${NudgeText}",
+      "wrap": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Please coordinate all branding activities with the Marketing Department as per policy.",
+      "wrap": true,
+      "spacing": "Medium",
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Nudge #${NudgeID}",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true,
+      "spacing": "Small"
+    }
+  ]
+}

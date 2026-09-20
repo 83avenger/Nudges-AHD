@@ -1,0 +1,95 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "AHD Thrive365 · ${PillarEmoji} ${PillarEN}",
+              "weight": "Bolder",
+              "size": "Medium",
+              "color": "Accent",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Theme: ${DailyThemeEN} · ${WeekArc}",
+              "isSubtle": true,
+              "spacing": "None",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "verticalContentAlignment": "Center",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Day ${Day}/21",
+              "weight": "Bolder",
+              "horizontalAlignment": "Right",
+              "wrap": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "${NudgeEN}",
+          "size": "Medium",
+          "weight": "Bolder",
+          "wrap": true
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "rtl": true,
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "${PillarEmoji} ${PillarAR}",
+          "weight": "Bolder",
+          "size": "Small",
+          "color": "Accent",
+          "horizontalAlignment": "Right",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "${NudgeAR}",
+          "size": "Medium",
+          "weight": "Bolder",
+          "horizontalAlignment": "Right",
+          "wrap": true,
+          "spacing": "Small"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "One AHD. One daily action. Stronger together. · ‏AHD واحد. فعل واحد كل يوم. أقوى معاً.",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true,
+      "horizontalAlignment": "Center",
+      "spacing": "Medium"
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+<title>Nudge Delivery Decision</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --bg:#F4F7F9; --surface:#FFFFFF; --surface-2:#EDF2F5;
+    --ink:#13242E; --muted:#576A75; --border:#DBE4EA;
+    --primary:#0F6E78; --primary-soft:#E1EEEF;
+    --good:#177F5F; --good-soft:#E4F2EC;
+    --warn:#A8501F; --warn-soft:#F6EADF;
+    --shadow:0 1px 2px rgba(19,36,46,.06),0 8px 24px rgba(19,36,46,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1A20; --surface:#15252D; --surface-2:#1B2E38;
+      --ink:#E9F0F3; --muted:#9BAEB8; --border:#273B45;
+      --primary:#57C3CB; --primary-soft:#153138;
+      --good:#4EC79D; --good-soft:#122E26;
+      --warn:#E48A55; --warn-soft:#33210F;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1A20; --surface:#15252D; --surface-2:#1B2E38;
+    --ink:#E9F0F3; --muted:#9BAEB8; --border:#273B45;
+    --primary:#57C3CB; --primary-soft:#153138;
+    --good:#4EC79D; --good-soft:#122E26;
+    --warn:#E48A55; --warn-soft:#33210F;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:clamp(24px,5vw,56px)}
+  .serif{font-family:Georgia,"Times New Roman",serif}
+
+  .eyebrow{
+    font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--primary); font-weight:600; margin:0 0 10px;
+  }
+  h1{
+    font-family:Georgia,serif; font-weight:600; letter-spacing:-.01em;
+    font-size:clamp(2rem,5vw,3rem); line-height:1.05; margin:0 0 14px;
+    text-wrap:balance;
+  }
+  .lede{font-size:clamp(1.02rem,2.2vw,1.18rem); color:var(--muted); max-width:60ch; margin:0}
+
+  .rec{
+    display:flex; gap:16px; align-items:flex-start;
+    margin:32px 0; padding:20px 22px; border-radius:14px;
+    background:var(--good-soft); border:1px solid color-mix(in srgb,var(--good) 30%,transparent);
+  }
+  .rec .tick{
+    flex:none; width:34px; height:34px; border-radius:50%;
+    background:var(--good); color:#fff; display:grid; place-items:center;
+    font-size:1.1rem; font-weight:700;
+  }
+  .rec h2{margin:0 0 4px; font-size:1.06rem}
+  .rec p{margin:0; color:var(--muted); font-size:.95rem}
+  .rec strong{color:var(--ink)}
+
+  .cards{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:26px 0}
+  @media (max-width:640px){.cards{grid-template-columns:1fr}}
+  .card{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:16px; padding:22px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .card.win{border-top:3px solid var(--good)}
+  .card.warn{border-top:3px solid var(--warn)}
+  .card .top{display:flex; align-items:center; gap:10px}
+  .card .badge{
+    font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+    padding:3px 9px; border-radius:100px;
+  }
+  .win .badge{background:var(--good-soft); color:var(--good)}
+  .warn .badge{background:var(--warn-soft); color:var(--warn)}
+  .card h3{margin:0; font-size:1.22rem; font-family:Georgia,serif; font-weight:600}
+  .card .sub{margin:-6px 0 0; font-size:.85rem; color:var(--muted)}
+  ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px}
+  li{position:relative; padding-left:24px; font-size:.92rem}
+  li::before{position:absolute; left:0; top:0; font-weight:700}
+  .win li.pos::before{content:"✓"; color:var(--good)}
+  .warn li.neg::before{content:"✕"; color:var(--warn)}
+  li.note{padding-left:24px; color:var(--muted)}
+  li.note::before{content:"•"; color:var(--muted); left:6px}
+
+  /* reach visual */
+  .reach{margin:8px 0 4px}
+  .reach .row{display:grid; grid-template-columns:96px 1fr 64px; align-items:center; gap:12px; margin:12px 0}
+  .reach .lab{font-size:.82rem; font-weight:600}
+  .reach .track{height:22px; border-radius:6px; background:var(--surface-2); overflow:hidden; position:relative; border:1px solid var(--border)}
+  .reach .fill{height:100%; border-radius:6px 0 0 6px}
+  .reach .fill.full{width:100%; background:var(--good); border-radius:6px}
+  .reach .fill.part{width:68%; background:var(--warn)}
+  .reach .lost{
+    position:absolute; top:0; right:0; height:100%; width:32%;
+    background:repeating-linear-gradient(-45deg,transparent,transparent 5px,color-mix(in srgb,var(--warn) 26%,transparent) 5px,color-mix(in srgb,var(--warn) 26%,transparent) 10px);
+  }
+  .reach .val{font-size:.9rem; font-weight:700; text-align:right; font-variant-numeric:tabular-nums}
+  .reach .cap{font-size:.8rem; color:var(--muted); margin:2px 0 0 108px}
+
+  .section-h{font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:600; margin:38px 0 14px}
+
+  .tablewrap{overflow-x:auto; border:1px solid var(--border); border-radius:14px; background:var(--surface)}
+  table{border-collapse:collapse; width:100%; min-width:520px; font-size:.9rem}
+  th,td{padding:12px 16px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top}
+  thead th{font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:600; background:var(--surface-2)}
+  tbody th{font-weight:600; color:var(--ink); width:34%}
+  tr:last-child td,tr:last-child th{border-bottom:none}
+  .c-good{color:var(--good); font-weight:600}
+  .c-warn{color:var(--warn); font-weight:600}
+  td .m{color:var(--muted); font-weight:400}
+
+  .demo{
+    margin-top:34px; padding:22px; border-radius:16px;
+    background:var(--primary-soft); border:1px solid color-mix(in srgb,var(--primary) 26%,transparent);
+  }
+  .demo h3{margin:0 0 8px; font-size:1.05rem}
+  .demo p{margin:0 0 10px; font-size:.94rem; color:var(--muted)}
+  .demo .metrics{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+  .chip{font-size:.8rem; padding:5px 11px; border-radius:100px; background:var(--surface); border:1px solid var(--border); color:var(--ink)}
+
+  footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--border); font-size:.82rem; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 18px; justify-content:space-between}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">AHD Wellbeing365 · Delivery method</p>
+    <h1>How the daily nudges reach people</h1>
+    <p class="lede">The pilot sends four bilingual wellbeing nudges a day. <strong style="color:var(--ink)">Who receives them, and how reliably, depends on the delivery method.</strong> This compares a personal 1:1 message against a shared Teams channel.</p>
+  </header>
+
+  <div class="rec">
+    <div class="tick">✓</div>
+    <div>
+      <h2>Recommendation — deliver 1:1, add a channel only as a complement</h2>
+      <p>1:1 guarantees <strong>every</strong> person receives every nudge and keeps it personal. A branded channel can run <strong>alongside</strong> as a shared feed, but should not replace 1:1 — members can quietly leave a channel and fall out of reach.</p>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card win">
+      <div class="top"><span class="badge">Recommended</span></div>
+      <h3>1:1 personal nudge</h3>
+      <p class="sub">A direct message to each employee</p>
+      <ul>
+        <li class="pos">Reaches <strong>100%</strong> of the group — a bot chat cannot be "left"</li>
+        <li class="pos">Muting silences the ping, but the nudge still arrives</li>
+        <li class="pos">Private and personal — feels addressed to me</li>
+        <li class="pos">$0 — standard Microsoft 365 connectors</li>
+        <li class="note">Sender label reads "Workflows"; the card itself is branded AHD Thrive365</li>
+      </ul>
+    </div>
+
+    <div class="card warn">
+      <div class="top"><span class="badge">Trade-offs</span></div>
+      <h3>Teams channel</h3>
+      <p class="sub">One post to a shared space</p>
+      <ul>
+        <li class="neg">Members can <strong>leave, hide or mute</strong> the channel — reach erodes</li>
+        <li class="neg">Broadcast feel — less personal for wellbeing</li>
+        <li class="neg">Four posts a day in one place invites mute fatigue</li>
+        <li class="neg">Branded sender needs a <strong>paid</strong> plan on a retiring connector</li>
+        <li class="note">Reactions and activity are visible to everyone in the channel</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reach" aria-label="Reach comparison">
+    <div class="row">
+      <span class="lab">1:1 nudge</span>
+      <div class="track"><div class="fill full"></div></div>
+      <span class="val">100%</span>
+    </div>
+    <div class="row">
+      <span class="lab">Channel</span>
+      <div class="track"><div class="fill part"></div><div class="lost"></div></div>
+      <span class="val">erodes</span>
+    </div>
+    <p class="cap">Hatched area = people who left, hid or muted the channel and no longer see the nudge.</p>
+  </div>
+
+  <p class="section-h">Head-to-head</p>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th scope="col">Dimension</th><th scope="col">1:1 nudge</th><th scope="col">Teams channel</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Guaranteed reach</th><td class="c-good">Every recipient</td><td class="c-warn">Erodes as people leave/mute</td></tr>
+        <tr><th scope="row">Notification</th><td class="c-good">Personal, hard to miss</td><td><span class="c-warn">Easy to overlook</span> <span class="m">in a busy channel</span></td></tr>
+        <tr><th scope="row">Personal feel</th><td class="c-good">Private, one-to-one</td><td class="c-warn">Broadcast to a group</td></tr>
+        <tr><th scope="row">Membership control</th><td class="c-good">Managed centrally</td><td><span class="c-warn">Self opt-out</span> <span class="m">unless org-wide/forced</span></td></tr>
+        <tr><th scope="row">Fatigue risk</th><td>Low <span class="m">— separate quiet pings</span></td><td class="c-warn">Higher — 4 posts stacked</td></tr>
+        <tr><th scope="row">Sender branding</th><td>"Workflows" <span class="m">(card is branded)</span></td><td>"AHD Thrive365" <span class="m">— paid + deprecating</span></td></tr>
+        <tr><th scope="row">Cost</th><td class="c-good">$0 (standard)</td><td>$0 basic; <span class="c-warn">paid</span> <span class="m">for branded sender</span></td></tr>
+        <tr><th scope="row">Privacy</th><td class="c-good">Engagement stays private</td><td class="c-warn">Visible to all members</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="demo">
+    <h3>We can prove it, not just assert it</h3>
+    <p>A read-only parallel demo mirrors each nudge into a test channel while the 1:1 flows run untouched — so the two experiences can be compared live over one to two weeks.</p>
+    <p style="margin-bottom:0">What we measure:</p>
+    <div class="metrics">
+      <span class="chip">Channel leaves &amp; mutes</span>
+      <span class="chip">Reach %</span>
+      <span class="chip">Reactions / replies</span>
+      <span class="chip">Champion sentiment</span>
+    </div>
+  </div>
+
+  <footer>
+    <span>AHD Wellbeing365 · Month of Connection pilot</span>
+    <span>For the September decision gate</span>
+  </footer>
+</div>

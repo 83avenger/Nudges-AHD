@@ -1,0 +1,96 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "AHD Thrive365 · Today's Wellbeing",
+              "weight": "Bolder",
+              "size": "Medium",
+              "color": "Accent",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Theme: ${DailyThemeEN} · ${WeekArc}",
+              "isSubtle": true,
+              "spacing": "None",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "verticalContentAlignment": "Center",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Day ${Day}/21",
+              "weight": "Bolder",
+              "horizontalAlignment": "Right",
+              "wrap": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        { "type": "TextBlock", "text": "🤝 Social · الرفاه الاجتماعي", "weight": "Bolder", "size": "Small", "color": "Accent", "wrap": true },
+        { "type": "TextBlock", "text": "${SocialEN}", "wrap": true, "spacing": "None" },
+        { "type": "TextBlock", "text": "${SocialAR}", "wrap": true, "horizontalAlignment": "Right", "spacing": "None" }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        { "type": "TextBlock", "text": "🏃 Physical · الرفاه البدني", "weight": "Bolder", "size": "Small", "color": "Good", "wrap": true },
+        { "type": "TextBlock", "text": "${PhysicalEN}", "wrap": true, "spacing": "None" },
+        { "type": "TextBlock", "text": "${PhysicalAR}", "wrap": true, "horizontalAlignment": "Right", "spacing": "None" }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        { "type": "TextBlock", "text": "💡 Financial · الرفاه المالي", "weight": "Bolder", "size": "Small", "color": "Warning", "wrap": true },
+        { "type": "TextBlock", "text": "${FinancialEN}", "wrap": true, "spacing": "None" },
+        { "type": "TextBlock", "text": "${FinancialAR}", "wrap": true, "horizontalAlignment": "Right", "spacing": "None" }
+      ]
+    },
+    {
+      "type": "Container",
+      "separator": true,
+      "spacing": "Medium",
+      "items": [
+        { "type": "TextBlock", "text": "🧠 Mental · الرفاه النفسي", "weight": "Bolder", "size": "Small", "color": "Accent", "wrap": true },
+        { "type": "TextBlock", "text": "${MentalEN}", "wrap": true, "spacing": "None" },
+        { "type": "TextBlock", "text": "${MentalAR}", "wrap": true, "horizontalAlignment": "Right", "spacing": "None" }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "One AHD. One daily action. Stronger together. · ‏AHD واحد. فعل واحد كل يوم. أقوى معاً.",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true,
+      "horizontalAlignment": "Center",
+      "spacing": "Medium"
+    }
+  ]
+}
